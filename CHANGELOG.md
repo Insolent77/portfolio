@@ -13,3 +13,8 @@
 - проведена проверка основных состояний: desktop/mobile, RU/EN, dark/light.
 
 - Исправлено наложение строк в крупных заголовках на промежуточных и мобильных разрешениях.
+## 2026-07-31 — Avito contact
+
+- Added the Avito services page to the contact section.
+- Adjusted the desktop contact grid for three links while preserving the mobile single-column layout.
+
