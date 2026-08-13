@@ -1,333 +1,192 @@
 <!doctype html>
-<html lang="ru" class="no-js" data-theme="dark">
+<html lang="ru" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Разработка современных сайтов под ключ: дизайн, frontend, backend, админ-панели и личные кабинеты. Портфолио INS.">
-  <meta name="theme-color" content="#071013">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="INS — дизайн и разработка понятных сайтов и цифровых продуктов под ключ.">
+  <meta name="theme-color" content="#241a14">
   <meta name="color-scheme" content="dark light">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="INS — сайты, которые работают на бизнес">
-  <meta property="og:description" content="Дизайн и разработка сайтов под ключ: от структуры и прототипа до запуска и поддержки.">
+  <meta property="og:title" content="INS — понятные сайты для людей и бизнеса">
+  <meta property="og:description" content="Проектирование, дизайн и разработка — от идеи до запуска.">
   <meta property="og:image" content="assets/og-cover.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="ru_RU">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="INS — сайты, которые работают на бизнес">
-  <meta name="twitter:description" content="Дизайн и разработка сайтов под ключ: от структуры и прототипа до запуска и поддержки.">
-  <meta name="twitter:image" content="assets/og-cover.png">
-  <title>INS — разработка сайтов под ключ</title>
+  <title>INS — дизайн и разработка сайтов</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/ins-portrait-transparent.png" as="image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Prata&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.remove('no-js');</script>
 </head>
-<body>
-  <a class="skip-link" href="#main" data-i18n="skipLink">Перейти к содержимому</a>
+<body data-background="coffee" data-glass="cocoa">
+  <a class="skip-link" href="#main-scroll" data-i18n="skipLink">Перейти к содержимому</a>
 
-  <div class="loader" aria-hidden="true">
-    <div class="loader__top"><span>INS / PORTFOLIO</span><span class="loader__count">00</span></div>
-    <div class="loader__word"><span data-i18n="loading">ЗАПУСК</span></div>
-    <div class="loader__line"><i></i></div>
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__coffee"></div>
+    <div class="ambient__home">
+      <div class="home-window"><i></i><i></i></div>
+      <div class="home-lamp"><i></i></div>
+      <div class="home-sofa"><i></i><i></i></div>
+      <div class="home-plant"><i></i><i></i><i></i></div>
+    </div>
+    <div class="ambient__glow"><i></i><i></i><i></i></div>
+    <div class="ambient__beam"></div>
   </div>
 
-  <div class="noise" aria-hidden="true"></div>
-  <div class="cursor-light" aria-hidden="true"></div>
-  <div class="scroll-progress" aria-hidden="true"><i></i></div>
+  <main class="glass" aria-label="Портфолио INS">
+    <header class="toolbar">
+      <div class="appearance" aria-label="Настройки оформления">
+        <div class="switcher" role="group" aria-labelledby="background-label">
+          <span class="switcher__label" id="background-label" data-i18n="backgroundLabel">Фон</span>
+          <button class="choice choice--coffee" type="button" data-background-choice="coffee" aria-label="Тёмный кофейный фон" title="Тёмный кофейный фон"><i></i></button>
+          <button class="choice choice--home" type="button" data-background-choice="home" aria-label="Домашний интерьер" title="Домашний интерьер"><i></i></button>
+          <button class="choice choice--glow" type="button" data-background-choice="glow" aria-label="Абстрактный свет" title="Абстрактный свет"><i></i></button>
+        </div>
 
-  <header class="topbar">
-    <a class="brand magnetic" href="#top" aria-label="Наверх" data-i18n-aria="brandAria">
-      <span class="brand__icon">I<span>/</span>S</span>
-      <span class="brand__copy" data-i18n-html="brandCopy">web design<br>& development</span>
-    </a>
+        <div class="switcher" role="group" aria-labelledby="glass-label">
+          <span class="switcher__label" id="glass-label" data-i18n="glassLabel">Стекло</span>
+          <button class="choice choice--dark" type="button" data-glass-choice="dark" aria-label="Тёмное стекло" title="Тёмное стекло"><i></i></button>
+          <button class="choice choice--milk" type="button" data-glass-choice="milk" aria-label="Молочное стекло" title="Молочное стекло"><i></i></button>
+          <button class="choice choice--cocoa" type="button" data-glass-choice="cocoa" aria-label="Коричневое стекло" title="Коричневое стекло"><i></i></button>
+        </div>
 
-    <nav class="nav" id="nav" aria-label="Основная навигация" data-i18n-aria="navAria">
-      <a href="#projects" data-nav-link data-i18n-html="navProjects"><span>01</span> кейсы</a>
-      <a href="#services" data-nav-link data-i18n-html="navServices"><span>02</span> услуги</a>
-      <a href="#process" data-nav-link data-i18n-html="navProcess"><span>03</span> процесс</a>
-      <a href="#contact" data-nav-link data-i18n-html="navContact"><span>04</span> контакты</a>
-    </nav>
+        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true" aria-label="Выключить звуки" title="Выключить звуки">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path class="sound-toggle__body" d="M5 9h3.2L12 6v12l-3.8-3H5Z"/>
+            <path class="sound-toggle__waves" d="M15 9.2c.8.7 1.2 1.6 1.2 2.8s-.4 2.1-1.2 2.8M17.4 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"/>
+            <path class="sound-toggle__mute" d="m15.4 9.4 4.2 5.2m0-5.2-4.2 5.2"/>
+          </svg>
+        </button>
+      </div>
 
-    <div class="topbar__actions">
-      <div class="topbar__status"><i></i><span data-i18n="status">открыт к проектам</span></div>
-      <button class="language-toggle" type="button" aria-label="Переключить язык" data-language-toggle>
-        <span data-lang-option="ru">RU</span><i>/</i><span data-lang-option="en">EN</span>
-      </button>
-      <button class="theme-toggle" type="button" aria-label="Сменить тему" data-theme-toggle>
-        <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <g class="theme-icon__sun"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6"/></g>
-          <path class="theme-icon__moon" d="M19.5 15.3A8 8 0 0 1 8.7 4.5 8 8 0 1 0 19.5 15.3Z"/>
-        </svg>
-        <span class="theme-toggle__label">тёмная</span>
-      </button>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#projects" data-nav-link data-i18n="navProjects">Проекты</a>
+        <a href="#approach" data-nav-link data-i18n="navApproach">Подход</a>
+        <a href="#contacts" data-nav-link data-i18n="navContacts">Контакты</a>
+      </nav>
+
+      <div class="toolbar__end">
+        <span class="availability"><i></i><span data-i18n="availability">Открыт к проектам</span></span>
+        <button class="language" type="button" data-language-toggle aria-label="Switch language"><span data-language-option="ru">RU</span><i>/</i><span data-language-option="en">EN</span></button>
+      </div>
+    </header>
+
+    <div class="scroll" id="main-scroll" tabindex="-1">
+      <section class="hero section" id="top" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <a class="brand reveal" href="#top" aria-label="INS — наверх">INS<span>.</span></a>
+          <p class="eyebrow reveal"><span>WEB / DESIGN / CODE</span><i></i><span data-i18n="heroKicker">Полный цикл разработки</span></p>
+          <h1 id="hero-title" class="reveal" data-i18n-html="heroTitle">Сайты, в которых<br><em>легко разобраться.</em></h1>
+          <p class="hero__lead reveal" data-i18n="heroLead">Создаю спокойные и понятные цифровые продукты — от структуры и дизайна до кода, запуска и поддержки.</p>
+          <div class="hero__actions reveal">
+            <a class="button button--primary" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="heroCta">Обсудить проект</span><i>↗</i></a>
+            <a class="button button--quiet" href="#projects"><span data-i18n="heroWork">Посмотреть работы</span><i>↓</i></a>
+          </div>
+          <div class="hero__facts reveal">
+            <p><span data-i18n="factPlaceLabel">Работаю</span><b data-i18n="factPlace">Удалённо</b></p>
+            <p><span data-i18n="factFocusLabel">Фокус</span><b data-i18n="factFocus">Польза + простота</b></p>
+          </div>
+        </div>
+
+        <a class="scroll-hint reveal" href="#projects"><span data-i18n="scrollHint">Листайте внутри окна</span><i>↓</i></a>
+      </section>
+
+      <section class="projects section" id="projects" aria-labelledby="projects-title">
+        <header class="section-head reveal">
+          <p class="section-label"><span>01</span><span data-i18n="projectsLabel">Избранные проекты</span></p>
+          <h2 id="projects-title" data-i18n-html="projectsTitle">Не просто страницы.<br><em>Рабочие системы.</em></h2>
+          <p data-i18n="projectsIntro">В каждом проекте сначала разбираюсь в задаче, а затем соединяю содержание, интерфейс и разработку в одно целое.</p>
+        </header>
+
+        <div class="project-list">
+          <article class="project reveal">
+            <a class="project__cover" href="https://alex-educator.com" target="_blank" rel="noreferrer" aria-label="Открыть Alex Educator">
+              <div class="preview preview--educator" aria-hidden="true">
+                <div class="preview-window">
+                  <div class="preview-window__bar"><i></i><i></i><i></i><span>alex-educator.com</span></div>
+                  <div class="educator-ui"><aside><b>A.</b><i></i><i></i><i></i></aside><div><small>STUDENT SPACE</small><strong>Учёба и управление<br>в одном месте</strong><span></span><span></span><span></span></div></div>
+                </div>
+              </div>
+              <span class="project__arrow">↗</span>
+            </a>
+            <div class="project__copy">
+              <p class="project__meta"><span>01 / EDTECH</span><span data-i18n="fullCycle">Полный цикл</span></p>
+              <h3>Alex Educator</h3>
+              <p data-i18n="alexDescription">Цифровая экосистема преподавателя: сайт, тестирование, электронные договоры, расписание, админ-панель и кабинет ученика.</p>
+              <ul aria-label="Технологии"><li>UX/UI</li><li>JavaScript</li><li>PHP</li><li>MySQL</li></ul>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <a class="project__cover" href="https://insolent77.github.io/git-time-machine" target="_blank" rel="noreferrer" aria-label="Открыть Git Time Machine">
+              <div class="preview preview--git" aria-hidden="true">
+                <div class="git-ui">
+                  <header><span>GIT TIME MACHINE</span><b>LIVE</b></header>
+                  <div class="git-map"><i></i><i></i><i></i><i></i><i></i><span>main</span><span>feature/ui</span><span>release</span></div>
+                  <footer><span>34 commits</span><span>Explore →</span></footer>
+                </div>
+              </div>
+              <span class="project__arrow">↗</span>
+            </a>
+            <div class="project__copy">
+              <p class="project__meta"><span>02 / DEV TOOL</span><span data-i18n="webApp">Веб-приложение</span></p>
+              <h3>Git Time Machine</h3>
+              <p data-i18n="gitDescription">Интерактивная временная карта, которая превращает историю коммитов и веток в понятный рассказ о развитии проекта.</p>
+              <ul aria-label="Технологии"><li>TypeScript</li><li>Git</li><li>Data UI</li><li>Motion</li></ul>
+            </div>
+          </article>
+
+          <article class="project project--future reveal">
+            <div class="future-mark" aria-hidden="true"><span>03</span><i>+</i></div>
+            <div class="project__copy">
+              <p class="project__meta"><span>03 / NEXT</span><span data-i18n="inProgress">Место для нового</span></p>
+              <h3 data-i18n="futureTitle">Следующий проект</h3>
+              <p data-i18n="futureDescription">Здесь появится новый кейс. Возможно, именно тот, который мы создадим вместе.</p>
+              <a class="inline-link" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="futureCta">Обсудить идею</span> ↗</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="approach section" id="approach" aria-labelledby="approach-title">
+        <header class="section-head reveal">
+          <p class="section-label"><span>02</span><span data-i18n="approachLabel">Подход</span></p>
+          <h2 id="approach-title" data-i18n-html="approachTitle">Один специалист.<br><em>Весь путь продукта.</em></h2>
+          <p data-i18n="approachIntro">Вам не нужно координировать нескольких исполнителей. Я погружаюсь в задачу, создаю дизайн, пишу код и остаюсь рядом после запуска.</p>
+        </header>
+
+        <ol class="steps">
+          <li class="reveal"><span>01</span><div><h3 data-i18n="stepOneTitle">Понять задачу</h3><p data-i18n="stepOneCopy">Обсудим цель, пользователей и желаемый результат простыми словами.</p></div><i>DISCOVERY</i></li>
+          <li class="reveal"><span>02</span><div><h3 data-i18n="stepTwoTitle">Собрать решение</h3><p data-i18n="stepTwoCopy">Продумую структуру, интерфейс и техническую основу как единую систему.</p></div><i>DESIGN + CODE</i></li>
+          <li class="reveal"><span>03</span><div><h3 data-i18n="stepThreeTitle">Проверить и запустить</h3><p data-i18n="stepThreeCopy">Тестирую ключевые сценарии, публикую проект и передаю понятные инструкции.</p></div><i>QA + LAUNCH</i></li>
+          <li class="reveal"><span>04</span><div><h3 data-i18n="stepFourTitle">Развивать дальше</h3><p data-i18n="stepFourCopy">Не исчезаю после запуска: проект можно поддерживать и постепенно улучшать.</p></div><i>SUPPORT</i></li>
+        </ol>
+
+        <div class="principles reveal">
+          <p><span>01</span><b data-i18n="principleOne">Понятный язык</b></p>
+          <p><span>02</span><b data-i18n="principleTwo">Адаптив для любого экрана</b></p>
+          <p><span>03</span><b data-i18n="principleThree">Без лишних функций</b></p>
+        </div>
+      </section>
+
+      <section class="contacts section" id="contacts" aria-labelledby="contacts-title">
+        <div class="contacts__glow" aria-hidden="true"></div>
+        <header class="section-head section-head--contacts reveal">
+          <p class="section-label"><span>03</span><span data-i18n="contactsLabel">Контакты</span></p>
+          <h2 id="contacts-title" data-i18n-html="contactsTitle">Расскажите об идее.<br><em>Начнём с разговора.</em></h2>
+          <p data-i18n="contactsIntro">Техническое задание не обязательно. Опишите задачу своими словами — я уточню главное и предложу следующий шаг.</p>
+        </header>
+
+        <div class="contact-list reveal">
+          <a href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span><i>01</i>Telegram</span><b>@INS8988</b><em>↗</em></a>
+          <a href="https://github.com/INSolent77" target="_blank" rel="noreferrer"><span><i>02</i>GitHub</span><b>INSolent77</b><em>↗</em></a>
+          <a href="https://www.avito.ru/nizhniy_novgorod/predlozheniya_uslug/sozdanie_saytov_pod_klyuch_8267151504" target="_blank" rel="noreferrer"><span><i>03</i>Avito</span><b data-i18n="avitoText">Создание сайтов</b><em>↗</em></a>
+        </div>
+
+        <footer class="footer reveal"><span>© <b data-year>2026</b> INS</span><span data-i18n="footerText">Дизайн и разработка с вниманием к людям</span><a href="#top" data-i18n="backTop">Наверх ↑</a></footer>
+      </section>
     </div>
-
-    <button class="menu-button" type="button" aria-controls="nav" aria-expanded="false" aria-label="Открыть меню" data-i18n-aria="menuAria">
-      <span data-i18n="menu">меню</span><i></i><i></i>
-    </button>
-  </header>
-
-  <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero__grid" aria-hidden="true"></div>
-      <div class="hero__shape hero__shape--one" aria-hidden="true"></div>
-      <div class="hero__shape hero__shape--two" aria-hidden="true"></div>
-
-      <div class="hero__content">
-        <p class="hero__kicker reveal">
-          <span data-i18n="heroKicker">Веб-разработчик полного цикла</span>
-          <span data-i18n="heroLocation">Удалённо · 2026</span>
-        </p>
-
-        <h1 id="hero-title" class="hero__title reveal" data-i18n-html="heroTitle">
-          Сайты, которые<br><em>выглядят убедительно</em><br>и работают на бизнес
-        </h1>
-
-        <p class="hero__lead reveal" data-i18n="heroLead">Проектирую и разрабатываю современные сайты под ключ: от смысла и структуры до интерфейса, логики, запуска и поддержки.</p>
-
-        <div class="hero__actions reveal">
-          <a class="button button--primary magnetic" href="https://t.me/INS8988" target="_blank" rel="noreferrer">
-            <span data-i18n="heroPrimary">Обсудить проект</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="button button--secondary" href="#projects"><span data-i18n="heroSecondary">Смотреть кейсы</span><span>↓</span></a>
-        </div>
-
-        <div class="hero__proof reveal" aria-label="Ключевые преимущества" data-i18n-aria="proofAria">
-          <div><strong>02</strong><span data-i18n-html="proofOne">проекта<br>в продакшене</span></div>
-          <div><strong>01</strong><span data-i18n-html="proofTwo">специалист<br>на весь цикл</span></div>
-          <div><strong>100%</strong><span data-i18n-html="proofThree">адаптив<br>под устройства</span></div>
-        </div>
-      </div>
-
-      <div class="portrait-wrap" data-portrait>
-        <div class="portrait-backdrop" aria-hidden="true"><span>INS</span></div>
-        <img class="portrait" src="assets/ins-portrait-transparent.png" alt="Веб-разработчик INS" data-i18n-alt="portraitAlt" width="1086" height="1448">
-        <div class="portrait-placeholder" aria-hidden="true"><span>I/S</span><small>portrait.asset</small></div>
-        <span class="portrait-wrap__code">FULL-CYCLE / WEB</span>
-      </div>
-
-      <aside class="availability-card reveal" data-tilt>
-        <div class="availability-card__top"><i></i><span data-i18n="availabilityLabel">Сейчас</span></div>
-        <strong data-i18n-html="availabilityTitle">Открыт к новым<br>проектам</strong>
-        <p data-i18n="availabilityCopy">Опишите задачу в Telegram — задам уточняющие вопросы и предложу формат работы.</p>
-        <a href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="availabilityCta">Написать</span> ↗</a>
-      </aside>
-
-      <div class="hero__edge hero__edge--left" aria-hidden="true">INSOLENT77 — DESIGN / DEVELOPMENT / PRODUCT</div>
-      <div class="hero__edge hero__edge--right" aria-hidden="true">FROM IDEA TO LAUNCH — 2026</div>
-    </section>
-
-    <section class="ticker" aria-label="Направления работы" data-i18n-aria="tickerAria">
-      <div class="ticker__track">
-        <span data-i18n="tickerOne">САЙТЫ ПОД КЛЮЧ</span><i>✦</i><span>UI / UX</span><i>✦</i><span>FRONTEND</span><i>✦</i><span>BACKEND</span><i>✦</i><span data-i18n="tickerTwo">АДМИН-ПАНЕЛИ</span><i>✦</i><span data-i18n="tickerThree">ЛИЧНЫЕ КАБИНЕТЫ</span><i>✦</i>
-        <span data-i18n="tickerOne">САЙТЫ ПОД КЛЮЧ</span><i>✦</i><span>UI / UX</span><i>✦</i><span>FRONTEND</span><i>✦</i><span>BACKEND</span><i>✦</i><span data-i18n="tickerTwo">АДМИН-ПАНЕЛИ</span><i>✦</i><span data-i18n="tickerThree">ЛИЧНЫЕ КАБИНЕТЫ</span><i>✦</i>
-      </div>
-    </section>
-
-    <section class="projects section" id="projects" aria-labelledby="projects-title">
-      <div class="section-head reveal">
-        <span class="section-head__number">01 / 04</span>
-        <p data-i18n="projectsLabel">КЕЙСЫ / РЕЗУЛЬТАТ</p>
-        <span>2025 — 2026</span>
-      </div>
-
-      <div class="section-intro projects__intro">
-        <div>
-          <p class="eyebrow reveal" data-i18n="projectsEyebrow">Не просто красивые экраны</p>
-          <h2 id="projects-title" class="reveal" data-i18n-html="projectsTitle">Проекты с логикой,<br><em>которой пользуются</em></h2>
-        </div>
-        <p class="section-intro__copy reveal" data-i18n="projectsIntro">В каждом кейсе начинаю с задачи пользователя и бизнеса, затем собираю структуру, дизайн и рабочий продукт в единую систему.</p>
-      </div>
-
-      <article class="project project--educator reveal" data-project-card>
-        <a class="project__link" href="https://alex-educator.com" target="_blank" rel="noreferrer" aria-label="Открыть проект Alex Educator" data-i18n-aria="alexAria"></a>
-        <div class="project__top"><span>01 / EDTECH PLATFORM</span><span data-i18n="fullCycle">ПОЛНЫЙ ЦИКЛ</span><span>2026 ↗</span></div>
-        <div class="project__content">
-          <div class="project__copy">
-            <p class="project__role" data-i18n="alexRole">Задача: объединить сайт преподавателя и рабочие процессы в одном продукте</p>
-            <h3>ALEX<br>EDUCATOR</h3>
-            <p data-i18n="alexDescription">Разработал цифровую экосистему: продающий сайт, тестирование, электронные договоры, админ-панель, личный кабинет ученика, расписание и домашние задания.</p>
-            <div class="project__result">
-              <span data-i18n="projectResult">Результат</span>
-              <strong data-i18n="alexResult">Единая система вместо разрозненных ручных процессов</strong>
-            </div>
-            <div class="project__tags"><span>PHP</span><span>JAVASCRIPT</span><span>MYSQL</span><span>UX / UI</span></div>
-            <span class="project__open"><span data-i18n="openProject">Открыть проект</span> ↗</span>
-          </div>
-          <div class="project__visual" aria-hidden="true">
-            <div class="edu-window">
-              <div class="edu-window__bar"><i></i><i></i><i></i><span>alex-educator.com</span></div>
-              <div class="edu-window__body">
-                <div class="edu-sidebar"><b>A.</b><i></i><i></i><i></i><i></i></div>
-                <div class="edu-main"><span>LEARNING DASHBOARD</span><strong data-i18n-html="eduPreview">Учёба и управление<br>в одном окне.</strong><div class="edu-chart"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <span class="project__index" aria-hidden="true">01</span>
-      </article>
-
-      <article class="project project--git reveal" data-project-card>
-        <a class="project__link" href="https://insolent77.github.io/git-time-machine" target="_blank" rel="noreferrer" aria-label="Открыть проект Git Time Machine" data-i18n-aria="gitAria"></a>
-        <div class="project__top"><span>02 / DEVELOPER TOOL</span><span data-i18n="webExperience">ВЕБ-ПРИЛОЖЕНИЕ</span><span>2026 ↗</span></div>
-        <div class="project__content">
-          <div class="project__copy">
-            <p class="project__role" data-i18n="gitRole">Задача: сделать историю проекта понятной без чтения десятков технических файлов</p>
-            <h3>GIT TIME<br>MACHINE</h3>
-            <p data-i18n="gitDescription">Создал браузерный инструмент, который превращает коммиты, ветки и изменения файлов в наглядную интерактивную временную карту.</p>
-            <div class="project__result">
-              <span data-i18n="projectResult">Результат</span>
-              <strong data-i18n="gitResult">Историю разработки можно исследовать визуально и последовательно</strong>
-            </div>
-            <div class="project__tags"><span>TYPESCRIPT</span><span>GIT</span><span>DATA UI</span><span>MOTION</span></div>
-            <span class="project__open"><span data-i18n="openProject">Открыть проект</span> ↗</span>
-          </div>
-          <div class="project__visual" aria-hidden="true">
-            <div class="git-window">
-              <div class="git-window__head"><span>GIT / TIMELINE</span><i>LIVE</i></div>
-              <div class="git-graph">
-                <svg viewBox="0 0 520 240" preserveAspectRatio="none"><path d="M20 45 C130 45 100 118 215 118 S310 196 500 196"/><path d="M20 45 C145 45 150 170 280 170 S390 90 500 90"/></svg>
-                <i style="--x:8%;--y:18%"></i><i style="--x:30%;--y:32%"></i><i style="--x:52%;--y:70%"></i><i style="--x:76%;--y:39%"></i><i style="--x:94%;--y:80%"></i>
-              </div>
-              <div class="git-window__foot"><span>main</span><span>34 commits</span><span>↗ explore</span></div>
-            </div>
-          </div>
-        </div>
-        <span class="project__index" aria-hidden="true">02</span>
-      </article>
-    </section>
-
-    <section class="services section" id="services" aria-labelledby="services-title">
-      <div class="section-head reveal">
-        <span class="section-head__number">02 / 04</span>
-        <p data-i18n="servicesLabel">УСЛУГИ / ФОРМАТЫ</p>
-        <span data-i18n="servicesHeadNote">ПОНЯТНАЯ СМЕТА ДО СТАРТА</span>
-      </div>
-
-      <div class="section-intro">
-        <div>
-          <p class="eyebrow reveal" data-i18n="servicesEyebrow">От первой страницы до продукта</p>
-          <h2 id="services-title" class="reveal" data-i18n-html="servicesTitle">Выберите масштаб.<br><em>Я соберу решение.</em></h2>
-        </div>
-        <p class="section-intro__copy reveal" data-i18n="servicesIntro">Стоимость зависит от объёма, логики и интеграций. До начала работ фиксируем задачу, состав проекта, этапы и ориентир по срокам.</p>
-      </div>
-
-      <div class="services-grid">
-        <article class="service-card reveal" data-tilt>
-          <div class="service-card__head"><span>01</span><b data-i18n="serviceOneType">БЫСТРЫЙ ЗАПУСК</b></div>
-          <h3 data-i18n="serviceOneTitle">Лендинг или сайт-визитка</h3>
-          <p data-i18n="serviceOneCopy">Для услуги, эксперта или нового направления: сильный первый экран, понятная структура, адаптив и форма связи.</p>
-          <ul>
-            <li data-i18n="serviceOneItemOne">Прототип и дизайн</li>
-            <li data-i18n="serviceOneItemTwo">Разработка и адаптив</li>
-            <li data-i18n="serviceOneItemThree">Базовая SEO-подготовка</li>
-          </ul>
-          <div class="service-card__price"><span data-i18n="from">от</span><strong>15 000 ₽</strong></div>
-        </article>
-
-        <article class="service-card service-card--featured reveal" data-tilt>
-          <div class="service-card__badge" data-i18n="popular">ПОПУЛЯРНЫЙ ФОРМАТ</div>
-          <div class="service-card__head"><span>02</span><b data-i18n="serviceTwoType">БИЗНЕС-СИСТЕМА</b></div>
-          <h3 data-i18n="serviceTwoTitle">Сайт с админ-панелью</h3>
-          <p data-i18n="serviceTwoCopy">Когда контент, заявки, каталог или статусы нужно управлять самостоятельно без правок в коде.</p>
-          <ul>
-            <li data-i18n="serviceTwoItemOne">Управление контентом</li>
-            <li data-i18n="serviceTwoItemTwo">Формы, база данных, уведомления</li>
-            <li data-i18n="serviceTwoItemThree">Роли, фильтры и статусы</li>
-          </ul>
-          <div class="service-card__price"><span data-i18n="from">от</span><strong>35 000 ₽</strong></div>
-        </article>
-
-        <article class="service-card reveal" data-tilt>
-          <div class="service-card__head"><span>03</span><b data-i18n="serviceThreeType">ЦИФРОВОЙ ПРОДУКТ</b></div>
-          <h3 data-i18n="serviceThreeTitle">Личный кабинет или сервис</h3>
-          <p data-i18n="serviceThreeCopy">Авторизация, пользовательские сценарии, расписание, оплаты, документы, аналитика и нестандартная логика.</p>
-          <ul>
-            <li data-i18n="serviceThreeItemOne">Проектирование сценариев</li>
-            <li data-i18n="serviceThreeItemTwo">Frontend и backend</li>
-            <li data-i18n="serviceThreeItemThree">Тестирование и запуск</li>
-          </ul>
-          <div class="service-card__price"><span data-i18n="from">от</span><strong>45 000 ₽</strong></div>
-        </article>
-      </div>
-
-      <div class="services-note reveal">
-        <span>+</span>
-        <p data-i18n-html="servicesNote"><strong>Уже есть сайт?</strong> Беру задачи на доработку, редизайн, автоматизацию и поддержку — от 2 000 ₽.</p>
-        <a href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="estimateTask">Оценить задачу</span> ↗</a>
-      </div>
-    </section>
-
-    <section class="process section" id="process" aria-labelledby="process-title">
-      <div class="section-head reveal">
-        <span class="section-head__number">03 / 04</span>
-        <p data-i18n="processLabel">ПРОЦЕСС / БЕЗ ХАОСА</p>
-        <span data-i18n="processHeadNote">ВЫ ВИДИТЕ ПРОГРЕСС</span>
-      </div>
-
-      <div class="process__layout">
-        <div class="process__sticky">
-          <p class="eyebrow reveal" data-i18n="processEyebrow">Понятно, что происходит на каждом этапе</p>
-          <h2 id="process-title" class="reveal" data-i18n-html="processTitle">От сообщения<br><em>до работающего сайта</em></h2>
-          <p class="reveal" data-i18n="processIntro">Без бесконечных согласований и технического тумана. Сначала фиксируем цель, потом последовательно собираем результат.</p>
-          <a class="text-link reveal" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="startDiscussion">Начать обсуждение</span> <span>↗</span></a>
-        </div>
-
-        <div class="process-list">
-          <article class="process-step reveal"><span>01</span><div><h3 data-i18n="stepOneTitle">Разбираемся в задаче</h3><p data-i18n="stepOneCopy">Вы рассказываете о продукте, аудитории и цели. Я уточняю детали, предлагаю формат и составляю оценку.</p></div><b>DISCOVERY</b></article>
-          <article class="process-step reveal"><span>02</span><div><h3 data-i18n="stepTwoTitle">Проектируем структуру</h3><p data-i18n="stepTwoCopy">Определяем страницы, сценарии и содержание. Уже на этом этапе видно, как сайт будет вести пользователя к действию.</p></div><b>UX / CONTENT</b></article>
-          <article class="process-step reveal"><span>03</span><div><h3 data-i18n="stepThreeTitle">Делаем дизайн и разработку</h3><p data-i18n="stepThreeCopy">Собираю визуальную систему и сразу учитываю адаптив, скорость, доступность и будущую поддержку.</p></div><b>DESIGN / CODE</b></article>
-          <article class="process-step reveal"><span>04</span><div><h3 data-i18n="stepFourTitle">Проверяем и запускаем</h3><p data-i18n="stepFourCopy">Тестирую ключевые сценарии, исправляю детали, переношу на хостинг и передаю понятные инструкции.</p></div><b>QA / LAUNCH</b></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="trust section" aria-labelledby="trust-title">
-      <div class="trust__top">
-        <div>
-          <p class="eyebrow reveal" data-i18n="trustEyebrow">Что получает заказчик</p>
-          <h2 id="trust-title" class="reveal" data-i18n-html="trustTitle">Не набор экранов.<br><em>Рабочий инструмент.</em></h2>
-        </div>
-        <p class="reveal" data-i18n="trustIntro">Дизайн должен привлекать внимание, но задача сайта — понятно объяснять ценность, вызывать доверие и помогать человеку сделать следующий шаг.</p>
-      </div>
-      <div class="trust-grid">
-        <article class="reveal"><span>01</span><h3 data-i18n="trustOneTitle">Фокус на цели</h3><p data-i18n="trustOneCopy">Каждый блок отвечает на вопрос клиента и ведёт к заявке, покупке или нужному действию.</p></article>
-        <article class="reveal"><span>02</span><h3 data-i18n="trustTwoTitle">Современный адаптив</h3><p data-i18n="trustTwoCopy">Интерфейс остаётся аккуратным и удобным на телефоне, планшете и большом экране.</p></article>
-        <article class="reveal"><span>03</span><h3 data-i18n="trustThreeTitle">Логика под задачу</h3><p data-i18n="trustThreeCopy">Формы, базы данных, роли, статусы и автоматизация создаются под реальный процесс, а не ради функции.</p></article>
-        <article class="reveal"><span>04</span><h3 data-i18n="trustFourTitle">Поддержка после запуска</h3><p data-i18n="trustFourCopy">Не исчезаю после публикации: можно продолжить развитие сайта и подключить регулярную поддержку.</p></article>
-      </div>
-    </section>
-
-    <section class="contact section" id="contact" aria-labelledby="contact-title">
-      <div class="section-head section-head--contact reveal">
-        <span class="section-head__number">04 / 04</span>
-        <p data-i18n="contactLabel">КОНТАКТ / СТАРТ</p>
-        <span data-i18n="contactHeadNote">ВАША ИДЕЯ → РАБОЧИЙ ПРОДУКТ</span>
-      </div>
-
-      <div class="contact__body">
-        <p class="contact__eyebrow reveal" data-i18n="contactQuestion">Есть задача, но пока непонятен объём?</p>
-        <h2 id="contact-title" class="reveal" data-i18n-html="contactTitle">Напишите.<br><em>Разложим по шагам.</em></h2>
-        <p class="contact__copy reveal" data-i18n="contactCopy">Пришлите ссылку, пример или просто опишите идею своими словами. Я уточню главное и предложу подходящий формат разработки.</p>
-        <div class="contact__actions reveal">
-          <a class="contact__primary magnetic" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span>Telegram</span><b>@INS8988</b><i>↗</i></a>
-          <a class="contact__secondary" href="https://github.com/INSolent77" target="_blank" rel="noreferrer"><span>GitHub</span><b>INSolent77</b><i>↗</i></a>
-          <a class="contact__secondary contact__avito" href="https://www.avito.ru/nizhniy_novgorod/predlozheniya_uslug/sozdanie_saytov_pod_klyuch_8267151504" target="_blank" rel="noreferrer"><span>Avito</span><b>Создание сайтов</b><i>↗</i></a>
-        </div>
-        <div class="contact__prompt reveal"><span>01</span><p data-i18n="contactPrompt">Для быстрой оценки напишите: что нужно сделать, для кого сайт и есть ли примеры, которые нравятся.</p></div>
-      </div>
-
-      <footer class="footer reveal">
-        <span>© <b id="year">2026</b> INS</span>
-        <span data-i18n="footerCopy">ДИЗАЙН + РАЗРАБОТКА С ФОКУСОМ НА РЕЗУЛЬТАТ</span>
-        <a href="#top" data-i18n="backTop">НАВЕРХ ↑</a>
-      </footer>
-    </section>
   </main>
-
-  <a class="mobile-cta" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="mobileCta">Обсудить проект</span><b>↗</b></a>
 
   <script src="script.js"></script>
 </body>
