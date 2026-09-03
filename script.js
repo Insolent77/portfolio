@@ -21,6 +21,8 @@ const translations = {
     alexDescription: 'Цифровая экосистема преподавателя: сайт, тестирование, электронные договоры, расписание, админ-панель и кабинет ученика.',
     gitDescription: 'Интерактивная временная карта, которая превращает историю коммитов и веток в понятный рассказ о развитии проекта.',
     textMateDescription: 'ИИ-расширение для работы с выделенным текстом: исправляет ошибки, переводит, сокращает и переписывает текст в нужном стиле — локально через Ollama или через облачный API.',
+    inProgress: 'Место для нового', futureTitle: 'Здесь может быть ваш проект',
+    futureDescription: 'Если вам нужен понятный сайт, сервис или нестандартный цифровой продукт — обсудим задачу и соберём решение под неё.', futureCta: 'Обсудить проект',
     approachLabel: 'Подход', approachTitle: 'Один специалист.<br><em>Весь путь продукта.</em>',
     approachIntro: 'Вам не нужно координировать нескольких исполнителей. Я погружаюсь в задачу, создаю дизайн, пишу код и остаюсь рядом после запуска.',
     stepOneTitle: 'Понять задачу', stepOneCopy: 'Обсудим цель, пользователей и желаемый результат простыми словами.',
@@ -52,6 +54,8 @@ const translations = {
     alexDescription: 'A digital ecosystem for a teacher: website, testing, e-contracts, schedule, admin panel and student portal.',
     gitDescription: 'An interactive timeline that turns commits and branches into a clear story of how a project evolved.',
     textMateDescription: 'An AI-powered browser extension for selected text: corrects mistakes, translates, shortens and rewrites in the needed tone, using local Ollama models or a cloud API.',
+    inProgress: 'Space for a new project', futureTitle: 'Your project could be here',
+    futureDescription: 'If you need a clear website, service or custom digital product, we can discuss the task and build the right solution around it.', futureCta: 'Discuss a project',
     approachLabel: 'Approach', approachTitle: 'One specialist.<br><em>The entire product journey.</em>',
     approachIntro: 'You do not need to coordinate several contractors. I understand the task, create the design, write the code and stay involved after launch.',
     stepOneTitle: 'Understand the task', stepOneCopy: 'We discuss the goal, users and desired outcome in plain language.',
@@ -322,9 +326,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
 if ('IntersectionObserver' in window && scrollContainer) {
   const navigationObserver = new IntersectionObserver((entries) => {
-    const activeEntry = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    const activeEntry = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
     if (!activeEntry) return;
     navLinks.forEach((link) => {
       link.classList.toggle('is-active', link.getAttribute('href') === `#${activeEntry.target.id}`);
