@@ -42,33 +42,18 @@
           <button class="choice choice--home" type="button" data-background-choice="home" aria-label="Домашний интерьер" title="Домашний интерьер"><i></i></button>
           <button class="choice choice--glow" type="button" data-background-choice="glow" aria-label="Абстрактный свет" title="Абстрактный свет"><i></i></button>
         </div>
-
         <div class="switcher" role="group" aria-labelledby="glass-label">
           <span class="switcher__label" id="glass-label" data-i18n="glassLabel">Стекло</span>
           <button class="choice choice--dark" type="button" data-glass-choice="dark" aria-label="Тёмное стекло" title="Тёмное стекло"><i></i></button>
           <button class="choice choice--milk" type="button" data-glass-choice="milk" aria-label="Молочное стекло" title="Молочное стекло"><i></i></button>
           <button class="choice choice--cocoa" type="button" data-glass-choice="cocoa" aria-label="Коричневое стекло" title="Коричневое стекло"><i></i></button>
         </div>
-
         <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="true" aria-label="Выключить звуки" title="Выключить звуки">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path class="sound-toggle__body" d="M5 9h3.2L12 6v12l-3.8-3H5Z"/>
-            <path class="sound-toggle__waves" d="M15 9.2c.8.7 1.2 1.6 1.2 2.8s-.4 2.1-1.2 2.8M17.4 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"/>
-            <path class="sound-toggle__mute" d="m15.4 9.4 4.2 5.2m0-5.2-4.2 5.2"/>
-          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="sound-toggle__body" d="M5 9h3.2L12 6v12l-3.8-3H5Z"/><path class="sound-toggle__waves" d="M15 9.2c.8.7 1.2 1.6 1.2 2.8s-.4 2.1-1.2 2.8M17.4 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"/><path class="sound-toggle__mute" d="m15.4 9.4 4.2 5.2m0-5.2-4.2 5.2"/></svg>
         </button>
       </div>
-
-      <nav class="nav" aria-label="Основная навигация">
-        <a href="#projects" data-nav-link data-i18n="navProjects">Проекты</a>
-        <a href="#approach" data-nav-link data-i18n="navApproach">Подход</a>
-        <a href="#contacts" data-nav-link data-i18n="navContacts">Контакты</a>
-      </nav>
-
-      <div class="toolbar__end">
-        <span class="availability"><i></i><span data-i18n="availability">Открыт к проектам</span></span>
-        <button class="language" type="button" data-language-toggle aria-label="Switch language"><span data-language-option="ru">RU</span><i>/</i><span data-language-option="en">EN</span></button>
-      </div>
+      <nav class="nav" aria-label="Основная навигация"><a href="#projects" data-nav-link data-i18n="navProjects">Проекты</a><a href="#approach" data-nav-link data-i18n="navApproach">Подход</a><a href="#contacts" data-nav-link data-i18n="navContacts">Контакты</a></nav>
+      <div class="toolbar__end"><span class="availability"><i></i><span data-i18n="availability">Открыт к проектам</span></span><button class="language" type="button" data-language-toggle aria-label="Switch language"><span data-language-option="ru">RU</span><i>/</i><span data-language-option="en">EN</span></button></div>
     </header>
 
     <div class="scroll" id="main-scroll" tabindex="-1">
@@ -78,124 +63,63 @@
           <p class="eyebrow reveal"><span>WEB / DESIGN / CODE</span><i></i><span data-i18n="heroKicker">Полный цикл разработки</span></p>
           <h1 id="hero-title" class="reveal" data-i18n-html="heroTitle">Сайты, в которых<br><em>легко разобраться.</em></h1>
           <p class="hero__lead reveal" data-i18n="heroLead">Создаю спокойные и понятные цифровые продукты — от структуры и дизайна до кода, запуска и поддержки.</p>
-          <div class="hero__actions reveal">
-            <a class="button button--primary" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="heroCta">Обсудить проект</span><i>↗</i></a>
-            <a class="button button--quiet" href="#projects"><span data-i18n="heroWork">Посмотреть работы</span><i>↓</i></a>
-          </div>
-          <div class="hero__facts reveal">
-            <p><span data-i18n="factPlaceLabel">Работаю</span><b data-i18n="factPlace">Удалённо</b></p>
-            <p><span data-i18n="factFocusLabel">Фокус</span><b data-i18n="factFocus">Польза + простота</b></p>
-          </div>
+          <div class="hero__actions reveal"><a class="button button--primary" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="heroCta">Обсудить проект</span><i>↗</i></a><a class="button button--quiet" href="#projects"><span data-i18n="heroWork">Посмотреть работы</span><i>↓</i></a></div>
+          <div class="hero__facts reveal"><p><span data-i18n="factPlaceLabel">Работаю</span><b data-i18n="factPlace">Удалённо</b></p><p><span data-i18n="factFocusLabel">Фокус</span><b data-i18n="factFocus">Польза + простота</b></p></div>
         </div>
-
         <a class="scroll-hint reveal" href="#projects"><span data-i18n="scrollHint">Листайте внутри окна</span><i>↓</i></a>
       </section>
 
       <section class="projects section" id="projects" aria-labelledby="projects-title">
-        <header class="section-head reveal">
-          <p class="section-label"><span>01</span><span data-i18n="projectsLabel">Избранные проекты</span></p>
-          <h2 id="projects-title" data-i18n-html="projectsTitle">Не просто страницы.<br><em>Рабочие системы.</em></h2>
-          <p data-i18n="projectsIntro">В каждом проекте сначала разбираюсь в задаче, а затем соединяю содержание, интерфейс и разработку в одно целое.</p>
-        </header>
-
+        <header class="section-head reveal"><p class="section-label"><span>01</span><span data-i18n="projectsLabel">Избранные проекты</span></p><h2 id="projects-title" data-i18n-html="projectsTitle">Не просто страницы.<br><em>Рабочие системы.</em></h2><p data-i18n="projectsIntro">В каждом проекте сначала разбираюсь в задаче, а затем соединяю содержание, интерфейс и разработку в одно целое.</p></header>
         <div class="project-list">
           <article class="project reveal">
-            <a class="project__cover" href="https://alex-educator.com" target="_blank" rel="noreferrer" aria-label="Открыть Alex Educator">
-              <div class="preview preview--educator" aria-hidden="true">
-                <div class="preview-window">
-                  <div class="preview-window__bar"><i></i><i></i><i></i><span>alex-educator.com</span></div>
-                  <div class="educator-ui"><aside><b>A.</b><i></i><i></i><i></i></aside><div><small>STUDENT SPACE</small><strong>Учёба и управление<br>в одном месте</strong><span></span><span></span><span></span></div></div>
-                </div>
-              </div>
-              <span class="project__arrow">↗</span>
-            </a>
-            <div class="project__copy">
-              <p class="project__meta"><span>01 / EDTECH</span><span data-i18n="fullCycle">Полный цикл</span></p>
-              <h3>Alex Educator</h3>
-              <p data-i18n="alexDescription">Цифровая экосистема преподавателя: сайт, тестирование, электронные договоры, расписание, админ-панель и кабинет ученика.</p>
-              <ul aria-label="Технологии"><li>UX/UI</li><li>JavaScript</li><li>PHP</li><li>MySQL</li></ul>
-            </div>
+            <a class="project__cover" href="https://alex-educator.com" target="_blank" rel="noreferrer" aria-label="Открыть Alex Educator"><div class="preview preview--educator" aria-hidden="true"><div class="preview-window"><div class="preview-window__bar"><i></i><i></i><i></i><span>alex-educator.com</span></div><div class="educator-ui"><aside><b>A.</b><i></i><i></i><i></i></aside><div><small>STUDENT SPACE</small><strong>Учёба и управление<br>в одном месте</strong><span></span><span></span><span></span></div></div></div></div><span class="project__arrow">↗</span></a>
+            <div class="project__copy"><p class="project__meta"><span>01 / EDTECH</span><span data-i18n="fullCycle">Полный цикл</span></p><h3>Alex Educator</h3><p data-i18n="alexDescription">Цифровая экосистема преподавателя: сайт, тестирование, электронные договоры, расписание, админ-панель и кабинет ученика.</p><ul aria-label="Технологии"><li>UX/UI</li><li>JavaScript</li><li>PHP</li><li>MySQL</li></ul></div>
           </article>
 
           <article class="project reveal">
-            <a class="project__cover" href="https://insolent77.github.io/git-time-machine" target="_blank" rel="noreferrer" aria-label="Открыть Git Time Machine">
-              <div class="preview preview--git" aria-hidden="true">
-                <div class="git-ui">
-                  <header><span>GIT TIME MACHINE</span><b>LIVE</b></header>
-                  <div class="git-map"><i></i><i></i><i></i><i></i><i></i><span>main</span><span>feature/ui</span><span>release</span></div>
-                  <footer><span>34 commits</span><span>Explore →</span></footer>
-                </div>
-              </div>
-              <span class="project__arrow">↗</span>
-            </a>
-            <div class="project__copy">
-              <p class="project__meta"><span>02 / DEV TOOL</span><span data-i18n="webApp">Веб-приложение</span></p>
-              <h3>Git Time Machine</h3>
-              <p data-i18n="gitDescription">Интерактивная временная карта, которая превращает историю коммитов и веток в понятный рассказ о развитии проекта.</p>
-              <ul aria-label="Технологии"><li>TypeScript</li><li>Git</li><li>Data UI</li><li>Motion</li></ul>
-            </div>
+            <a class="project__cover" href="https://insolent77.github.io/git-time-machine" target="_blank" rel="noreferrer" aria-label="Открыть Git Time Machine"><div class="preview preview--git" aria-hidden="true"><div class="git-ui"><header><span>GIT TIME MACHINE</span><b>LIVE</b></header><div class="git-map"><i></i><i></i><i></i><i></i><i></i><span>main</span><span>feature/ui</span><span>release</span></div><footer><span>34 commits</span><span>Explore →</span></footer></div></div><span class="project__arrow">↗</span></a>
+            <div class="project__copy"><p class="project__meta"><span>02 / DEV TOOL</span><span data-i18n="webApp">Веб-приложение</span></p><h3>Git Time Machine</h3><p data-i18n="gitDescription">Интерактивная временная карта, которая превращает историю коммитов и веток в понятный рассказ о развитии проекта.</p><ul aria-label="Технологии"><li>TypeScript</li><li>Git</li><li>Data UI</li><li>Motion</li></ul></div>
           </article>
 
           <article class="project reveal">
             <a class="project__cover" href="https://github.com/Insolent77/TextMate" target="_blank" rel="noreferrer" aria-label="Открыть TextMate на GitHub">
-              <div class="preview preview--educator" aria-hidden="true">
-                <div class="preview-window">
-                  <div class="preview-window__bar"><i></i><i></i><i></i><span>TextMate · browser extension</span></div>
-                  <div class="educator-ui"><aside><b>TM</b><i></i><i></i><i></i></aside><div><small>AI TEXT TOOL</small><strong>Выделите текст.<br>TextMate сделает остальное.</strong><span></span><span></span><span></span></div></div>
+              <div class="preview" aria-hidden="true" style="display:grid;place-items:center;background:linear-gradient(135deg,#171713,#26211b);padding:24px;">
+                <div style="width:min(78%,360px);border:1px solid rgba(255,255,255,.14);border-radius:18px;background:#1e1d1a;box-shadow:0 26px 50px rgba(0,0,0,.35);overflow:hidden;transform:rotate(-1.2deg);">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.1);font:600 11px/1 Manrope,Arial,sans-serif;letter-spacing:.08em;color:#f2eadf;"><span>TextMate</span><span style="color:#91ad7a;">● AI ready</span></div>
+                  <div style="padding:14px;display:grid;gap:10px;">
+                    <div style="padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font:500 11px/1.45 Manrope,Arial,sans-serif;color:#cfc4b7;">Мы пошли домой потому что стемнело.</div>
+                    <div style="display:flex;gap:7px;flex-wrap:wrap;"><span style="padding:6px 8px;border-radius:8px;background:#d18a5b;color:white;font:600 9px/1 Manrope,Arial,sans-serif;">Исправить</span><span style="padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.08);color:#eee5da;font:600 9px/1 Manrope,Arial,sans-serif;">Перевод</span><span style="padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.08);color:#eee5da;font:600 9px/1 Manrope,Arial,sans-serif;">Короче</span></div>
+                    <div style="padding:10px 12px;border-radius:10px;background:rgba(145,173,122,.12);border:1px solid rgba(145,173,122,.28);font:500 11px/1.45 Manrope,Arial,sans-serif;color:#e8f0e2;">Мы пошли домой, потому что стемнело.</div>
+                  </div>
                 </div>
               </div>
               <span class="project__arrow">↗</span>
             </a>
-            <div class="project__copy">
-              <p class="project__meta"><span>03 / BROWSER EXTENSION</span><span data-i18n="browserExtension">Расширение</span></p>
-              <h3>TextMate</h3>
-              <p data-i18n="textMateDescription">ИИ-расширение для работы с выделенным текстом: исправляет ошибки, переводит, сокращает и переписывает текст в нужном стиле — локально через Ollama или через облачный API.</p>
-              <ul aria-label="Технологии"><li>JavaScript</li><li>Browser API</li><li>Ollama</li><li>AI API</li></ul>
-            </div>
+            <div class="project__copy"><p class="project__meta"><span>03 / BROWSER EXTENSION</span><span data-i18n="browserExtension">Расширение</span></p><h3>TextMate</h3><p data-i18n="textMateDescription">ИИ-расширение для работы с выделенным текстом: исправляет ошибки, переводит, сокращает и переписывает текст в нужном стиле — локально через Ollama или через облачный API.</p><ul aria-label="Технологии"><li>JavaScript</li><li>Browser API</li><li>Ollama</li><li>AI API</li></ul></div>
+          </article>
+
+          <article class="project project--future reveal">
+            <div class="future-mark" aria-hidden="true"><span>04</span><i>+</i></div>
+            <div class="project__copy"><p class="project__meta"><span>04 / YOUR PROJECT</span><span data-i18n="inProgress">Место для нового</span></p><h3 data-i18n="futureTitle">Здесь может быть ваш проект</h3><p data-i18n="futureDescription">Если вам нужен понятный сайт, сервис или нестандартный цифровой продукт — обсудим задачу и соберём решение под неё.</p><a class="inline-link" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="futureCta">Обсудить проект</span> ↗</a></div>
           </article>
         </div>
       </section>
 
       <section class="approach section" id="approach" aria-labelledby="approach-title">
-        <header class="section-head reveal">
-          <p class="section-label"><span>02</span><span data-i18n="approachLabel">Подход</span></p>
-          <h2 id="approach-title" data-i18n-html="approachTitle">Один специалист.<br><em>Весь путь продукта.</em></h2>
-          <p data-i18n="approachIntro">Вам не нужно координировать нескольких исполнителей. Я погружаюсь в задачу, создаю дизайн, пишу код и остаюсь рядом после запуска.</p>
-        </header>
-
-        <ol class="steps">
-          <li class="reveal"><span>01</span><div><h3 data-i18n="stepOneTitle">Понять задачу</h3><p data-i18n="stepOneCopy">Обсудим цель, пользователей и желаемый результат простыми словами.</p></div><i>DISCOVERY</i></li>
-          <li class="reveal"><span>02</span><div><h3 data-i18n="stepTwoTitle">Собрать решение</h3><p data-i18n="stepTwoCopy">Продумую структуру, интерфейс и техническую основу как единую систему.</p></div><i>DESIGN + CODE</i></li>
-          <li class="reveal"><span>03</span><div><h3 data-i18n="stepThreeTitle">Проверить и запустить</h3><p data-i18n="stepThreeCopy">Тестирую ключевые сценарии, публикую проект и передаю понятные инструкции.</p></div><i>QA + LAUNCH</i></li>
-          <li class="reveal"><span>04</span><div><h3 data-i18n="stepFourTitle">Развивать дальше</h3><p data-i18n="stepFourCopy">Не исчезаю после запуска: проект можно поддерживать и постепенно улучшать.</p></div><i>SUPPORT</i></li>
-        </ol>
-
-        <div class="principles reveal">
-          <p><span>01</span><b data-i18n="principleOne">Понятный язык</b></p>
-          <p><span>02</span><b data-i18n="principleTwo">Адаптив для любого экрана</b></p>
-          <p><span>03</span><b data-i18n="principleThree">Без лишних функций</b></p>
-        </div>
+        <header class="section-head reveal"><p class="section-label"><span>02</span><span data-i18n="approachLabel">Подход</span></p><h2 id="approach-title" data-i18n-html="approachTitle">Один специалист.<br><em>Весь путь продукта.</em></h2><p data-i18n="approachIntro">Вам не нужно координировать нескольких исполнителей. Я погружаюсь в задачу, создаю дизайн, пишу код и остаюсь рядом после запуска.</p></header>
+        <ol class="steps"><li class="reveal"><span>01</span><div><h3 data-i18n="stepOneTitle">Понять задачу</h3><p data-i18n="stepOneCopy">Обсудим цель, пользователей и желаемый результат простыми словами.</p></div><i>DISCOVERY</i></li><li class="reveal"><span>02</span><div><h3 data-i18n="stepTwoTitle">Собрать решение</h3><p data-i18n="stepTwoCopy">Продумую структуру, интерфейс и техническую основу как единую систему.</p></div><i>DESIGN + CODE</i></li><li class="reveal"><span>03</span><div><h3 data-i18n="stepThreeTitle">Проверить и запустить</h3><p data-i18n="stepThreeCopy">Тестирую ключевые сценарии, публикую проект и передаю понятные инструкции.</p></div><i>QA + LAUNCH</i></li><li class="reveal"><span>04</span><div><h3 data-i18n="stepFourTitle">Развивать дальше</h3><p data-i18n="stepFourCopy">Не исчезаю после запуска: проект можно поддерживать и постепенно улучшать.</p></div><i>SUPPORT</i></li></ol>
+        <div class="principles reveal"><p><span>01</span><b data-i18n="principleOne">Понятный язык</b></p><p><span>02</span><b data-i18n="principleTwo">Адаптив для любого экрана</b></p><p><span>03</span><b data-i18n="principleThree">Без лишних функций</b></p></div>
       </section>
 
       <section class="contacts section" id="contacts" aria-labelledby="contacts-title">
         <div class="contacts__glow" aria-hidden="true"></div>
-        <header class="section-head section-head--contacts reveal">
-          <p class="section-label"><span>03</span><span data-i18n="contactsLabel">Контакты</span></p>
-          <h2 id="contacts-title" data-i18n-html="contactsTitle">Расскажите об идее.<br><em>Начнём с разговора.</em></h2>
-          <p data-i18n="contactsIntro">Техническое задание не обязательно. Опишите задачу своими словами — я уточню главное и предложу следующий шаг.</p>
-        </header>
-
-        <div class="contact-list reveal">
-          <a href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span><i>01</i>Telegram</span><b>@INS8988</b><em>↗</em></a>
-          <a href="https://github.com/INSolent77" target="_blank" rel="noreferrer"><span><i>02</i>GitHub</span><b>INSolent77</b><em>↗</em></a>
-          <a href="https://www.avito.ru/nizhniy_novgorod/predlozheniya_uslug/sozdanie_saytov_pod_klyuch_8267151504" target="_blank" rel="noreferrer"><span><i>03</i>Avito</span><b data-i18n="avitoText">Создание сайтов</b><em>↗</em></a>
-        </div>
-
+        <header class="section-head section-head--contacts reveal"><p class="section-label"><span>03</span><span data-i18n="contactsLabel">Контакты</span></p><h2 id="contacts-title" data-i18n-html="contactsTitle">Расскажите об идее.<br><em>Начнём с разговора.</em></h2><p data-i18n="contactsIntro">Техническое задание не обязательно. Опишите задачу своими словами — я уточню главное и предложу следующий шаг.</p></header>
+        <div class="contact-list reveal"><a href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span><i>01</i>Telegram</span><b>@INS8988</b><em>↗</em></a><a href="https://github.com/INSolent77" target="_blank" rel="noreferrer"><span><i>02</i>GitHub</span><b>INSolent77</b><em>↗</em></a><a href="https://www.avito.ru/nizhniy_novgorod/predlozheniya_uslug/sozdanie_saytov_pod_klyuch_8267151504" target="_blank" rel="noreferrer"><span><i>03</i>Avito</span><b data-i18n="avitoText">Создание сайтов</b><em>↗</em></a></div>
         <footer class="footer reveal"><span>© <b data-year>2026</b> INS</span><span data-i18n="footerText">Дизайн и разработка с вниманием к людям</span><a href="#top" data-i18n="backTop">Наверх ↑</a></footer>
       </section>
     </div>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
