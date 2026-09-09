@@ -8,6 +8,10 @@
       textMateResultTwo: 'Локальные и облачные AI-модели',
       gitResultOne: 'Интерактивная визуализация истории Git',
       gitResultTwo: 'Ветки и коммиты в одном сценарии',
+      lomonosovType: 'Мобильное приложение',
+      lomonosovDescription: 'Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.',
+      lomonosovResultOne: 'ДЗ, чаты и расписание в одном месте',
+      lomonosovResultTwo: 'Роли ученика, родителя и преподавателя',
       futureResultOne: 'Сайт / сервис / автоматизация',
       futureResultTwo: 'Решение под конкретную задачу',
       trustTitle: 'Есть задача, но нет ТЗ? Нормально.',
@@ -21,12 +25,49 @@
       textMateResultTwo: 'Local and cloud AI models',
       gitResultOne: 'Interactive Git history visualization',
       gitResultTwo: 'Branches and commits in one flow',
+      lomonosovType: 'Mobile application',
+      lomonosovDescription: 'My Lomonosov is a personal learning app for students, parents and teachers with homework, chats, lesson schedules, reports and learning statistics in one place.',
+      lomonosovResultOne: 'Homework, chats and schedule in one place',
+      lomonosovResultTwo: 'Student, parent and teacher roles',
       futureResultOne: 'Website / service / automation',
       futureResultTwo: 'A solution built around the task',
       trustTitle: 'Have a task but no specification? That’s fine.',
       trustText: 'Describe what you want in your own words — I’ll help turn it into a clear solution.'
     }
   };
+
+  const projectList = document.querySelector('.project-list');
+  if (projectList && !projectList.querySelector('[data-project-lomonosov]')) {
+    const futureCard = [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
+    const lomonosovCard = document.createElement('article');
+    lomonosovCard.className = 'project reveal';
+    lomonosovCard.dataset.projectLomonosov = '';
+    lomonosovCard.innerHTML = `
+      <a class="project__cover" href="https://lk.mylomonosov.ru/" target="_blank" rel="noreferrer" aria-label="Открыть Мой Ломоносов">
+        <div class="preview project-preview project-preview--lomonosov" aria-hidden="true">
+          <div class="project-preview__frame lomonosov-ui">
+            <div class="lomonosov-ui__top"><span>МОЙ</span><b>Ломоносов</b></div>
+            <div class="lomonosov-ui__panel lomonosov-ui__panel--homework"><small>ДЗ</small><i></i><i></i><i></i></div>
+            <div class="lomonosov-ui__panel lomonosov-ui__panel--chat"><small>Чаты</small><i></i><i></i></div>
+            <div class="lomonosov-ui__panel lomonosov-ui__panel--schedule"><small>Расписание</small><i></i><i></i><i></i></div>
+            <div class="rubik" aria-hidden="true">
+              <span class="rubik__piece rubik__piece--1">Л</span><span class="rubik__piece rubik__piece--2">О</span><span class="rubik__piece rubik__piece--3">М</span>
+              <span class="rubik__piece rubik__piece--4">О</span><span class="rubik__piece rubik__piece--5">Н</span><span class="rubik__piece rubik__piece--6">О</span>
+              <span class="rubik__piece rubik__piece--7">С</span><span class="rubik__piece rubik__piece--8">О</span><span class="rubik__piece rubik__piece--9">В</span>
+              <em class="rubik__float rubik__float--1"></em><em class="rubik__float rubik__float--2"></em><em class="rubik__float rubik__float--3"></em>
+            </div>
+          </div>
+        </div><span class="project__arrow">↗</span>
+      </a>
+      <div class="project__copy"><p class="project__meta"><span>04 / EDTECH APP</span><span data-extra-i18n="lomonosovType">Мобильное приложение</span></p><h3>Мой Ломоносов</h3><p data-extra-i18n="lomonosovDescription">Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.</p><div class="project__results"><span data-extra-i18n="lomonosovResultOne">ДЗ, чаты и расписание в одном месте</span><span data-extra-i18n="lomonosovResultTwo">Роли ученика, родителя и преподавателя</span></div><ul aria-label="Технологии"><li>Expo</li><li>React Native</li><li>API</li><li>UX/UI</li></ul></div>`;
+    if (futureCard) {
+      projectList.insertBefore(lomonosovCard, futureCard);
+      const futureMeta = futureCard.querySelector('.project__meta span:first-child');
+      if (futureMeta) futureMeta.textContent = '05 / YOUR PROJECT';
+    } else {
+      projectList.appendChild(lomonosovCard);
+    }
+  }
 
   const updateExtraCopy = () => {
     const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
@@ -66,4 +107,22 @@
   };
   scrollContainer?.addEventListener('scroll', hideHint, { passive: true });
   hideHint();
+
+  const addedProject = document.querySelector('[data-project-lomonosov]');
+  if (addedProject) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      addedProject.classList.add('is-visible');
+    } else if ('IntersectionObserver' in window && scrollContainer) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          obs.unobserve(entry.target);
+        });
+      }, { root: scrollContainer, threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+      observer.observe(addedProject);
+    } else {
+      addedProject.classList.add('is-visible');
+    }
+  }
 })();
