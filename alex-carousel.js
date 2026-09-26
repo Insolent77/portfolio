@@ -1,90 +1,162 @@
 (() => {
   const card = [...document.querySelectorAll('.project')].find((node) => node.querySelector('h3')?.textContent.trim() === 'Alex Educator');
-  if (!card || card.dataset.alexExactReady === 'true') return;
-  card.dataset.alexExactReady = 'true';
-  card.classList.add('project--alex-exact');
+  if (!card || card.dataset.alexScreensReady === 'true') return;
+  card.dataset.alexScreensReady = 'true';
+  card.className = 'project reveal is-visible project--alex-screens';
+
+  const shot = (url) => `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=1400`;
+  const shots = [
+    { label: 'Личный кабинет', src: shot('https://lk.alex-educator.com/') },
+    { label: 'Главная страница', src: shot('https://alex-educator.com/') },
+    { label: 'Админ-панель', src: shot('https://www.admin.alex-educator.com/') }
+  ];
 
   const copy = {
     ru: {
-      type: 'Веб-приложение',
+      badge: 'Веб-приложение',
       subtitle: 'Сайт и админ-панель для преподавателя английского языка',
       description: 'Современный сайт для преподавателя английского языка с описанием услуг, отзывами, формой записи и CEFR тестом. Также разработана удобная админ-панель для управления заявками, уроками и расписанием.',
-      features: [
-        ['Современный и стильный дизайн', 'Адаптивный сайт под все устройства'],
-        ['CEFR тест и форма записи', 'Автоматическая обработка заявок'],
-        ['Админ-панель', 'Управление расписанием, учениками и заявками'],
-        ['Поддержка двух языков', 'Русский и английский интерфейс']
-      ],
-      tech: 'Технологии', project: 'Посмотреть проект', github: 'GitHub'
+      feature1: ['Современный и стильный дизайн', 'Адаптивный сайт под все устройства'],
+      feature2: ['CEFR тест и форма записи', 'Автоматическая обработка заявок'],
+      feature3: ['Админ-панель', 'Управление расписанием, учениками и заявками'],
+      feature4: ['Поддержка двух языков', 'Русский и английский интерфейс'],
+      tech: 'Технологии',
+      project: 'Посмотреть проект',
+      github: 'GitHub'
     },
     en: {
-      type: 'Web application',
+      badge: 'Web application',
       subtitle: 'Website and admin panel for an English tutor',
-      description: 'A modern website for an English tutor with services, testimonials, booking form and CEFR test. It also includes an admin panel for managing requests, lessons and schedules.',
-      features: [
-        ['Modern visual design', 'Responsive layout for every screen'],
-        ['CEFR test and booking form', 'Automated request processing'],
-        ['Admin panel', 'Schedule, students and requests management'],
-        ['Two-language support', 'Russian and English interface']
-      ],
-      tech: 'Technologies', project: 'View project', github: 'GitHub'
+      description: 'A modern English tutor website with services, testimonials, booking form and CEFR test, plus an admin panel for requests, lessons and schedules.',
+      feature1: ['Modern visual design', 'Responsive website for every screen'],
+      feature2: ['CEFR test and booking form', 'Automatic request processing'],
+      feature3: ['Admin panel', 'Schedule, students and requests management'],
+      feature4: ['Two languages', 'Russian and English interface'],
+      tech: 'Technologies',
+      project: 'View project',
+      github: 'GitHub'
     }
   };
 
-  const icon = (n) => [
+  const icons = [
     '<svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/></svg>',
     '<svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM8 3v6M16 3v6M4 10h16"/></svg>',
     '<svg viewBox="0 0 24 24"><path d="M12 3l2 2.5 3.2-.3.8 3.1 2.8 1.6-1.6 2.8.3 3.2-3.1.8L12 21l-2.5-2-3.2.3-.8-3.1-2.8-1.6 1.6-2.8-.3-3.2 3.1-.8L12 3zM9.5 12l1.5 1.5 3.5-4"/></svg>',
     '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>'
-  ][n];
+  ];
 
-  const site = (thumb = false) => `<div class="ae-preview ae-site${thumb ? ' is-thumb' : ''}">
-    <header><div class="brand"><span>AE</span><b>Alex the Educator</b></div><nav><i>Home</i><i>Services</i><i>Testimonials</i><i>Test</i></nav><div class="act"><i>RU</i><b>Apply now</b></div></header>
-    <section class="site-hero"><div class="photo"><img src="https://alex-educator.com/assets/img/alexei.webp" alt="Alex the Educator"></div><div class="intro"><small>ENGLISH TUTOR</small><h4>Perfection is not a goal.<strong>It's a standard</strong></h4><p>I’m Alex and I work as an English teacher. Clear structure, gentle support and measurable progress.</p><div><b>Apply now</b><i>Test</i></div></div></section>
-    <footer><b>Services</b><span>Choose the format that fits your goal and schedule.</span><div><i>General English</i><i>One-on-one Lessons</i><i>Business English</i></div></footer>
-  </div>`;
+  card.innerHTML = `
+    <div class="alex-ref-info">
+      <span class="alex-ref-badge" data-k="badge"></span>
+      <h3>Alex Educator</h3>
+      <p class="alex-ref-subtitle" data-k="subtitle"></p>
+      <p class="alex-ref-description" data-k="description"></p>
 
-  const admin = (thumb = false) => `<div class="ae-preview ae-admin${thumb ? ' is-thumb' : ''}">
-    <aside><div><span>AE</span><b>Alex Educator</b></div><i>Главная</i><i>Ученики</i><i class="on">Расписание</i><i>Заявки</i><i>Уроки</i><i>Материалы</i><i>Статистика</i><i>Настройки</i></aside>
-    <main><div class="top"><h4>Расписание</h4><b>+ Добавить урок</b></div><div class="tabs"><span>Неделя</span><span class="on">Месяц</span><span>Список</span></div><div class="calendar"><div class="calhead"><b>Сентябрь 2026</b><span>Пн Вт Ср Чт Пт Сб Вс</span></div><div class="grid"></div><i class="lesson a">Аня<br>B2</i><i class="lesson b">Группа<br>B1</i><i class="lesson c">Мария<br>A2</i><i class="lesson d">Иван<br>C1</i><i class="lesson e">Разговорный<br>клуб</i></div><div class="create"><b>Создать урок</b><span>Тип занятия · Индивидуальное</span><span>Ученик · Выберите ученика</span><span>Дата и время · 15.09.2026 · 14:00</span><button>Создать урок</button></div></main>
-  </div>`;
+      <div class="alex-ref-features">
+        ${[1,2,3,4].map((n,i)=>`<div>${icons[i]}<p><b data-f="${n}" data-p="0"></b><span data-f="${n}" data-p="1"></span></p></div>`).join('')}
+      </div>
 
-  const student = (thumb = false) => `<div class="ae-preview ae-student${thumb ? ' is-thumb' : ''}">
-    <aside><div><span>AE</span><b>Alex Educator</b></div><i class="on">Мой прогресс</i><i>Расписание</i><i>Домашние задания</i><i>Материалы</i><i>Сообщения</i><i>Настройки</i></aside>
-    <main><div class="hello"><div class="avatar">А</div><p><b>Привет, Анна!</b><span>Продолжаем путь к вашим целям 🚀</span></p><i>Сентябрь 2026</i></div><div class="cards"><section><small>Следующий урок</small><b>Завтра, 14:00</b><span>Business English</span><button>Подготовиться</button></section><section><small>Домашнее задание</small><b>Unit 4: Business English</b><span>Выполнено 2/3</span><div><i></i></div></section></div><div class="stats"><section><small>Прогресс</small><b>B2 → C1</b><div><i></i></div></section><section><small>Сентябрь 2026</small><p>Пн Вт Ср Чт Пт Сб Вс<br>1 2 3 4 5 6 7<br>8 9 10 11 12 13 14<br>15 16 17 18 19 20 21</p></section></div></main>
-  </div>`;
+      <div class="alex-ref-tech">
+        <small data-k="tech"></small>
+        <div><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Responsive</span></div>
+      </div>
 
-  card.innerHTML = `<div class="alex-info"><span class="alex-badge" data-alex-copy="type"></span><h3>Alex Educator</h3><p class="alex-sub" data-alex-copy="subtitle"></p><p class="alex-desc" data-alex-copy="description"></p><div class="alex-features">${[0,1,2,3].map(i=>`<div>${icon(i)}<p><b data-alex-feature-title="${i}"></b><span data-alex-feature-text="${i}"></span></p></div>`).join('')}</div><div class="alex-tech"><small data-alex-copy="tech"></small><div><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Responsive</span></div></div><div class="alex-actions"><a href="https://alex-educator.com" target="_blank" rel="noreferrer"><span>↗</span><b data-alex-copy="project"></b></a><a href="https://github.com/Insolent77/alex-educator" target="_blank" rel="noreferrer" class="secondary"><span>●</span><b data-alex-copy="github"></b></a></div></div><div class="alex-visual"><div class="alex-stage"><button class="alex-slide is-left" data-slide="0" type="button">${student()}</button><button class="alex-slide is-center" data-slide="1" type="button">${site()}</button><button class="alex-slide is-right" data-slide="2" type="button">${admin()}</button></div><div class="alex-nav"><button type="button" data-prev>‹</button><div><button data-dot="0"></button><button class="is-active" data-dot="1"></button><button data-dot="2"></button></div><button type="button" data-next>›</button></div><div class="alex-thumbs"><button data-thumb="1">${site(true)}</button><button data-thumb="2">${admin(true)}</button><button data-thumb="0">${student(true)}</button></div></div>`;
+      <div class="alex-ref-actions">
+        <a class="alex-ref-cta" href="https://alex-educator.com" target="_blank" rel="noreferrer"><span>↗</span><b data-k="project"></b></a>
+        <a class="alex-ref-cta alex-ref-cta--secondary" href="https://github.com/Insolent77/alex-educator" target="_blank" rel="noreferrer"><span>◉</span><b data-k="github"></b></a>
+      </div>
+    </div>
+
+    <div class="alex-ref-gallery">
+      <div class="alex-ref-stage" aria-label="Скриншоты проекта">
+        ${shots.map((s,i)=>`<button type="button" class="alex-ref-slide" data-slide="${i}" aria-label="${s.label}"><img src="${s.src}" alt="${s.label}" loading="lazy"></button>`).join('')}
+      </div>
+
+      <div class="alex-ref-controls">
+        <button type="button" data-prev aria-label="Предыдущий скриншот">‹</button>
+        <div class="alex-ref-dots">${shots.map((_,i)=>`<button type="button" data-dot="${i}" aria-label="Скриншот ${i+1}"></button>`).join('')}</div>
+        <button type="button" data-next aria-label="Следующий скриншот">›</button>
+      </div>
+
+      <div class="alex-ref-thumbs">
+        ${shots.map((s,i)=>`<button type="button" data-thumb="${i}" aria-label="${s.label}"><img src="${s.src}" alt="" loading="lazy"></button>`).join('')}
+      </div>
+    </div>`;
 
   const style = document.createElement('style');
+  style.dataset.alexScreens = 'true';
   style.textContent = `
-  .project--alex-exact{grid-column:1/-1!important;display:grid!important;grid-template-columns:25.5% 74.5%!important;min-height:610px!important;padding:22px!important;border-radius:22px!important;overflow:hidden!important;background:radial-gradient(circle at 68% 35%,rgba(33,76,129,.28),transparent 33%),linear-gradient(145deg,#0c1b2d,#071421 76%)!important;border:1px solid rgba(84,132,194,.25)!important;box-shadow:0 28px 80px rgba(3,10,19,.34)!important;color:#eaf2fc!important}.project--alex-exact:hover{transform:none!important}.project--alex-exact *{box-sizing:border-box}.alex-info{padding:20px 28px 8px 18px;display:flex;flex-direction:column}.alex-badge{align-self:flex-start;padding:9px 15px;border-radius:999px;background:#213a58;border:1px solid rgba(141,178,225,.28);font:600 10px/1 var(--font-body);color:#eaf3ff}.project--alex-exact h3{margin:19px 0 0!important;font:600 34px/1.03 var(--font-body)!important;letter-spacing:-.025em;color:#fff!important}.alex-sub{margin:11px 0 0;color:#bdc9da;font-size:11px;line-height:1.55}.alex-desc{margin:21px 0 0;color:#9dacbf;font-size:9.5px;line-height:1.68}.alex-features{display:grid;gap:11px;margin-top:20px}.alex-features>div{display:grid;grid-template-columns:39px 1fr;gap:11px;align-items:center}.alex-features svg{width:37px;height:37px;padding:9px;border-radius:10px;background:rgba(35,72,118,.48);stroke:#5d9cff;fill:none;stroke-width:1.65;border:1px solid rgba(98,153,239,.20)}.alex-features p{display:grid;gap:2px;margin:0}.alex-features b{font-size:9px;color:#eef5ff}.alex-features span{font-size:7.8px;color:#8496ad}.alex-tech{margin-top:22px;padding-top:16px;border-top:1px solid rgba(255,255,255,.10)}.alex-tech small{display:block;font-size:8px;color:#cad6e5;margin-bottom:9px}.alex-tech div{display:flex;flex-wrap:wrap;gap:7px}.alex-tech span{padding:7px 11px;border-radius:999px;background:rgba(34,55,80,.68);border:1px solid rgba(125,157,196,.20);font-size:7px;color:#dce6f2}.alex-actions{display:flex;gap:10px;margin-top:auto;padding-top:21px}.alex-actions a{min-height:43px;padding:0 16px;border-radius:10px;background:linear-gradient(135deg,#2e7cf0,#163f9c);display:flex;align-items:center;gap:9px;border:1px solid rgba(102,151,245,.34);font-size:8px;color:#fff;text-decoration:none}.alex-actions a.secondary{background:rgba(26,44,64,.82);border-color:rgba(255,255,255,.11)}
-  .alex-visual{position:relative;min-width:0;padding-top:6px}.alex-stage{position:relative;height:405px;perspective:1300px;overflow:visible}.alex-slide{position:absolute;top:26px;width:66%;height:338px;padding:0;border:0;border-radius:15px;overflow:hidden;background:#f7f8fb;box-shadow:0 28px 58px rgba(1,7,16,.44);transition:all .62s cubic-bezier(.22,.61,.36,1);opacity:.58;cursor:pointer}.alex-slide.is-center{left:17%;transform:scale(1);z-index:5;opacity:1}.alex-slide.is-left{left:-12%;transform:scale(.86) rotateY(9deg);transform-origin:right center;z-index:2}.alex-slide.is-right{right:-12%;transform:scale(.86) rotateY(-9deg);transform-origin:left center;z-index:2}.alex-nav{height:46px;display:flex;align-items:center;justify-content:center;gap:17px}.alex-nav>button{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(126,159,199,.26);background:rgba(16,35,57,.88);color:#fff;font-size:20px}.alex-nav>div{display:flex;gap:8px}.alex-nav>div button{width:7px;height:7px;border:0;padding:0;border-radius:50%;background:#2b4563}.alex-nav>div button.is-active{background:#2f7cf7}.alex-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:560px;margin:2px auto 0}.alex-thumbs>button{height:88px;padding:0;border:2px solid transparent;border-radius:9px;overflow:hidden;background:#dce4ee;position:relative}.alex-thumbs>button.is-active{border-color:#2f7af5}
-  .ae-preview{width:100%;height:100%;overflow:hidden;font-family:Arial,Helvetica,sans-serif;color:#111936;text-align:left;background:#f7f4ee}.ae-preview *{box-sizing:border-box}.ae-site{background:radial-gradient(circle at 8% 5%,#d4ddef 0,transparent 42%),#f7f4ee}.ae-site header{height:44px;margin:9px 11px 0;padding:6px 9px;border-radius:20px;background:rgba(255,255,255,.84);display:flex;align-items:center;justify-content:space-between;gap:7px;box-shadow:0 4px 14px rgba(19,25,54,.07)}.ae-site .brand{display:flex;align-items:center;gap:6px}.ae-site .brand span{width:26px;height:26px;border-radius:9px;background:#131936;color:#fff;display:grid;place-items:center;font-size:8px;font-weight:700}.ae-site .brand b{font-size:8px;white-space:nowrap}.ae-site nav{display:flex;gap:8px;font-size:6px;color:#4d5772}.ae-site nav i,.ae-site .act i{font-style:normal}.ae-site .act{display:flex;align-items:center;gap:6px;font-size:6px}.ae-site .act i{padding:5px 7px;border-radius:9px;background:#fff}.ae-site .act b{padding:6px 9px;border-radius:10px;background:#131936;color:#fff}.site-hero{height:198px;padding:14px 16px 9px;display:grid;grid-template-columns:.95fr 1.05fr;gap:12px}.site-hero .photo{border-radius:15px;overflow:hidden;background:#d0daef}.site-hero .photo img{width:100%;height:100%;object-fit:cover;display:block}.site-hero .intro{border-radius:15px;background:rgba(255,255,255,.76);padding:16px 15px;display:flex;flex-direction:column}.site-hero small{font-size:6px;letter-spacing:.14em;color:#65729c}.site-hero h4{margin:8px 0 7px;font-size:17px;line-height:1.02;letter-spacing:-.04em}.site-hero h4 strong{display:block;color:#3c5393}.site-hero p{margin:0;color:#5d667d;font-size:6.5px;line-height:1.5}.site-hero .intro>div{display:flex;gap:6px;margin-top:auto}.site-hero .intro>div b,.site-hero .intro>div i{font-style:normal;font-size:6px;padding:6px 9px;border-radius:9px}.site-hero .intro>div b{background:#6f86c9;color:#fff}.site-hero .intro>div i{background:#fff;border:1px solid #d9dfeb}.ae-site footer{padding:3px 16px 12px;text-align:center}.ae-site footer>b{display:block;font-size:10px}.ae-site footer>span{display:block;font-size:5.7px;color:#778095;margin-top:2px}.ae-site footer>div{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.ae-site footer i{height:42px;padding:7px;border-radius:10px;background:rgba(255,255,255,.78);font-size:6px;font-style:normal;font-weight:700;text-align:left;border:1px solid rgba(60,83,147,.08)}
-  .ae-admin,.ae-student{display:grid;grid-template-columns:25% 75%;background:#f6f8fc;color:#14213f}.ae-admin aside,.ae-student aside{padding:11px 7px;background:#eef2f8;border-right:1px solid #dde4ef;display:flex;flex-direction:column;gap:4px}.ae-admin aside>div,.ae-student aside>div{display:flex;align-items:center;gap:5px;margin-bottom:7px}.ae-admin aside span,.ae-student aside span{width:21px;height:21px;border-radius:6px;background:#173874;color:#fff;display:grid;place-items:center;font-size:6px}.ae-admin aside b,.ae-student aside b{font-size:6px}.ae-admin aside>i,.ae-student aside>i{font-style:normal;font-size:5.5px;padding:5px 6px;border-radius:6px;color:#64728a}.ae-admin aside>i.on,.ae-student aside>i.on{background:#173874;color:#fff}.ae-admin main,.ae-student main{padding:11px 12px}.ae-admin .top{display:flex;justify-content:space-between;align-items:center}.ae-admin .top h4{margin:0;font-size:12px}.ae-admin .top b{font-size:5.5px;background:#173874;color:#fff;padding:6px 8px;border-radius:6px}.ae-admin .tabs{display:flex;justify-content:flex-end;gap:3px;margin:8px 0 5px}.ae-admin .tabs span{font-size:5px;padding:4px 7px;border-radius:5px;background:#eef2f7}.ae-admin .tabs .on{background:#e3e9f4;color:#173874;font-weight:700}.calendar{height:172px;border:1px solid #dce4ef;border-radius:9px;background:#fff;position:relative;overflow:hidden}.calhead{height:34px;padding:7px 8px;display:flex;flex-direction:column;gap:5px;border-bottom:1px solid #e4e9f1}.calhead b{font-size:7px}.calhead span{font-size:4.6px;color:#7b879b;word-spacing:9px}.calendar .grid{position:absolute;inset:34px 0 0;background-image:linear-gradient(#edf1f6 1px,transparent 1px),linear-gradient(90deg,#edf1f6 1px,transparent 1px);background-size:100% 25%,14.285% 100%}.lesson{position:absolute;font-style:normal;font-size:4.7px;line-height:1.35;padding:6px 5px;border-radius:6px}.lesson.a{left:19%;top:54px;background:#b9d8ff}.lesson.b{left:43%;top:67px;background:#bfeccc}.lesson.c{left:13%;top:116px;background:#ffe5a8}.lesson.d{left:68%;top:95px;background:#f7c9d5}.lesson.e{left:47%;top:128px;background:#d7c9ff}.create{margin-top:7px;border-radius:9px;background:#fff;border:1px solid #e1e7ef;padding:7px;display:grid;grid-template-columns:1fr 1fr;gap:4px}.create b{grid-column:1/-1;font-size:7px}.create span{font-size:4.6px;padding:5px;border:1px solid #e5eaf1;border-radius:5px;color:#6b7890}.create button{grid-column:1/-1;border:0;border-radius:6px;background:#173874;color:#fff;font-size:5px;padding:6px}.ae-student{grid-template-columns:24% 76%}.ae-student .hello{height:48px;border-radius:10px;background:#fff;display:flex;align-items:center;padding:8px;gap:7px}.avatar{width:28px;height:28px;border-radius:50%;background:#d8e4f5;display:grid;place-items:center;font-size:8px;font-weight:700}.hello p{display:grid;margin:0;gap:2px;flex:1}.hello p b{font-size:8px}.hello p span{font-size:5.5px;color:#7a879b}.hello>i{font-style:normal;font-size:5px;color:#66758e}.cards,.stats{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}.cards section,.stats section{background:#fff;border:1px solid #e2e7ee;border-radius:10px;padding:8px}.cards small,.stats small{font-size:5px;color:#7a879b}.cards b,.stats b{display:block;font-size:8px;margin-top:4px}.cards span{display:block;font-size:5.5px;color:#66758e;margin-top:3px}.cards button{margin-top:7px;border:0;background:#173874;color:#fff;border-radius:6px;font-size:5px;padding:5px 7px}.cards section>div,.stats section>div{height:5px;border-radius:999px;background:#e7edf3;margin-top:8px;overflow:hidden}.cards section>div i,.stats section>div i{display:block;width:68%;height:100%;background:#64b989}.stats p{font-size:4.9px;line-height:1.8;color:#68758b;margin:5px 0 0}.alex-thumbs .ae-preview{width:420px;height:260px;transform:scale(.30);transform-origin:top left}
-  @media(max-width:900px){.project--alex-exact{grid-template-columns:1fr!important}.alex-info{padding-right:18px}.alex-stage{height:335px}.alex-slide{height:285px;width:78%}.alex-slide.is-center{left:11%}.alex-slide.is-left{left:-38%}.alex-slide.is-right{right:-38%}}@media(max-width:560px){.project--alex-exact{padding:16px!important;min-height:0!important}.project--alex-exact h3{font-size:28px!important}.alex-stage{height:238px}.alex-slide{width:100%;height:220px;top:4px;left:0!important;right:auto!important;transform:none!important;opacity:0}.alex-slide.is-center{opacity:1}.alex-thumbs>button{height:58px}.alex-thumbs .ae-preview{transform:scale(.21)}}`;
+    .project--alex-screens{grid-column:1/-1!important;display:grid!important;grid-template-columns:26% 74%!important;min-height:620px!important;padding:22px!important;overflow:hidden!important;border-radius:24px!important;background:radial-gradient(circle at 72% 40%,rgba(25,80,148,.22),transparent 34%),linear-gradient(145deg,#0d2036 0%,#081827 55%,#071420 100%)!important;border:1px solid rgba(72,132,205,.28)!important;box-shadow:0 28px 85px rgba(1,8,18,.36)!important;color:#f2f7ff!important;transform:none!important}
+    .project--alex-screens:hover{transform:none!important}.project--alex-screens *{box-sizing:border-box}
+    .alex-ref-info{padding:22px 28px 6px 18px;display:flex;flex-direction:column;min-width:0}
+    .alex-ref-badge{align-self:flex-start;padding:9px 15px;border-radius:999px;background:linear-gradient(180deg,#263f60,#1d3552);border:1px solid rgba(142,181,230,.28);font:600 10px/1 var(--font-body);color:#eef5ff}
+    .project--alex-screens h3{margin:18px 0 0!important;font:600 34px/1.05 var(--font-body)!important;letter-spacing:-.03em!important;color:#fff!important}
+    .alex-ref-subtitle{margin:11px 0 0!important;color:#c2d0e0!important;font-size:11px!important;line-height:1.55!important}
+    .alex-ref-description{margin:23px 0 0!important;color:#9eafc3!important;font-size:9.6px!important;line-height:1.72!important}
+    .alex-ref-features{display:grid;gap:12px;margin-top:22px}
+    .alex-ref-features>div{display:grid;grid-template-columns:39px minmax(0,1fr);gap:11px;align-items:center}
+    .alex-ref-features svg{width:37px;height:37px;padding:9px;border-radius:10px;background:rgba(34,75,126,.48);stroke:#66a3ff;fill:none;stroke-width:1.65;border:1px solid rgba(103,158,241,.2)}
+    .alex-ref-features p{display:grid;gap:2px;margin:0!important}.alex-ref-features b{font-size:9px;color:#f5f8fd}.alex-ref-features span{font-size:7.8px;color:#8497af}
+    .alex-ref-tech{margin-top:23px;padding-top:17px;border-top:1px solid rgba(255,255,255,.1)}
+    .alex-ref-tech small{display:block;margin-bottom:9px;font-size:8px;color:#d6e0ec}.alex-ref-tech div{display:flex;flex-wrap:wrap;gap:7px}
+    .alex-ref-tech span{padding:7px 11px;border-radius:999px;background:rgba(33,54,79,.68);border:1px solid rgba(125,157,196,.2);font-size:7px;color:#dfe8f3}
+    .alex-ref-actions{display:flex;gap:10px;margin-top:auto;padding-top:22px;flex-wrap:wrap}
+    .alex-ref-cta{width:max-content;min-height:43px;padding:0 19px;border-radius:10px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#3382f4,#17469f);border:1px solid rgba(107,159,246,.35);box-shadow:0 12px 28px rgba(24,92,197,.22);font-size:8px;color:#fff;text-decoration:none}
+    .alex-ref-cta--secondary{background:rgba(25,44,65,.88);box-shadow:none;border-color:rgba(255,255,255,.12)}
+
+    .alex-ref-gallery{position:relative;min-width:0;padding-top:6px}
+    .alex-ref-stage{position:relative;height:405px;perspective:1250px;overflow:visible}
+    .alex-ref-slide{position:absolute;top:26px;width:66%;height:338px;padding:0;border:0;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 30px 60px rgba(1,7,16,.46);transition:left .55s cubic-bezier(.22,.61,.36,1),right .55s cubic-bezier(.22,.61,.36,1),transform .55s cubic-bezier(.22,.61,.36,1),opacity .4s ease;cursor:pointer;opacity:.62}
+    .alex-ref-slide img{display:block;width:100%;height:100%;object-fit:cover;background:#f8f8fa}
+    .alex-ref-slide.is-center{left:17%;right:auto;z-index:5;opacity:1;transform:scale(1)}
+    .alex-ref-slide.is-left{left:-12%;right:auto;z-index:2;transform:scale(.86) rotateY(9deg);transform-origin:right center}
+    .alex-ref-slide.is-right{right:-12%;left:auto;z-index:2;transform:scale(.86) rotateY(-9deg);transform-origin:left center}
+
+    .alex-ref-controls{height:48px;display:flex;align-items:center;justify-content:center;gap:17px}
+    .alex-ref-controls>button{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(126,159,199,.26);background:rgba(17,37,60,.9);color:#fff;font-size:20px}
+    .alex-ref-dots{display:flex;gap:8px}.alex-ref-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#2c4766}.alex-ref-dots button.is-active{background:#2f7df8}
+    .alex-ref-thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:570px;margin:2px auto 0}
+    .alex-ref-thumbs button{height:90px;padding:0;border:2px solid transparent;border-radius:9px;overflow:hidden;background:#dfe6ef;box-shadow:0 8px 20px rgba(0,0,0,.14)}
+    .alex-ref-thumbs button.is-active{border-color:#2f7df8}.alex-ref-thumbs img{display:block;width:100%;height:100%;object-fit:cover;background:#fff}
+
+    @media(max-width:960px){.project--alex-screens{grid-template-columns:1fr!important;padding:18px!important}.alex-ref-info{padding:14px 10px 26px}.alex-ref-actions{margin-top:24px;padding-top:0}.alex-ref-stage{height:355px}.alex-ref-slide{height:300px;width:76%}.alex-ref-slide.is-center{left:12%}.alex-ref-slide.is-left{left:-42%}.alex-ref-slide.is-right{right:-42%}}
+    @media(max-width:560px){.project--alex-screens{padding:14px!important;border-radius:18px!important}.alex-ref-info{padding:12px 6px 24px}.project--alex-screens h3{font-size:30px!important}.alex-ref-stage{height:250px}.alex-ref-slide{top:5px;width:100%;height:230px;left:0!important;right:auto!important;transform:none!important;opacity:0}.alex-ref-slide.is-center{opacity:1;z-index:5}.alex-ref-thumbs{gap:6px}.alex-ref-thumbs button{height:58px}}
+  `;
   document.head.appendChild(style);
 
-  const langCopy = () => {
+  const slides = [...card.querySelectorAll('[data-slide]')];
+  const dots = [...card.querySelectorAll('[data-dot]')];
+  const thumbs = [...card.querySelectorAll('[data-thumb]')];
+  let current = 1;
+
+  const render = () => {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('is-left','is-center','is-right');
+      const pos = (i - current + slides.length) % slides.length;
+      slide.classList.add(pos === 0 ? 'is-center' : pos === 1 ? 'is-right' : 'is-left');
+    });
+    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+    thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === current));
+  };
+
+  const go = (index) => { current = (index + slides.length) % slides.length; render(); };
+  card.querySelector('[data-prev]').addEventListener('click', () => go(current - 1));
+  card.querySelector('[data-next]').addEventListener('click', () => go(current + 1));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => go(i)));
+  thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => go(i)));
+  slides.forEach((slide, i) => slide.addEventListener('click', () => go(i)));
+
+  const applyCopy = () => {
     const t = copy[document.documentElement.lang === 'en' ? 'en' : 'ru'];
-    card.querySelectorAll('[data-alex-copy]').forEach(el => el.textContent = t[el.dataset.alexCopy]);
-    t.features.forEach((f, i) => {
-      card.querySelector(`[data-alex-feature-title="${i}"]`).textContent = f[0];
-      card.querySelector(`[data-alex-feature-text="${i}"]`).textContent = f[1];
+    card.querySelectorAll('[data-k]').forEach((node) => node.textContent = t[node.dataset.k]);
+    [1,2,3,4].forEach((n) => {
+      const pair = t['feature' + n];
+      card.querySelector(`[data-f="${n}"][data-p="0"]`).textContent = pair[0];
+      card.querySelector(`[data-f="${n}"][data-p="1"]`).textContent = pair[1];
     });
   };
-  langCopy();
-  new MutationObserver(langCopy).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
-  const slides = [...card.querySelectorAll('[data-slide]')], dots = [...card.querySelectorAll('[data-dot]')], thumbs = [...card.querySelectorAll('[data-thumb]')];
-  let center = 1, timer;
-  const render = () => {
-    slides.forEach((s, i) => { s.classList.remove('is-left','is-center','is-right'); const r = (i-center+3)%3; s.classList.add(r===0?'is-center':r===1?'is-right':'is-left'); });
-    dots.forEach((d,i)=>d.classList.toggle('is-active',i===center));
-    thumbs.forEach(t=>t.classList.toggle('is-active',Number(t.dataset.thumb)===center));
-  };
-  const stop = () => clearInterval(timer);
-  const start = () => { stop(); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(()=>go(center+1),6000); };
-  const go = i => { center=(i+3)%3; render(); start(); };
-  card.querySelector('[data-prev]').onclick=()=>go(center-1); card.querySelector('[data-next]').onclick=()=>go(center+1); dots.forEach((d,i)=>d.onclick=()=>go(i)); thumbs.forEach(t=>t.onclick=()=>go(Number(t.dataset.thumb))); slides.forEach((s,i)=>s.onclick=()=>go(i)); card.addEventListener('pointerenter',stop); card.addEventListener('pointerleave',start); render(); start();
+  applyCopy();
+  new MutationObserver(applyCopy).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  render();
 })();
