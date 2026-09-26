@@ -86,6 +86,37 @@
 .project:hover .rubik { animation:rubik-settle 900ms var(--ease) both; }
 @keyframes rubik-settle { 0% { transform:translate(-50%,-50%) rotate(-8deg) scale(.98); } 52% { transform:translate(-50%,-50%) rotate(1deg) scale(1.035); } 100% { transform:translate(-50%,-50%) rotate(0) scale(1); } }
 
+.project-preview--auto {
+  background:
+    radial-gradient(circle at 78% 35%,rgba(244,183,24,.12),transparent 30%),
+    linear-gradient(145deg,#11171b,#06090b 70%);
+}
+.auto-ui { background:#080c0f; color:#f7f8f8; }
+.auto-ui::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.16),transparent 52%,rgba(244,183,24,.05)); pointer-events:none; }
+.auto-ui__top { position:absolute; left:0; right:0; top:0; height:34px; display:flex; align-items:center; gap:13px; padding:0 12px; border-bottom:1px solid rgba(255,255,255,.07); background:rgba(5,8,10,.88); z-index:4; }
+.auto-ui__logo { margin-right:auto; font:700 6px/1 var(--font-body); letter-spacing:.04em; }
+.auto-ui__logo b { color:#f4b718; }
+.auto-ui__top > i { width:22px; height:3px; border-radius:4px; background:rgba(255,255,255,.20); }
+.auto-ui__copy { position:absolute; z-index:3; left:16px; top:55px; width:49%; }
+.auto-ui__copy small { display:block; color:#cfd3d5; font:600 5px/1 var(--font-body); letter-spacing:.12em; }
+.auto-ui__copy strong { display:block; margin-top:7px; font:700 14px/1.02 var(--font-body); letter-spacing:-.035em; }
+.auto-ui__copy .auto-ui__accent { margin-top:2px; color:#f4b718; }
+.auto-ui__copy p { width:82%; height:4px; margin:8px 0 0; border-radius:4px; background:rgba(255,255,255,.18); }
+.auto-ui__copy p + p { width:62%; margin-top:5px; }
+.auto-ui__garage { position:absolute; z-index:2; right:0; top:34px; width:58%; bottom:40px; overflow:hidden; background:linear-gradient(145deg,#1b2023,#0c1013); }
+.auto-ui__garage::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 2px,transparent 2px 30px),linear-gradient(180deg,rgba(255,255,255,.05),transparent 30%); }
+.auto-ui__lights { position:absolute; left:12%; right:10%; top:13px; height:8px; box-shadow:0 0 20px rgba(255,255,255,.65); background:linear-gradient(90deg,rgba(255,255,255,.15),#fff,rgba(255,255,255,.15)); opacity:.75; }
+.auto-ui__car { position:absolute; bottom:24px; width:92px; height:34px; border-radius:22px 30px 8px 8px; background:linear-gradient(145deg,#0b0d0f,#2b3034); border:1px solid rgba(255,255,255,.16); box-shadow:0 8px 12px rgba(0,0,0,.35); }
+.auto-ui__car::before { content:''; position:absolute; left:22px; top:-14px; width:49px; height:18px; border-radius:24px 24px 4px 4px; background:linear-gradient(145deg,#11161a,#323a40); border:1px solid rgba(255,255,255,.14); transform:skewX(-13deg); }
+.auto-ui__car::after { content:''; position:absolute; left:13px; bottom:-6px; width:13px; height:13px; border-radius:50%; background:#090b0c; box-shadow:55px 0 0 #090b0c; }
+.auto-ui__car--one { left:8%; }
+.auto-ui__car--two { right:2%; width:78px; background:linear-gradient(145deg,#b7b9b8,#555b5f); }
+.auto-ui__services { position:absolute; z-index:4; left:0; right:0; bottom:0; height:40px; display:grid; grid-template-columns:repeat(6,1fr); border-top:1px solid rgba(255,255,255,.08); background:#080c0f; }
+.auto-ui__services i { border-right:1px solid rgba(255,255,255,.07); position:relative; }
+.auto-ui__services i::before { content:''; position:absolute; left:9px; top:10px; width:14px; height:14px; border:1px solid #f4b718; border-radius:4px; opacity:.8; }
+.auto-ui__services i:last-child { border:0; }
+.project:hover .auto-ui__garage { filter:brightness(1.08); }
+
 .project-preview--future { background: linear-gradient(145deg,color-mix(in srgb,var(--glass-soft) 55%,transparent),color-mix(in srgb,var(--accent) 11%,transparent)); }
 .future-ui { display:grid; align-content:center; justify-items:center; gap:9px; padding:18px; background: color-mix(in srgb,var(--glass-strong) 45%,transparent); }
 .future-ui__label { position:absolute; top:14px; left:16px; color:var(--glass-muted); font-size:6px; font-weight:600; letter-spacing:.12em; }
@@ -132,4 +163,8 @@
   .lomonosov-ui__panel--schedule { right:10px; width:80px; }
   .lomonosov-ui__panel--chat { left:18px; width:70px; }
   .rubik { width:92px; height:92px; }
+  .auto-ui__copy { left:12px; top:50px; }
+  .auto-ui__copy strong { font-size:12px; }
+  .auto-ui__car { transform:scale(.9); transform-origin:bottom left; }
+  .auto-ui__car--two { transform-origin:bottom right; }
 }
