@@ -1,161 +1,89 @@
 (() => {
-  const card = [...document.querySelectorAll('.project')].find((node) => node.querySelector('h3')?.textContent.trim() === 'Alex Educator');
-  if (!card || card.dataset.showcaseReady === 'true') return;
-  card.dataset.showcaseReady = 'true';
-  card.classList.add('project--alex-showcase');
-
-  const copy = {
-    ru: {
-      type: 'Веб-приложение',
-      subtitle: 'Сайт и админ-панель для преподавателя английского языка',
-      description: 'Современный сайт для преподавателя английского языка с описанием услуг, отзывами, формой записи и CEFR тестом. Также разработана удобная админ-панель для управления заявками, уроками и расписанием.',
-      features: [
-        ['Современный и стильный дизайн', 'Адаптивный сайт под все устройства'],
-        ['CEFR тест и форма записи', 'Автоматическая обработка заявок'],
-        ['Админ-панель', 'Управление расписанием, учениками и заявками'],
-        ['Поддержка двух языков', 'Русский и английский интерфейс']
-      ],
-      tech: 'Технологии',
-      project: 'Посмотреть проект',
-      github: 'GitHub'
-    },
-    en: {
-      type: 'Web application',
-      subtitle: 'Website and admin panel for an English tutor',
-      description: 'A modern website for an English tutor with services, testimonials, booking form and CEFR test. It also includes an admin panel for managing requests, lessons and schedules.',
-      features: [
-        ['Modern visual design', 'Responsive layout for every screen'],
-        ['CEFR test and booking form', 'Automated request processing'],
-        ['Admin panel', 'Schedule, students and requests management'],
-        ['Two-language support', 'Russian and English interface']
-      ],
-      tech: 'Technologies',
-      project: 'View project',
-      github: 'GitHub'
-    }
-  };
-
-  const iconSvg = (n) => {
-    const icons = [
-      '<svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM8 20h8M12 16v4"/></svg>',
-      '<svg viewBox="0 0 24 24"><path d="M4 6h16v14H4zM8 3v6M16 3v6M4 10h16"/></svg>',
-      '<svg viewBox="0 0 24 24"><path d="M12 3l2 2.5 3.2-.3.8 3.1 2.8 1.6-1.6 2.8.3 3.2-3.1.8L12 21l-2.5-2-3.2.3-.8-3.1-2.8-1.6 1.6-2.8-.3-3.2 3.1-.8L12 3zM9.5 12l1.5 1.5 3.5-4"/></svg>',
-      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>'
-    ];
-    return icons[n] || icons[0];
-  };
-
-  const slideSite = `
-    <div class="alex-screen alex-screen--site">
-      <div class="alex-site__nav"><b><span>AE</span> Alex Educator</b><i>Главная</i><i>Обо мне</i><i>Услуги</i><i>Отзывы</i><i>Контакты</i><em>RU⌄</em><strong>Записаться</strong></div>
-      <div class="alex-site__hero">
-        <div class="alex-site__copy"><small>ИНДИВИДУАЛЬНЫЙ АНГЛИЙСКИЙ</small><h4>Английский<br>как навык<br>для <u>реальной жизни</u></h4><p></p><p></p><span>Записаться на консультацию</span></div>
-        <div class="alex-site__photo"><i class="head"></i><i class="body"></i><b>5+<small>лет опыта</small></b></div>
-      </div>
-      <div class="alex-site__services"><article><i>▣</i><b>Индивидуальные занятия</b><p></p><p></p><strong>от 2 500 ₽</strong></article><article><i>◉</i><b>Мини-группа</b><p></p><p></p><strong>от 1 200 ₽</strong></article><article><i>▤</i><b>Английский для работы</b><p></p><p></p><strong>от 2 500 ₽</strong></article></div>
-    </div>`;
-
-  const slideAdmin = `
-    <div class="alex-screen alex-screen--admin">
-      <div class="alex-admin__sidebar"><b><span>AE</span> Alex Educator</b><i>Главная</i><i>Ученики</i><i class="active">Расписание</i><i>Заявки</i><i>Уроки</i><i>Материалы</i><i>Статистика</i></div>
-      <div class="alex-admin__main"><header><small>РАСПИСАНИЕ</small><h4>Расписание</h4></header><div class="alex-admin__calendar"><div class="days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div><div class="grid">${'<i></i>'.repeat(35)}</div><b class="lesson l1">Аня<br>B2</b><b class="lesson l2">Группа<br>B1</b><b class="lesson l3">Мария<br>A2</b><b class="lesson l4">Иван<br>C1</b><b class="lesson l5">Разговорный<br>клуб</b></div><div class="alex-admin__form"><small>Создать урок</small><p></p><p></p><p></p><button>Создать урок</button></div></div>
-    </div>`;
-
-  const slideStudent = `
-    <div class="alex-screen alex-screen--student">
-      <div class="alex-student__top"><b><span>AE</span> Alex Educator</b><i>Мой прогресс</i><i>Расписание</i><i>Домашние задания</i></div>
-      <div class="alex-student__welcome"><small>ЛИЧНЫЙ КАБИНЕТ</small><h4>Привет, Анна!</h4><p>Продолжаем путь к вашим целям 🚀</p></div>
-      <div class="alex-student__cards"><article><small>Следующий урок</small><b>Завтра, 14:00</b><p></p><button>Подготовиться</button></article><article><small>Домашнее задание</small><b>Unit 4: Business English</b><div><i></i></div><span>2/3</span></article><article><small>Сентябрь 2026</small><div class="mini-cal">${'<i></i>'.repeat(28)}</div></article></div>
-    </div>`;
-
-  card.innerHTML = `
-    <div class="alex-showcase__info">
-      <span class="alex-showcase__badge" data-alex-copy="type"></span>
-      <h3>Alex Educator</h3>
-      <p class="alex-showcase__subtitle" data-alex-copy="subtitle"></p>
-      <p class="alex-showcase__description" data-alex-copy="description"></p>
-      <div class="alex-showcase__features">
-        ${[0,1,2,3].map((i)=>`<div>${iconSvg(i)}<p><b data-alex-feature-title="${i}"></b><span data-alex-feature-text="${i}"></span></p></div>`).join('')}
-      </div>
-      <div class="alex-showcase__tech"><small data-alex-copy="tech"></small><div><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Responsive</span></div></div>
-      <div class="alex-showcase__actions"><a href="https://alex-educator.com" target="_blank" rel="noreferrer"><span>↗</span><b data-alex-copy="project"></b></a><a href="https://github.com/Insolent77/alex-educator" target="_blank" rel="noreferrer" class="secondary"><span>◉</span><b data-alex-copy="github"></b></a></div>
-    </div>
-    <div class="alex-showcase__visual" data-alex-showcase>
-      <div class="alex-showcase__stage">
-        <div class="alex-showcase__slide is-left" data-slide="0">${slideStudent}</div>
-        <div class="alex-showcase__slide is-center" data-slide="1">${slideSite}</div>
-        <div class="alex-showcase__slide is-right" data-slide="2">${slideAdmin}</div>
-      </div>
-      <div class="alex-showcase__nav"><button type="button" data-prev aria-label="Предыдущий слайд">‹</button><div class="alex-showcase__dots"><button class="is-active" data-dot="0"></button><button data-dot="1"></button><button data-dot="2"></button></div><button type="button" data-next aria-label="Следующий слайд">›</button></div>
-      <div class="alex-showcase__thumbs"><button data-thumb="0">${slideSite}</button><button data-thumb="1">${slideAdmin}</button><button data-thumb="2">${slideStudent}</button></div>
-    </div>`;
-
   const style = document.createElement('style');
-  style.id = 'alex-showcase-style';
+  style.id = 'alex-showcase-style-v2';
   style.textContent = `
-    .project--alex-showcase{grid-column:1/-1!important;display:grid!important;grid-template-columns:31% 69%!important;min-height:620px!important;padding:26px!important;border-radius:24px!important;overflow:hidden!important;background:linear-gradient(145deg,#111d2c,#0a1522 72%)!important;border:1px solid rgba(112,146,190,.18)!important;box-shadow:0 28px 80px rgba(5,12,22,.28)!important;color:#e9f1fb!important}
-    .project--alex-showcase .alex-showcase__info{padding:20px 20px 12px 10px;display:flex;flex-direction:column;min-width:0}
-    .alex-showcase__badge{align-self:flex-start;padding:8px 14px;border-radius:999px;background:linear-gradient(180deg,#314b70,#203955);border:1px solid rgba(145,179,224,.24);font:600 9px/1 var(--font-body);color:#e9f2ff}
-    .project--alex-showcase h3{margin:18px 0 0;font:400 34px/1.05 var(--font-display);color:#fff}
-    .alex-showcase__subtitle{margin:12px 0 0;color:#b7c4d6;font-size:11px;line-height:1.55;max-width:280px}
-    .alex-showcase__description{margin:22px 0 0;color:#99a9bd;font-size:10px;line-height:1.6;max-width:300px}
-    .alex-showcase__features{display:grid;gap:12px;margin-top:22px}.alex-showcase__features>div{display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:center}.alex-showcase__features svg{width:34px;height:34px;padding:8px;border-radius:10px;background:rgba(44,80,125,.34);stroke:#6ea3ff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;border:1px solid rgba(112,163,255,.16)}.alex-showcase__features p{display:grid;gap:2px;margin:0}.alex-showcase__features b{font-size:9px;color:#e9f1fb}.alex-showcase__features span{font-size:8px;color:#8394aa;line-height:1.4}
-    .alex-showcase__tech{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09)}.alex-showcase__tech small{display:block;color:#dce6f2;font-size:8px;margin-bottom:10px}.alex-showcase__tech div{display:flex;flex-wrap:wrap;gap:7px}.alex-showcase__tech span{padding:7px 11px;border-radius:999px;background:rgba(37,59,84,.52);border:1px solid rgba(125,157,196,.16);font-size:7px;color:#c7d3e2}
-    .alex-showcase__actions{display:flex;gap:10px;margin-top:auto;padding-top:24px}.alex-showcase__actions a{min-height:42px;padding:0 18px;border-radius:10px;background:linear-gradient(135deg,#3277e6,#173f9a);display:flex;align-items:center;gap:9px;border:1px solid rgba(102,151,245,.32);font-size:8px;color:#fff}.alex-showcase__actions a.secondary{background:rgba(30,47,67,.72);border-color:rgba(255,255,255,.10)}.alex-showcase__actions b{font-weight:600}.alex-showcase__actions span{font-size:14px}
-    .alex-showcase__visual{position:relative;min-width:0;padding:12px 0 0}.alex-showcase__stage{position:relative;height:400px;perspective:1100px;overflow:visible}.alex-showcase__slide{position:absolute;top:26px;width:66%;height:330px;border-radius:14px;overflow:hidden;background:#f7f8fb;border:1px solid rgba(255,255,255,.15);box-shadow:0 30px 55px rgba(2,8,18,.35);transition:all .65s cubic-bezier(.22,.61,.36,1);opacity:.58;pointer-events:none}.alex-showcase__slide.is-center{left:17%;transform:translateX(0) scale(1);z-index:5;opacity:1;pointer-events:auto}.alex-showcase__slide.is-left{left:-12%;transform:scale(.86) rotateY(10deg);transform-origin:right center;z-index:2}.alex-showcase__slide.is-right{right:-12%;transform:scale(.86) rotateY(-10deg);transform-origin:left center;z-index:2}
-    .alex-screen{height:100%;width:100%;color:#10204f;font-family:var(--font-body);background:linear-gradient(145deg,#fbf8f2,#edf3ff)}
-    .alex-site__nav{height:42px;padding:0 18px;display:flex;align-items:center;gap:12px;font-size:4.5px}.alex-site__nav b{display:flex;align-items:center;gap:5px;margin-right:auto}.alex-site__nav b span{width:19px;height:19px;border-radius:6px;background:#10204f;color:#fff;display:grid;place-items:center}.alex-site__nav i{font-style:normal;color:#5d6780}.alex-site__nav em{font-style:normal;padding:5px 8px;border-radius:8px;background:#fff}.alex-site__nav strong{padding:6px 9px;border-radius:8px;background:#10204f;color:#fff;font-weight:600}.alex-site__hero{display:grid;grid-template-columns:1.1fr .9fr;gap:12px;padding:12px 18px 8px}.alex-site__copy small{font-size:4px;color:#4965af;letter-spacing:.12em}.alex-site__copy h4{margin:6px 0 0;font-size:20px;line-height:.94;letter-spacing:-.05em}.alex-site__copy h4 u{color:#3f6fd2;text-decoration:none}.alex-site__copy p{width:78%;height:3px;border-radius:5px;background:rgba(16,32,79,.12);margin:7px 0 0}.alex-site__copy p+p{width:60%;margin-top:4px}.alex-site__copy span{display:inline-block;margin-top:9px;padding:6px 9px;border-radius:7px;background:#10204f;color:#fff;font-size:4px}.alex-site__photo{min-height:150px;border-radius:14px;background:linear-gradient(135deg,#c8daf5,#8eaed9);position:relative;overflow:hidden}.alex-site__photo .head{position:absolute;left:50%;top:25px;width:43px;height:43px;border-radius:50%;background:#dfb89d;transform:translateX(-50%)}.alex-site__photo .body{position:absolute;left:50%;bottom:-12px;width:92px;height:104px;border-radius:48px 48px 12px 12px;background:#183a33;transform:translateX(-50%)}.alex-site__photo b{position:absolute;right:8px;top:52px;background:rgba(255,255,255,.9);border-radius:9px;padding:7px 9px;font-size:7px}.alex-site__photo b small{display:block;font-size:4px;color:#667085}.alex-site__services{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:8px 18px 16px}.alex-site__services article{min-height:86px;padding:9px;border-radius:10px;background:rgba(255,255,255,.8);border:1px solid rgba(16,32,79,.08)}.alex-site__services article>i{font-style:normal;color:#3b6fd2}.alex-site__services b{display:block;margin-top:4px;font-size:5px}.alex-site__services p{height:3px;width:80%;margin:7px 0 0;background:rgba(16,32,79,.10);border-radius:4px}.alex-site__services p+p{width:63%;margin-top:4px}.alex-site__services strong{display:block;margin-top:9px;font-size:5px}
-    .alex-admin--placeholder{}.alex-admin__sidebar{position:absolute;left:0;top:0;bottom:0;width:21%;padding:15px 10px;background:#eaf0fb;border-right:1px solid #d7dfed}.alex-admin__sidebar b{display:flex;align-items:center;gap:5px;font-size:5px;margin-bottom:15px}.alex-admin__sidebar b span{width:18px;height:18px;background:#122451;color:#fff;border-radius:6px;display:grid;place-items:center}.alex-admin__sidebar i{display:block;padding:7px 7px;margin:4px 0;border-radius:6px;font-style:normal;font-size:4px;color:#5d6a83}.alex-admin__sidebar i.active{background:#284f96;color:#fff}.alex-admin__main{margin-left:21%;height:100%;padding:14px;position:relative}.alex-admin__main header small{font-size:3.8px;color:#7c8ca8;letter-spacing:.12em}.alex-admin__main header h4{margin:3px 0 8px;font-size:15px}.alex-admin__calendar{position:relative;width:72%;height:245px;background:#fff;border:1px solid #dfe5ef;border-radius:9px;padding:12px}.alex-admin__calendar .days{display:grid;grid-template-columns:repeat(7,1fr);font-size:4px;color:#72809a;text-align:center;margin-bottom:5px}.alex-admin__calendar .grid{display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:repeat(5,1fr);height:190px}.alex-admin__calendar .grid i{border-right:1px solid #edf0f5;border-bottom:1px solid #edf0f5}.alex-admin__calendar .lesson{position:absolute;padding:5px;border-radius:5px;font-size:4px;line-height:1.4}.alex-admin__calendar .l1{left:19%;top:58px;background:#bfe1ff}.alex-admin__calendar .l2{left:43%;top:84px;background:#c7f1ce}.alex-admin__calendar .l3{left:12%;top:123px;background:#ffe5aa}.alex-admin__calendar .l4{left:68%;top:91px;background:#f9c6cc}.alex-admin__calendar .l5{left:48%;top:156px;background:#d9c9ff}.alex-admin__form{position:absolute;right:14px;top:68px;width:22%;padding:10px;background:#fff;border:1px solid #dfe5ef;border-radius:9px}.alex-admin__form small{font-size:5px;font-weight:700}.alex-admin__form p{height:18px;border:1px solid #e0e5ee;border-radius:5px;margin:7px 0}.alex-admin__form button{width:100%;height:24px;border:0;border-radius:6px;background:#173675;color:#fff;font-size:4px}
-    .alex-student__top{height:42px;padding:0 18px;display:flex;align-items:center;gap:14px;font-size:4.5px}.alex-student__top b{display:flex;align-items:center;gap:5px;margin-right:auto}.alex-student__top b span{width:19px;height:19px;border-radius:6px;background:#10204f;color:#fff;display:grid;place-items:center}.alex-student__top i{font-style:normal;color:#64708a}.alex-student__welcome{margin:6px 18px 10px;padding:13px 15px;border-radius:12px;background:linear-gradient(135deg,#e6eefc,#f6f3ed)}.alex-student__welcome small{font-size:4px;letter-spacing:.1em}.alex-student__welcome h4{margin:4px 0 0;font-size:17px}.alex-student__welcome p{margin:4px 0 0;font-size:5px;color:#62708b}.alex-student__cards{display:grid;grid-template-columns:1.25fr 1fr .8fr;gap:8px;padding:0 18px 14px}.alex-student__cards article{min-height:185px;background:#fff;border:1px solid rgba(16,32,79,.08);border-radius:10px;padding:10px}.alex-student__cards small{font-size:4px;color:#6d7890}.alex-student__cards b{display:block;margin-top:7px;font-size:7px}.alex-student__cards p{height:4px;width:70%;border-radius:4px;background:rgba(16,32,79,.10);margin-top:10px}.alex-student__cards button{margin-top:12px;border:0;border-radius:6px;padding:6px 9px;background:#10204f;color:#fff;font-size:4px}.alex-student__cards article:nth-child(2) div{height:6px;margin-top:18px;background:#e9edf4;border-radius:5px;overflow:hidden}.alex-student__cards article:nth-child(2) div i{display:block;width:70%;height:100%;background:#5fb66e}.alex-student__cards article:nth-child(2) span{display:block;margin-top:5px;font-size:4px;text-align:right}.mini-cal{display:grid!important;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:11px!important;height:auto!important;background:none!important}.mini-cal i{display:block!important;width:8px!important;height:8px!important;border-radius:2px;background:#edf0f6!important}.mini-cal i:nth-child(18){background:#244e99!important}
-    .alex-showcase__nav{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:8px}.alex-showcase__nav>button{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:#15253a;color:#fff;font-size:20px}.alex-showcase__dots{display:flex;gap:7px}.alex-showcase__dots button{width:7px;height:7px;border:0;border-radius:50%;background:#2a405b}.alex-showcase__dots button.is-active{background:#2f7cff}.alex-showcase__thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:72%;margin:15px auto 0}.alex-showcase__thumbs button{height:72px;padding:0;border:1px solid rgba(255,255,255,.10);border-radius:9px;overflow:hidden;background:#fff;opacity:.72}.alex-showcase__thumbs button.is-active{opacity:1;border-color:#4f91ff;box-shadow:0 0 0 2px rgba(79,145,255,.18)}.alex-showcase__thumbs .alex-screen{transform:scale(.28);transform-origin:top left;width:357%;height:357%;pointer-events:none}
-    @media(max-width:1100px){.project--alex-showcase{grid-template-columns:35% 65%!important}.alex-showcase__stage{height:350px}.alex-showcase__slide{height:285px}.project--alex-showcase h3{font-size:30px}}
-    @media(max-width:760px){.project--alex-showcase{grid-template-columns:1fr!important;padding:18px!important}.alex-showcase__info{padding:8px 4px 22px!important}.alex-showcase__visual{padding-top:0}.alex-showcase__stage{height:255px;overflow:hidden}.alex-showcase__slide{width:92%;height:225px;top:8px}.alex-showcase__slide.is-center{left:4%}.alex-showcase__slide.is-left,.alex-showcase__slide.is-right{opacity:0;pointer-events:none}.alex-showcase__thumbs{width:100%;gap:7px}.alex-showcase__thumbs button{height:58px}.alex-showcase__actions{margin-top:20px}.alex-showcase__description{max-width:none}.alex-showcase__subtitle{max-width:none}}
-    @media(prefers-reduced-motion:reduce){.alex-showcase__slide{transition:none}}
+    .project--alex-showcase{
+      grid-column:1/-1!important; overflow:hidden!important; padding:0!important;
+      border:1px solid rgba(92,143,232,.28)!important; border-radius:22px!important;
+      background:linear-gradient(145deg,#0c1a2a,#081420)!important;
+      box-shadow:0 24px 70px rgba(3,11,20,.24)!important;
+    }
+    .project--alex-showcase:hover{transform:none!important;border-color:rgba(92,143,232,.38)!important}
+    .alex-showcase{min-height:610px;display:grid;grid-template-columns:minmax(250px,.34fr) minmax(0,.66fr);gap:28px;padding:34px 34px 30px;color:#edf5ff}
+    .alex-showcase__info{display:flex;flex-direction:column;min-width:0;padding:6px 2px 0}
+    .alex-showcase__type{align-self:flex-start;padding:8px 14px;border:1px solid rgba(111,164,255,.35);border-radius:999px;background:linear-gradient(180deg,rgba(91,142,220,.28),rgba(60,96,154,.22));color:#eef6ff;font-size:10px;font-weight:600}
+    .alex-showcase__info h3{margin:16px 0 0!important;color:#fff;font:400 clamp(34px,4.2vw,56px)/1.04 var(--font-display)!important;letter-spacing:-.025em}
+    .alex-showcase__subtitle{margin:13px 0 0;color:#c5d3e6;font-size:14px;line-height:1.55}
+    .alex-showcase__description{margin:22px 0 0;color:#9fb1c7;font-size:11px;line-height:1.65}
+    .alex-showcase__features{display:grid;gap:14px;margin:24px 0 0!important}
+    .alex-showcase__features li{display:grid!important;grid-template-columns:38px 1fr;gap:13px;align-items:center;padding:0!important;border:0!important;border-radius:0!important;text-transform:none!important;letter-spacing:0!important}
+    .alex-showcase__feature-icon{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(83,143,236,.34);border-radius:11px;background:linear-gradient(145deg,rgba(42,79,127,.74),rgba(20,47,78,.78));color:#58a0ff;font-size:15px}
+    .alex-showcase__features b{display:block;color:#edf5ff;font-size:11px;font-weight:600;line-height:1.35}
+    .alex-showcase__features small{display:block;margin-top:2px;color:#8195ad;font-size:8px;line-height:1.4}
+    .alex-showcase__tech{margin-top:auto;padding-top:22px;border-top:1px solid rgba(135,171,219,.16)}
+    .alex-showcase__tech>span{display:block;margin-bottom:9px;color:#b7c7da;font-size:9px}
+    .alex-showcase__tags{display:flex;flex-wrap:wrap;gap:7px}
+    .alex-showcase__tags i{padding:6px 10px;border:1px solid rgba(133,168,215,.22);border-radius:999px;background:rgba(65,98,139,.16);color:#b9c9dc;font:500 8px/1 var(--font-body);font-style:normal}
+    .alex-showcase__actions{display:flex;gap:10px;margin-top:23px}
+    .alex-showcase__button{min-height:43px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(100,155,245,.3);border-radius:11px;background:rgba(37,65,101,.28);color:#edf5ff;font-size:9px;font-weight:600;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+    .alex-showcase__button--primary{min-width:170px;background:linear-gradient(135deg,#377be8,#1748ae);border-color:#4f8dff;box-shadow:0 14px 28px rgba(31,91,190,.25)}
+    .alex-showcase__button:hover{transform:translateY(-2px);border-color:#6fa7ff}
+
+    .alex-showcase__gallery{min-width:0;display:flex;flex-direction:column;justify-content:center;padding-top:4px}
+    .alex-showcase__stage{position:relative;height:394px;perspective:1300px;overflow:visible}
+    .alex-showcase__slide{position:absolute;top:18px;left:50%;width:68%;height:345px;overflow:hidden;border:1px solid rgba(255,255,255,.28);border-radius:12px;background:#f6f8fc;box-shadow:0 28px 55px rgba(0,0,0,.34);transform-origin:center;transition:transform .68s var(--ease),opacity .5s ease,filter .5s ease,z-index 0s linear .1s}
+    .alex-showcase__slide.is-center{z-index:4;opacity:1;filter:none;transform:translateX(-50%) translateZ(10px) scale(1)}
+    .alex-showcase__slide.is-left{z-index:2;opacity:.9;filter:brightness(.82) saturate(.8);transform:translateX(-112%) rotateY(10deg) scale(.88)}
+    .alex-showcase__slide.is-right{z-index:2;opacity:.9;filter:brightness(.82) saturate(.8);transform:translateX(12%) rotateY(-10deg) scale(.88)}
+    .alex-showcase__slide.is-hidden{z-index:1;opacity:0;pointer-events:none;transform:translateX(-50%) scale(.78)}
+
+    .alex-mock{height:100%;color:#0d2253;font-family:var(--font-body)}
+    .alex-mock--site{padding:14px;background:linear-gradient(145deg,#faf7f1,#eef4ff)}
+    .alex-mock__nav{height:28px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(14,36,83,.08);font-size:5px;color:#6b7b98}
+    .alex-mock__brand{display:flex;align-items:center;gap:7px;margin-right:auto;color:#0d2253;font-size:6px;font-weight:700}.alex-mock__brand i{width:18px;height:18px;display:grid;place-items:center;border-radius:6px;background:#0d2253;color:#fff;font-style:normal;font-size:6px}.alex-mock__nav b{padding:6px 9px;border-radius:9px;background:#0e2862;color:#fff;font-size:5px}
+    .alex-mock__hero{display:grid;grid-template-columns:1fr .95fr;gap:13px;padding:20px 8px 12px}.alex-mock__hero small{display:block;color:#5573b9;font-size:4px;letter-spacing:.11em}.alex-mock__hero h4{margin:8px 0 0;font:700 23px/.98 var(--font-body);letter-spacing:-.055em;color:#10245a}.alex-mock__hero h4 em{font-style:normal;color:#3674e7}.alex-mock__hero p{width:84%;height:4px;margin:10px 0 0;border-radius:5px;background:rgba(16,36,90,.14)}.alex-mock__hero p+p{width:64%;margin-top:5px}.alex-mock__cta{display:inline-flex;margin-top:12px;padding:7px 13px;border-radius:7px;background:#0d2c71;color:#fff;font-size:5px}
+    .alex-mock__portrait{position:relative;min-height:156px;border-radius:12px;background:linear-gradient(145deg,#c9daf4,#91add3);overflow:hidden}.alex-mock__portrait:before{content:'';position:absolute;left:50%;top:18px;width:48px;height:48px;border-radius:50%;background:#e3b896;transform:translateX(-50%)}.alex-mock__portrait:after{content:'';position:absolute;left:50%;bottom:-16px;width:104px;height:116px;border-radius:58px 58px 10px 10px;background:#183d35;transform:translateX(-50%)}.alex-mock__badge{position:absolute;right:10px;top:22px;padding:8px 10px;border-radius:9px;background:#fff;color:#173b7c;font-size:5px;font-weight:700;box-shadow:0 8px 20px rgba(24,51,93,.12)}
+    .alex-mock__services{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:0 8px}.alex-mock__services article{height:74px;padding:10px;border:1px solid rgba(16,36,90,.09);border-radius:9px;background:rgba(255,255,255,.88);box-shadow:0 7px 15px rgba(54,73,110,.06)}.alex-mock__services b{display:block;font-size:6px}.alex-mock__services i{display:block;width:88%;height:3px;margin-top:8px;border-radius:5px;background:rgba(16,36,90,.1)}.alex-mock__services i+i{width:62%;margin-top:4px}
+
+    .alex-mock--admin{display:grid;grid-template-columns:54px 1fr;background:linear-gradient(145deg,#f9f6f1,#eef3fb)}
+    .alex-admin-side{padding:14px 8px;background:#edf2fa;border-right:1px solid rgba(20,45,91,.08)}.alex-admin-side b{display:block;width:22px;height:22px;margin-bottom:16px;border-radius:7px;background:#102c68}.alex-admin-side i{display:block;height:16px;margin:8px 0;border-radius:5px;background:rgba(20,45,91,.07)}.alex-admin-side i:nth-child(4){background:#173a85}
+    .alex-admin-main{padding:14px}.alex-admin-top{padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,#edf3ff,#f9f6f1);font-size:6px;font-weight:700}.alex-admin-body{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:10px}.alex-admin-form{padding:10px;border:1px solid rgba(20,45,91,.08);border-radius:9px;background:#fff}.alex-admin-form i{display:block;height:13px;margin:7px 0;border:1px solid rgba(20,45,91,.08);border-radius:4px}.alex-admin-form i:last-child{background:#173a85}.alex-admin-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:10px;border:1px solid rgba(20,45,91,.08);border-radius:9px;background:#fff}.alex-admin-calendar span{height:41px;border:1px solid rgba(20,45,91,.06);border-radius:4px;background:#fbfcfe}.alex-admin-calendar span:nth-child(5),.alex-admin-calendar span:nth-child(11),.alex-admin-calendar span:nth-child(15),.alex-admin-calendar span:nth-child(20){background:#d9f5e1}.alex-admin-calendar span:nth-child(9),.alex-admin-calendar span:nth-child(18){background:#fff0ae}
+
+    .alex-mock--lk{padding:14px;background:linear-gradient(145deg,#faf7f1,#eef4ff)}.alex-lk-top{height:28px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(14,36,83,.08);font-size:5px;color:#6d7d98}.alex-lk-top b{margin-right:auto;color:#0d2253}.alex-lk-welcome{width:72%;margin:20px auto 9px;padding:13px 15px;border-radius:10px;background:linear-gradient(135deg,#eef3ff,#dce7fb)}.alex-lk-welcome small{font-size:4px;letter-spacing:.08em}.alex-lk-welcome strong{display:block;margin-top:5px;font-size:17px}.alex-lk-stats{width:72%;margin:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.alex-lk-stats span{height:28px;padding:7px;border-radius:7px;background:#fff;border:1px solid rgba(14,36,83,.07)}.alex-lk-content{width:72%;margin:8px auto 0;display:grid;grid-template-columns:1.4fr .7fr;gap:8px}.alex-lk-card{height:112px;padding:12px;border-radius:9px;background:#fff;border:1px solid rgba(14,36,83,.07)}.alex-lk-card b{display:block;font-size:6px}.alex-lk-card i{display:block;width:40%;height:4px;margin:11px auto 0;border-radius:4px;background:rgba(14,36,83,.1)}
+
+    .alex-showcase__controls{display:flex;justify-content:center;align-items:center;gap:13px;margin-top:2px}
+    .alex-showcase__arrow{width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(118,157,211,.3);border-radius:50%;background:rgba(29,55,86,.65);color:#fff;font-size:22px;cursor:pointer;transition:transform .2s ease,background .2s ease}
+    .alex-showcase__arrow:hover{transform:scale(1.05);background:#1b467c}
+    .alex-showcase__dots{display:flex;gap:7px;align-items:center}.alex-showcase__dot{width:8px;height:8px;border-radius:50%;background:rgba(139,171,215,.3);cursor:pointer;transition:.2s ease}.alex-showcase__dot.is-active{background:#2d7df1;box-shadow:0 0 0 3px rgba(45,125,241,.12)}
+    .alex-showcase__thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px auto 0;width:74%}.alex-showcase__thumb{position:relative;height:82px;padding:0;overflow:hidden;border:2px solid transparent;border-radius:9px;background:#edf2f8;cursor:pointer;transition:border-color .2s ease,transform .2s ease}.alex-showcase__thumb.is-active{border-color:#4c8dff;box-shadow:0 0 0 2px rgba(76,141,255,.12)}.alex-showcase__thumb:hover{transform:translateY(-2px)}.alex-showcase__thumb-inner{position:absolute;inset:0;width:220%;height:220%;transform:scale(.455);transform-origin:top left;pointer-events:none;overflow:hidden}
+
+    @media(max-width:1000px){.alex-showcase{grid-template-columns:1fr;gap:28px}.alex-showcase__info{padding-right:0}.alex-showcase__description{max-width:650px}.alex-showcase__tech{margin-top:24px}.alex-showcase__stage{height:360px}.alex-showcase__slide{height:315px}.alex-showcase__gallery{padding-top:0}}
+    @media(max-width:760px){.alex-showcase{padding:22px 16px 24px}.alex-showcase__info h3{font-size:38px!important}.alex-showcase__features{grid-template-columns:1fr 1fr}.alex-showcase__stage{height:290px}.alex-showcase__slide{top:8px;width:92%;height:255px}.alex-showcase__slide.is-center{transform:translateX(-50%) scale(1)}.alex-showcase__slide.is-left,.alex-showcase__slide.is-right{opacity:0;pointer-events:none}.alex-showcase__thumbs{width:100%;gap:7px}.alex-showcase__thumb{height:64px}.alex-showcase__actions{flex-direction:column}.alex-showcase__button{width:100%}.alex-mock__hero h4{font-size:17px}}
+    @media(max-width:430px){.alex-showcase__features{grid-template-columns:1fr}.alex-showcase__stage{height:248px}.alex-showcase__slide{height:220px}.alex-showcase__thumb{height:56px}.alex-showcase__controls{gap:10px}.alex-showcase__arrow{width:36px;height:36px}.alex-showcase__subtitle{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){.alex-showcase__slide,.alex-showcase__arrow,.alex-showcase__thumb{transition:none}}
   `;
   document.head.appendChild(style);
 
-  const showcase = card.querySelector('[data-alex-showcase]');
-  const slides = [...showcase.querySelectorAll('[data-slide]')];
-  const dots = [...showcase.querySelectorAll('[data-dot]')];
-  const thumbs = [...showcase.querySelectorAll('[data-thumb]')];
-  let active = 1;
-  let timer = null;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const card=[...document.querySelectorAll('.project')].find(node=>node.querySelector('h3')?.textContent.trim()==='Alex Educator');
+  if(!card)return;
+  card.classList.add('project--alex-showcase');
+  card.dataset.showcaseReady='true';
 
-  const updateCopy = () => {
-    const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
-    const t = copy[lang];
-    card.querySelectorAll('[data-alex-copy]').forEach((el) => { const key = el.dataset.alexCopy; if (t[key]) el.textContent = t[key]; });
-    card.querySelectorAll('[data-alex-feature-title]').forEach((el) => { const i = +el.dataset.alexFeatureTitle; el.textContent = t.features[i][0]; });
-    card.querySelectorAll('[data-alex-feature-text]').forEach((el) => { const i = +el.dataset.alexFeatureText; el.textContent = t.features[i][1]; });
-  };
-  updateCopy();
-  new MutationObserver(updateCopy).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  const siteMock=()=>`<div class="alex-mock alex-mock--site"><div class="alex-mock__nav"><span class="alex-mock__brand"><i>AE</i>Alex Educator</span><span>Главная</span><span>Обо мне</span><span>Услуги</span><span>Отзывы</span><b>Записаться</b></div><div class="alex-mock__hero"><div><small>ИНДИВИДУАЛЬНЫЙ АНГЛИЙСКИЙ</small><h4>Английский<br>как навык<br>для <em>реальной жизни</em></h4><p></p><p></p><span class="alex-mock__cta">Записаться на консультацию</span></div><div class="alex-mock__portrait"><span class="alex-mock__badge">5+<br>лет опыта</span></div></div><div class="alex-mock__services"><article><b>Индивидуальные занятия</b><i></i><i></i></article><article><b>Мини-группа</b><i></i><i></i></article><article><b>Английский для работы</b><i></i><i></i></article></div></div>`;
+  const adminMock=()=>`<div class="alex-mock alex-mock--admin"><div class="alex-admin-side"><b></b><i></i><i></i><i></i><i></i><i></i></div><div class="alex-admin-main"><div class="alex-admin-top">Расписание · Сентябрь 2026</div><div class="alex-admin-body"><div class="alex-admin-form">${'<i></i>'.repeat(7)}</div><div class="alex-admin-calendar">${'<span></span>'.repeat(35)}</div></div></div></div>`;
+  const lkMock=()=>`<div class="alex-mock alex-mock--lk"><div class="alex-lk-top"><b>AE · Alex Educator</b><span>Главная</span><span>Расписание</span><span>Домашние задания</span></div><div class="alex-lk-welcome"><small>ЛИЧНЫЙ КАБИНЕТ</small><strong>Привет, Анна!</strong></div><div class="alex-lk-stats"><span></span><span></span><span></span><span></span></div><div class="alex-lk-content"><div class="alex-lk-card"><b>Следующий урок</b><i></i><i></i></div><div class="alex-lk-card"><b>Календарь</b><i></i></div></div></div>`;
 
-  const render = () => {
-    slides.forEach((slide, i) => {
-      slide.classList.remove('is-left','is-center','is-right');
-      const diff = (i - active + slides.length) % slides.length;
-      if (diff === 0) slide.classList.add('is-center');
-      else if (diff === 1) slide.classList.add('is-right');
-      else slide.classList.add('is-left');
-    });
-    dots.forEach((dot, i) => dot.classList.toggle('is-active', i === active));
-    thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === active));
-  };
-  const go = (i, manual = false) => { active = (i + slides.length) % slides.length; render(); if (manual) restart(); };
-  const stop = () => { if (timer) clearInterval(timer); timer = null; };
-  const start = () => { if (reduced || timer) return; timer = setInterval(() => go(active + 1), 5000); };
-  const restart = () => { stop(); start(); };
-  showcase.querySelector('[data-prev]').addEventListener('click', () => go(active - 1, true));
-  showcase.querySelector('[data-next]').addEventListener('click', () => go(active + 1, true));
-  dots.forEach((dot, i) => dot.addEventListener('click', () => go(i, true)));
-  thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => go(i, true)));
-  showcase.addEventListener('pointerenter', stop);
-  showcase.addEventListener('pointerleave', start);
-  showcase.addEventListener('focusin', stop);
-  showcase.addEventListener('focusout', start);
-  document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-  render();
-  start();
+  card.innerHTML=`<div class="alex-showcase"><aside class="alex-showcase__info"><span class="alex-showcase__type" data-alex-i18n="type">Веб-приложение</span><h3>Alex Educator</h3><p class="alex-showcase__subtitle" data-alex-i18n="subtitle">Сайт и админ-панель для преподавателя английского языка</p><p class="alex-showcase__description" data-alex-i18n="description">Современный сайт для преподавателя английского языка с описанием услуг, отзывами, формой записи и CEFR тестом. Также разработана удобная админ-панель для управления заявками, уроками и расписанием.</p><ul class="alex-showcase__features"><li><span class="alex-showcase__feature-icon">▣</span><span><b data-alex-i18n="feature1">Современный и стильный дизайн</b><small data-alex-i18n="feature1s">Адаптивный сайт под все устройства</small></span></li><li><span class="alex-showcase__feature-icon">▦</span><span><b data-alex-i18n="feature2">CEFR тест и форма записи</b><small data-alex-i18n="feature2s">Автоматическая обработка заявок</small></span></li><li><span class="alex-showcase__feature-icon">✣</span><span><b data-alex-i18n="feature3">Админ-панель</b><small data-alex-i18n="feature3s">Управление расписанием, учениками и заявками</small></span></li><li><span class="alex-showcase__feature-icon">◎</span><span><b data-alex-i18n="feature4">Поддержка двух языков</b><small data-alex-i18n="feature4s">Русский и английский интерфейс</small></span></li></ul><div class="alex-showcase__tech"><span data-alex-i18n="tech">Технологии</span><div class="alex-showcase__tags"><i>PHP</i><i>MySQL</i><i>JavaScript</i><i>HTML</i><i>CSS</i><i>Responsive</i></div></div><div class="alex-showcase__actions"><a class="alex-showcase__button alex-showcase__button--primary" href="https://alex-educator.com" target="_blank" rel="noreferrer">↗ <span data-alex-i18n="view">Посмотреть проект</span></a><a class="alex-showcase__button" href="https://github.com/Insolent77" target="_blank" rel="noreferrer">◉ GitHub</a></div></aside><div class="alex-showcase__gallery" data-alex-carousel><div class="alex-showcase__stage"><div class="alex-showcase__slide" data-slide="0">${siteMock()}</div><div class="alex-showcase__slide" data-slide="1">${adminMock()}</div><div class="alex-showcase__slide" data-slide="2">${lkMock()}</div></div><div class="alex-showcase__controls"><button class="alex-showcase__arrow" type="button" data-prev aria-label="Предыдущий слайд">‹</button><div class="alex-showcase__dots"><button class="alex-showcase__dot" type="button" data-dot="0"></button><button class="alex-showcase__dot" type="button" data-dot="1"></button><button class="alex-showcase__dot" type="button" data-dot="2"></button></div><button class="alex-showcase__arrow" type="button" data-next aria-label="Следующий слайд">›</button></div><div class="alex-showcase__thumbs"><button class="alex-showcase__thumb" type="button" data-thumb="0" aria-label="Основной сайт"><div class="alex-showcase__thumb-inner">${siteMock()}</div></button><button class="alex-showcase__thumb" type="button" data-thumb="1" aria-label="Админ-панель"><div class="alex-showcase__thumb-inner">${adminMock()}</div></button><button class="alex-showcase__thumb" type="button" data-thumb="2" aria-label="Личный кабинет"><div class="alex-showcase__thumb-inner">${lkMock()}</div></button></div></div></div>`;
+
+  const carousel=card.querySelector('[data-alex-carousel]');
+  const slides=[...carousel.querySelectorAll('[data-slide]')];
+  const dots=[...carousel.querySelectorAll('[data-dot]')];
+  const thumbs=[...carousel.querySelectorAll('[data-thumb]')];
+  let index=0;let timer=null;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const update=()=>{slides.forEach((slide,i)=>{slide.classList.remove('is-center','is-left','is-right','is-hidden');const left=(index-1+slides.length)%slides.length;const right=(index+1)%slides.length;if(i===index)slide.classList.add('is-center');else if(i===left)slide.classList.add('is-left');else if(i===right)slide.classList.add('is-right');else slide.classList.add('is-hidden')});dots.forEach((dot,i)=>dot.classList.toggle('is-active',i===index));thumbs.forEach((thumb,i)=>thumb.classList.toggle('is-active',i===index))};
+  const stop=()=>{if(timer)clearInterval(timer);timer=null};const start=()=>{if(reduced||timer)return;timer=setInterval(()=>{index=(index+1)%slides.length;update()},5000)};const go=(i)=>{index=(i+slides.length)%slides.length;update();stop();start()};
+  carousel.querySelector('[data-prev]').addEventListener('click',()=>go(index-1));carousel.querySelector('[data-next]').addEventListener('click',()=>go(index+1));dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));thumbs.forEach((t,i)=>t.addEventListener('click',()=>go(i)));carousel.addEventListener('pointerenter',stop);carousel.addEventListener('pointerleave',start);document.addEventListener('visibilitychange',()=>document.hidden?stop():start());update();start();
+
+  const copy={ru:{type:'Веб-приложение',subtitle:'Сайт и админ-панель для преподавателя английского языка',description:'Современный сайт для преподавателя английского языка с описанием услуг, отзывами, формой записи и CEFR тестом. Также разработана удобная админ-панель для управления заявками, уроками и расписанием.',feature1:'Современный и стильный дизайн',feature1s:'Адаптивный сайт под все устройства',feature2:'CEFR тест и форма записи',feature2s:'Автоматическая обработка заявок',feature3:'Админ-панель',feature3s:'Управление расписанием, учениками и заявками',feature4:'Поддержка двух языков',feature4s:'Русский и английский интерфейс',tech:'Технологии',view:'Посмотреть проект'},en:{type:'Web application',subtitle:'Website and admin panel for an English teacher',description:'A modern English-teacher website with services, reviews, booking form and CEFR test, plus a convenient admin panel for applications, lessons and schedules.',feature1:'Modern and clean design',feature1s:'Responsive across all devices',feature2:'CEFR test and booking form',feature2s:'Automated lead processing',feature3:'Admin panel',feature3s:'Manage schedules, students and applications',feature4:'Two-language support',feature4s:'Russian and English interface',tech:'Technologies',view:'View project'}};
+  const localize=()=>{const lang=document.documentElement.lang==='en'?'en':'ru';card.querySelectorAll('[data-alex-i18n]').forEach(el=>{const v=copy[lang][el.dataset.alexI18n];if(v)el.textContent=v})};localize();new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
 })();
