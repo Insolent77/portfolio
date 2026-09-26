@@ -1,1 +1,0 @@
-Real Alex Educator screenshots are referenced by alex-carousel.js.
