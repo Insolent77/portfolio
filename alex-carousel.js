@@ -8,9 +8,9 @@
   card.className = 'project reveal is-visible project--alex-static';
 
   const shots = [
-    { label: 'Отзывы', src: 'assets/alex-reviews-shot.svg' },
-    { label: 'Главная страница', src: 'assets/alex-home-shot.svg' },
-    { label: 'Админка — расписание', src: 'assets/alex-admin-shot.svg' }
+    { label: 'Отзывы', src: 'assets/alex-reviews-shot.jpg' },
+    { label: 'Главная страница', src: 'assets/alex-home-shot.jpg' },
+    { label: 'Админка — расписание', src: 'assets/alex-admin-shot.jpg' }
   ];
 
   const copy = {
