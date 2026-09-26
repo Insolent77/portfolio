@@ -154,4 +154,9 @@
       addedProject.classList.add('is-visible');
     }
   });
+
+  const alexCarouselScript = document.createElement('script');
+  alexCarouselScript.src = 'alex-carousel.js';
+  alexCarouselScript.defer = true;
+  document.body.appendChild(alexCarouselScript);
 })();
