@@ -12,6 +12,10 @@
       lomonosovDescription: 'Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.',
       lomonosovResultOne: 'ДЗ, чаты и расписание в одном месте',
       lomonosovResultTwo: 'Роли ученика, родителя и преподавателя',
+      autoType: 'Одностраничный сайт',
+      autoDescription: 'Промо-сайт автосервиса в Саратове: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.',
+      autoResultOne: 'Адаптивный лендинг под телефон и ПК',
+      autoResultTwo: 'Кликабельные контакты и карта',
       futureResultOne: 'Сайт / сервис / автоматизация',
       futureResultTwo: 'Решение под конкретную задачу',
       trustTitle: 'Есть задача, но нет ТЗ? Нормально.',
@@ -29,6 +33,10 @@
       lomonosovDescription: 'My Lomonosov is a personal learning app for students, parents and teachers with homework, chats, lesson schedules, reports and learning statistics in one place.',
       lomonosovResultOne: 'Homework, chats and schedule in one place',
       lomonosovResultTwo: 'Student, parent and teacher roles',
+      autoType: 'One-page website',
+      autoDescription: 'A promotional website for an auto service in Saratov with services, benefits, contacts and quick access to calls, social media and Yandex Maps.',
+      autoResultOne: 'Responsive landing page for mobile and desktop',
+      autoResultTwo: 'Clickable contacts and map',
       futureResultOne: 'Website / service / automation',
       futureResultTwo: 'A solution built around the task',
       trustTitle: 'Have a task but no specification? That’s fine.',
@@ -37,9 +45,12 @@
   };
 
   const projectList = document.querySelector('.project-list');
-  if (projectList && !projectList.querySelector('[data-project-lomonosov]')) {
+  let lomonosovCard = projectList?.querySelector('[data-project-lomonosov]');
+  let autoCard = projectList?.querySelector('[data-project-auto]');
+
+  if (projectList && !lomonosovCard) {
     const futureCard = [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
-    const lomonosovCard = document.createElement('article');
+    lomonosovCard = document.createElement('article');
     lomonosovCard.className = 'project reveal';
     lomonosovCard.dataset.projectLomonosov = '';
     lomonosovCard.innerHTML = `
@@ -60,14 +71,32 @@
         </div><span class="project__arrow">↗</span>
       </a>
       <div class="project__copy"><p class="project__meta"><span>04 / EDTECH APP</span><span data-extra-i18n="lomonosovType">Мобильное приложение</span></p><h3>Мой Ломоносов</h3><p data-extra-i18n="lomonosovDescription">Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.</p><div class="project__results"><span data-extra-i18n="lomonosovResultOne">ДЗ, чаты и расписание в одном месте</span><span data-extra-i18n="lomonosovResultTwo">Роли ученика, родителя и преподавателя</span></div><ul aria-label="Технологии"><li>Expo</li><li>React Native</li><li>API</li><li>UX/UI</li></ul></div>`;
-    if (futureCard) {
-      projectList.insertBefore(lomonosovCard, futureCard);
-      const futureMeta = futureCard.querySelector('.project__meta span:first-child');
-      if (futureMeta) futureMeta.textContent = '05 / YOUR PROJECT';
-    } else {
-      projectList.appendChild(lomonosovCard);
-    }
+    if (futureCard) projectList.insertBefore(lomonosovCard, futureCard); else projectList.appendChild(lomonosovCard);
   }
+
+  if (projectList && !autoCard) {
+    const futureCard = [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
+    autoCard = document.createElement('article');
+    autoCard.className = 'project reveal';
+    autoCard.dataset.projectAuto = '';
+    autoCard.innerHTML = `
+      <a class="project__cover" href="https://insolent77.github.io/artemiy-site/" target="_blank" rel="noreferrer" aria-label="Открыть проект Автосервис Саратов">
+        <div class="preview project-preview project-preview--auto" aria-hidden="true">
+          <div class="project-preview__frame auto-ui">
+            <div class="auto-ui__top"><span class="auto-ui__logo">АВТОСЕРВИС <b>САРАТОВ</b></span><i></i><i></i><i></i></div>
+            <div class="auto-ui__copy"><small>РЕМОНТ АВТОМОБИЛЕЙ</small><strong>РЕМОНТ КУЗОВЩИНЫ</strong><strong class="auto-ui__accent">ГАЗЕЛЕЙ И ЛЕГКОВЫХ</strong><p></p><p></p></div>
+            <div class="auto-ui__garage"><span class="auto-ui__car auto-ui__car--one"></span><span class="auto-ui__car auto-ui__car--two"></span><div class="auto-ui__lights"></div></div>
+            <div class="auto-ui__services"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div><span class="project__arrow">↗</span>
+      </a>
+      <div class="project__copy"><p class="project__meta"><span>05 / BUSINESS LANDING</span><span data-extra-i18n="autoType">Одностраничный сайт</span></p><h3>Автосервис Саратов</h3><p data-extra-i18n="autoDescription">Промо-сайт автосервиса в Саратове: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.</p><div class="project__results"><span data-extra-i18n="autoResultOne">Адаптивный лендинг под телефон и ПК</span><span data-extra-i18n="autoResultTwo">Кликабельные контакты и карта</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
+    if (futureCard) projectList.insertBefore(autoCard, futureCard); else projectList.appendChild(autoCard);
+  }
+
+  const futureCard = projectList && [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
+  const futureMeta = futureCard?.querySelector('.project__meta span:first-child');
+  if (futureMeta) futureMeta.textContent = '06 / YOUR PROJECT';
 
   const updateExtraCopy = () => {
     const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
@@ -108,8 +137,8 @@
   scrollContainer?.addEventListener('scroll', hideHint, { passive: true });
   hideHint();
 
-  const addedProject = document.querySelector('[data-project-lomonosov]');
-  if (addedProject) {
+  const addedProjects = [lomonosovCard, autoCard].filter(Boolean);
+  addedProjects.forEach((addedProject) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       addedProject.classList.add('is-visible');
     } else if ('IntersectionObserver' in window && scrollContainer) {
@@ -124,5 +153,5 @@
     } else {
       addedProject.classList.add('is-visible');
     }
-  }
+  });
 })();
