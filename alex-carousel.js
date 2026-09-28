@@ -10,7 +10,7 @@
   const shots = [
     { label: 'Главная страница', src: 'assets/alex-home-updated.png', ratio: 4 / 3 },
     { label: 'Админка — расписание', src: 'assets/alex-schedule-updated.png', ratio: 3 / 4 },
-    { label: 'Отзывы', src: 'assets/alex-reviews-updated.png', ratio: 3 / 4 }
+    { label: 'Кабинет ученика — домашние задания', src: 'assets/alex-student-ivan.png', ratio: 1906 / 825 }
   ];
 
   const copy = {
