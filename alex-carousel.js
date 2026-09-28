@@ -1,4 +1,43 @@
 (() => {
+  // Mobile: keep native touch scrolling inside the content panel and
+  // forward swipes that start outside the panel to the same scroller.
+  const mobileScroll = document.querySelector('.scroll');
+  if (mobileScroll) {
+    mobileScroll.style.webkitOverflowScrolling = 'touch';
+    mobileScroll.style.touchAction = 'pan-y';
+    mobileScroll.style.overscrollBehaviorY = 'contain';
+
+    let touchStartedOutside = false;
+    let lastTouchY = 0;
+
+    window.addEventListener('touchstart', (event) => {
+      if (event.touches.length !== 1) return;
+      const targetIsInsideScroller = event.target instanceof Element && event.target.closest('.scroll');
+      touchStartedOutside = !targetIsInsideScroller;
+      lastTouchY = event.touches[0].clientY;
+    }, { passive: true, capture: true });
+
+    window.addEventListener('touchmove', (event) => {
+      if (!touchStartedOutside || event.touches.length !== 1) return;
+
+      const currentY = event.touches[0].clientY;
+      const delta = lastTouchY - currentY;
+      lastTouchY = currentY;
+      if (!delta) return;
+
+      const maxScroll = mobileScroll.scrollHeight - mobileScroll.clientHeight;
+      const nextScroll = Math.min(maxScroll, Math.max(0, mobileScroll.scrollTop + delta));
+      if (nextScroll === mobileScroll.scrollTop) return;
+
+      event.preventDefault();
+      mobileScroll.scrollTop = nextScroll;
+    }, { passive: false, capture: true });
+
+    const finishTouch = () => { touchStartedOutside = false; };
+    window.addEventListener('touchend', finishTouch, { passive: true, capture: true });
+    window.addEventListener('touchcancel', finishTouch, { passive: true, capture: true });
+  }
+
   const card = [...document.querySelectorAll('.project')].find((node) =>
     node.querySelector('h3')?.textContent.trim() === 'Alex Educator' ||
     node.querySelector('a[href*="alex-educator.com"]')
