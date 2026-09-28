@@ -13,7 +13,7 @@ const translations = {
     heroLead: 'Создаю спокойные и понятные цифровые продукты — от структуры и дизайна до кода, запуска и поддержки.',
     heroCta: 'Обсудить проект', heroWork: 'Посмотреть работы',
     factPlaceLabel: 'Работаю', factPlace: 'Удалённо', factFocusLabel: 'Фокус', factFocus: 'Польза + простота',
-    scrollHint: 'Листайте внутри окна',
+    scrollHint: 'Листайте страницу',
     projectsLabel: 'Избранные проекты',
     projectsTitle: 'Не просто страницы.<br><em>Рабочие системы.</em>',
     projectsIntro: 'В каждом проекте сначала разбираюсь в задаче, а затем соединяю содержание, интерфейс и разработку в одно целое.',
@@ -46,7 +46,7 @@ const translations = {
     heroLead: 'I create calm and clear digital products — from structure and design to code, launch and ongoing support.',
     heroCta: 'Discuss a project', heroWork: 'View my work',
     factPlaceLabel: 'Working', factPlace: 'Remotely', factFocusLabel: 'Focus', factFocus: 'Value + clarity',
-    scrollHint: 'Scroll inside the window',
+    scrollHint: 'Scroll the page',
     projectsLabel: 'Selected projects',
     projectsTitle: 'More than pages.<br><em>Working systems.</em>',
     projectsIntro: 'Every project begins with understanding the problem. Then content, interface and development become one coherent product.',
@@ -306,6 +306,26 @@ soundTargets.forEach((element) => {
 const scrollContainer = document.querySelector('.scroll');
 const sections = [...document.querySelectorAll('.scroll section[id]')];
 const navLinks = [...document.querySelectorAll('[data-nav-link]')];
+
+// The page itself is fixed, so wheel gestures made over the surrounding
+// background or toolbar need to be forwarded to the content scroller.
+window.addEventListener('wheel', (event) => {
+  const targetIsInsideScroller = event.target instanceof Element && event.target.closest('.scroll');
+  if (!scrollContainer || event.defaultPrevented || targetIsInsideScroller) return;
+
+  const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+    ? 16
+    : (event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? scrollContainer.clientHeight : 1);
+  const delta = (Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX) * unit;
+  if (!delta) return;
+
+  const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  const nextScroll = Math.min(maxScroll, Math.max(0, scrollContainer.scrollTop + delta));
+  if (nextScroll === scrollContainer.scrollTop) return;
+
+  event.preventDefault();
+  scrollContainer.scrollTop = nextScroll;
+}, { passive: false });
 
 function scrollToSection(target, behavior = 'smooth') {
   if (!target || !scrollContainer) return;
