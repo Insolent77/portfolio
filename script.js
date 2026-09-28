@@ -309,9 +309,41 @@ const navLinks = [...document.querySelectorAll('[data-nav-link]')];
 
 // The page itself is fixed, so wheel gestures made over the surrounding
 // background or toolbar need to be forwarded to the content scroller.
+let outsideScrollTarget = null;
+let outsideScrollFrame = null;
+let outsideScrollTime = 0;
+
+function animateOutsideScroll(time) {
+  if (!scrollContainer || outsideScrollTarget === null) return;
+
+  const elapsed = Math.min(34, Math.max(1, time - outsideScrollTime));
+  const distance = outsideScrollTarget - scrollContainer.scrollTop;
+
+  if (Math.abs(distance) < 0.5) {
+    scrollContainer.scrollTop = outsideScrollTarget;
+    scrollContainer.classList.remove('is-outside-scrolling');
+    outsideScrollTarget = null;
+    outsideScrollFrame = null;
+    return;
+  }
+
+  const progress = 1 - Math.pow(0.01, elapsed / 260);
+  scrollContainer.scrollTop += distance * progress;
+  outsideScrollTime = time;
+  outsideScrollFrame = requestAnimationFrame(animateOutsideScroll);
+}
+
 window.addEventListener('wheel', (event) => {
   const targetIsInsideScroller = event.target instanceof Element && event.target.closest('.scroll');
-  if (!scrollContainer || event.defaultPrevented || targetIsInsideScroller) return;
+  if (!scrollContainer || event.defaultPrevented) return;
+
+  if (targetIsInsideScroller) {
+    if (outsideScrollFrame !== null) cancelAnimationFrame(outsideScrollFrame);
+    scrollContainer.classList.remove('is-outside-scrolling');
+    outsideScrollTarget = null;
+    outsideScrollFrame = null;
+    return;
+  }
 
   const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
     ? 16
@@ -320,11 +352,24 @@ window.addEventListener('wheel', (event) => {
   if (!delta) return;
 
   const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-  const nextScroll = Math.min(maxScroll, Math.max(0, scrollContainer.scrollTop + delta));
-  if (nextScroll === scrollContainer.scrollTop) return;
+  const start = outsideScrollTarget ?? scrollContainer.scrollTop;
+  const nextScroll = Math.min(maxScroll, Math.max(0, start + delta));
+  if (nextScroll === start) return;
 
   event.preventDefault();
-  scrollContainer.scrollTop = nextScroll;
+  if (reducedMotion) {
+    scrollContainer.classList.add('is-outside-scrolling');
+    scrollContainer.scrollTop = nextScroll;
+    scrollContainer.classList.remove('is-outside-scrolling');
+    return;
+  }
+
+  outsideScrollTarget = nextScroll;
+  if (outsideScrollFrame === null) {
+    scrollContainer.classList.add('is-outside-scrolling');
+    outsideScrollTime = performance.now();
+    outsideScrollFrame = requestAnimationFrame(animateOutsideScroll);
+  }
 }, { passive: false });
 
 function scrollToSection(target, behavior = 'smooth') {
