@@ -35,12 +35,12 @@
 .alex-static-actions a > span { font-size: 19px; line-height: 1; }
 .alex-static-actions a.secondary { border-color: #2c486b; background: linear-gradient(120deg, #0d1c2d, #172c44); }
 .alex-static-gallery { min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr) 44px auto; gap: 12px; }
-.alex-static-stage { position: relative; min-height: 430px; perspective: 1200px; isolation: isolate; }
-.alex-static-stage button { position: absolute; top: 0; left: 50%; width: 60%; height: 100%; padding: 0; overflow: hidden; border: 0; border-radius: 12px; background: #fff; box-shadow: 0 22px 35px #0005; cursor: pointer; transition: transform .5s ease, width .5s ease, opacity .5s ease; }
+.alex-static-stage { position: relative; min-height: 430px; container-type: size; perspective: 1200px; isolation: isolate; }
+.alex-static-stage button { position: absolute; top: 50%; left: 50%; width: min(60cqw, calc(100cqh * var(--shot-ratio))); height: auto; aspect-ratio: var(--shot-ratio); padding: 0; overflow: hidden; border: 0; border-radius: 12px; background: #fff; box-shadow: 0 22px 35px #0005; cursor: pointer; transition: transform .5s ease, width .5s ease, opacity .5s ease; }
 .alex-static-stage img { display: block; width: 100%; height: 100%; object-fit: contain; background: #fff; }
-.alex-static-stage .is-center { z-index: 3; transform: translateX(-50%); opacity: 1; }
-.alex-static-stage .is-left { z-index: 1; left: 0; width: 36%; transform-origin: left center; transform: scale(.96) rotateY(18deg); opacity: .9; }
-.alex-static-stage .is-right { z-index: 1; left: auto; right: 0; width: 36%; transform-origin: right center; transform: scale(.96) rotateY(-18deg); opacity: .9; }
+.alex-static-stage .is-center { z-index: 3; transform: translate(-50%, -50%); opacity: 1; }
+.alex-static-stage .is-left { z-index: 1; left: 0; width: min(36cqw, calc(100cqh * var(--shot-ratio))); transform-origin: left center; transform: translateY(-50%) scale(.96) rotateY(18deg); opacity: .9; }
+.alex-static-stage .is-right { z-index: 1; left: auto; right: 0; width: min(36cqw, calc(100cqh * var(--shot-ratio))); transform-origin: right center; transform: translateY(-50%) scale(.96) rotateY(-18deg); opacity: .9; }
 .alex-static-nav { position: relative; display: flex; align-items: center; justify-content: center; gap: 25px; }
 .alex-static-nav > button { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid #2c4b70; border-radius: 50%; background: #13273e; color: #fff; font-size: 28px; line-height: 1; cursor: pointer; }
 .alex-static-nav > div { display: flex; gap: 2px; }
@@ -63,8 +63,8 @@
   .alex-static-actions { grid-template-columns: 1.45fr 1fr; }
   .alex-static-gallery { grid-template-rows: auto 44px auto; }
   .alex-static-stage { min-height: 0; height: clamp(280px, 75cqw, 460px); }
-  .alex-static-stage button { width: 76%; }
-  .alex-static-stage .is-left, .alex-static-stage .is-right { width: 45%; }
+  .alex-static-stage button { width: min(76cqw, calc(100cqh * var(--shot-ratio))); }
+  .alex-static-stage .is-left, .alex-static-stage .is-right { width: min(45cqw, calc(100cqh * var(--shot-ratio))); }
   .alex-static-thumbs button { height: 72px; }
 }
 @media (prefers-reduced-motion: reduce) {

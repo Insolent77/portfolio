@@ -8,9 +8,9 @@
   card.className = 'project reveal is-visible project--alex-static';
 
   const shots = [
-    { label: 'Главная страница', src: 'assets/alex-home-updated.png' },
-    { label: 'Админка — расписание', src: 'assets/alex-schedule-updated.png' },
-    { label: 'Отзывы', src: 'assets/alex-reviews-updated.png' }
+    { label: 'Главная страница', src: 'assets/alex-home-updated.png', ratio: 4 / 3 },
+    { label: 'Админка — расписание', src: 'assets/alex-schedule-updated.png', ratio: 3 / 4 },
+    { label: 'Отзывы', src: 'assets/alex-reviews-updated.png', ratio: 3 / 4 }
   ];
 
   const copy = {
@@ -36,7 +36,7 @@
       <div class="alex-static-actions"><a href="https://alex-educator.com" target="_blank" rel="noreferrer"><span>↗</span><b data-alex-copy="project"></b></a><a class="secondary" href="https://github.com/Insolent77/alex-educator" target="_blank" rel="noreferrer"><span>●</span><b data-alex-copy="github"></b></a></div>
     </div>
     <div class="alex-static-gallery">
-      <div class="alex-static-stage">${shots.map((shot,i)=>`<button type="button" data-slide="${i}" aria-label="${shot.label}"><img src="${shot.src}" alt="${shot.label}"></button>`).join('')}</div>
+      <div class="alex-static-stage">${shots.map((shot,i)=>`<button type="button" data-slide="${i}" style="--shot-ratio:${shot.ratio}" aria-label="${shot.label}"><img src="${shot.src}" alt="${shot.label}"></button>`).join('')}</div>
       <div class="alex-static-nav"><button type="button" data-prev aria-label="Предыдущий скриншот">‹</button><div>${shots.map((_,i)=>`<button type="button" data-dot="${i}" aria-label="Скриншот ${i+1}"></button>`).join('')}</div><button type="button" data-next aria-label="Следующий скриншот">›</button></div>
       <div class="alex-static-thumbs">${shots.map((shot,i)=>`<button type="button" data-thumb="${i}" aria-label="${shot.label}"><img src="${shot.src}" alt=""></button>`).join('')}</div>
     </div>`;
