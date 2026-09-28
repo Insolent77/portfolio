@@ -13,7 +13,7 @@
       lomonosovResultOne: 'ДЗ, чаты и расписание в одном месте',
       lomonosovResultTwo: 'Роли ученика, родителя и преподавателя',
       autoType: 'Одностраничный сайт',
-      autoDescription: 'Промо-сайт автосервиса в Саратове: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.',
+      autoDescription: 'Промо-сайт автосервиса: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.',
       autoResultOne: 'Адаптивный лендинг под телефон и ПК',
       autoResultTwo: 'Кликабельные контакты и карта',
       futureResultOne: 'Сайт / сервис / автоматизация',
@@ -80,17 +80,17 @@
     autoCard.className = 'project reveal';
     autoCard.dataset.projectAuto = '';
     autoCard.innerHTML = `
-      <a class="project__cover" href="https://insolent77.github.io/artemiy-site/" target="_blank" rel="noreferrer" aria-label="Открыть проект Автосервис Саратов">
+      <a class="project__cover" href="https://insolent77.github.io/artemiy-site/" target="_blank" rel="noreferrer" aria-label="Открыть проект Автосервис">
         <div class="preview project-preview project-preview--auto" aria-hidden="true">
           <div class="project-preview__frame auto-ui">
-            <div class="auto-ui__top"><span class="auto-ui__logo">АВТОСЕРВИС <b>САРАТОВ</b></span><i></i><i></i><i></i></div>
+            <div class="auto-ui__top"><span class="auto-ui__logo">АВТОСЕРВИС</span><i></i><i></i><i></i></div>
             <div class="auto-ui__copy"><small>РЕМОНТ АВТОМОБИЛЕЙ</small><strong>РЕМОНТ КУЗОВЩИНЫ</strong><strong class="auto-ui__accent">ГАЗЕЛЕЙ И ЛЕГКОВЫХ</strong><p></p><p></p></div>
             <div class="auto-ui__garage"><span class="auto-ui__car auto-ui__car--one"></span><span class="auto-ui__car auto-ui__car--two"></span><div class="auto-ui__lights"></div></div>
             <div class="auto-ui__services"><i></i><i></i><i></i><i></i><i></i><i></i></div>
           </div>
         </div><span class="project__arrow">↗</span>
       </a>
-      <div class="project__copy"><p class="project__meta"><span>05 / BUSINESS LANDING</span><span data-extra-i18n="autoType">Одностраничный сайт</span></p><h3>Автосервис Саратов</h3><p data-extra-i18n="autoDescription">Промо-сайт автосервиса в Саратове: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.</p><div class="project__results"><span data-extra-i18n="autoResultOne">Адаптивный лендинг под телефон и ПК</span><span data-extra-i18n="autoResultTwo">Кликабельные контакты и карта</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
+      <div class="project__copy"><p class="project__meta"><span>05 / BUSINESS LANDING</span><span data-extra-i18n="autoType">Одностраничный сайт</span></p><h3>Автосервис</h3><p data-extra-i18n="autoDescription">Промо-сайт автосервиса: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.</p><div class="project__results"><span data-extra-i18n="autoResultOne">Адаптивный лендинг под телефон и ПК</span><span data-extra-i18n="autoResultTwo">Кликабельные контакты и карта</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
     if (futureCard) projectList.insertBefore(autoCard, futureCard); else projectList.appendChild(autoCard);
   }
 
