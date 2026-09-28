@@ -6,34 +6,36 @@
   align-items: stretch;
   gap: 24px;
   padding: 30px;
-  border: 1px solid #294b72;
+  border: 1px solid var(--glass-line);
   border-radius: 20px;
-  background: radial-gradient(ellipse at 80% 100%, #163453 0, transparent 55%), linear-gradient(145deg, #0c2036, #071420 65%);
-  color: #f2f7ff;
+  background: radial-gradient(ellipse at 80% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%), var(--glass-soft);
+  color: var(--glass-text);
   isolation: isolate;
 }
 .project--alex-static:hover { transform: none; }
 .project--alex-static * { box-sizing: border-box; }
 .alex-static-info { min-width: 0; display: flex; flex-direction: column; align-items: stretch; }
-.alex-static-badge { align-self: flex-start; padding: 6px 12px; border: 1px solid #375883; border-radius: 999px; background: #193356; font-size: 11px; font-weight: 600; }
-.project--alex-static h3 { margin: 14px 0 0; font: 600 clamp(28px, 3.1cqw, 42px)/1.12 var(--font-body); letter-spacing: -.04em; color: #fff; }
-.alex-static-subtitle { margin: 12px 0 0; color: #aec9e9; font-size: 14px; line-height: 1.6; }
-.alex-static-description { margin: 18px 0 0; color: #9db8d9; font-size: 12px; line-height: 1.75; }
+.alex-static-badge { align-self: flex-start; padding: 6px 12px; border: 1px solid var(--glass-line); border-radius: 999px; background: var(--glass-soft); font-size: 11px; font-weight: 600; }
+.project--alex-static h3 { margin: 14px 0 0; font: 400 clamp(28px, 3.1cqw, 42px)/1.12 var(--font-display); letter-spacing: -.025em; color: var(--glass-text); }
+.alex-static-subtitle { margin: 12px 0 0; color: var(--glass-text); font-size: 14px; line-height: 1.6; }
+.alex-static-description { margin: 18px 0 0; color: var(--glass-muted); font-size: 12px; line-height: 1.75; }
 .alex-static-features { display: grid; gap: 14px; margin-top: 22px; }
 .alex-static-features > div { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 12px; }
-.alex-static-features i { width: 38px; height: 40px; display: grid; place-items: center; border: 1px solid #294361; border-radius: 11px; background: linear-gradient(135deg, #1b3451, #101e30); color: #3986ff; font-size: 23px; font-style: normal; }
+.alex-static-features i { width: 38px; height: 40px; display: grid; place-items: center; border: 1px solid var(--glass-line); border-radius: 11px; background: var(--glass-soft); color: var(--accent); font-size: 23px; font-style: normal; }
 .alex-static-features p { margin: 0; display: grid; gap: 3px; line-height: 1.5; }
-.alex-static-features b { font-size: 12px; color: #f2f7ff; }
-.alex-static-features span { font-size: 11px; color: #9db8d9; }
-.alex-static-tech { margin-top: 24px; padding-top: 16px; border-top: 1px solid #28405c; }
+.alex-static-features b { font-size: 12px; color: var(--glass-text); }
+.alex-static-features span { font-size: 11px; color: var(--glass-muted); }
+.alex-static-tech { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--glass-line); }
 .alex-static-tech small { display: block; margin-bottom: 9px; font-size: 12px; }
 .alex-static-tech > div { display: flex; flex-wrap: wrap; gap: 7px; }
-.alex-static-tech span { padding: 5px 12px; border: 1px solid #294361; border-radius: 999px; background: #122238; color: #d0dded; font-size: 11px; }
+.alex-static-tech span { padding: 5px 12px; border: 1px solid var(--glass-line); border-radius: 999px; background: var(--glass-soft); color: var(--glass-muted); font-size: 11px; }
 .alex-static-actions { display: grid; grid-template-columns: 1.45fr 1fr; gap: 10px; margin-top: auto; padding-top: 22px; }
-.alex-static-actions a { min-width: 0; min-height: 44px; padding: 10px 8px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid #3977e8; border-radius: 11px; background: linear-gradient(120deg, #2f79fa, #11357d); color: #fff; font-size: 11px; text-decoration: none; white-space: nowrap; }
+.alex-static-actions a { min-width: 0; min-height: 44px; padding: 10px 8px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: 11px; background: var(--glass-text); color: var(--glass-strong); font-size: 11px; text-decoration: none; white-space: nowrap; }
 .alex-static-actions b { font-weight: 600; }
 .alex-static-actions a > span { font-size: 19px; line-height: 1; }
-.alex-static-actions a.secondary { border-color: #2c486b; background: linear-gradient(120deg, #0d1c2d, #172c44); }
+.alex-static-actions a.secondary { border-color: var(--glass-line); background: var(--glass-soft); color: var(--glass-text); }
+.alex-static-actions a:hover { background: var(--accent); color: #fff; }
+.alex-static-actions a.secondary:hover { background: var(--glass-soft); border-color: var(--accent); color: var(--glass-text); }
 .alex-static-gallery { min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr) 44px auto; gap: 12px; }
 .alex-static-stage { position: relative; min-height: 430px; container-type: size; perspective: 1200px; isolation: isolate; }
 .alex-static-stage button { position: absolute; top: 50%; left: 50%; width: min(60cqw, calc(100cqh * var(--shot-ratio))); height: auto; aspect-ratio: var(--shot-ratio); padding: 0; overflow: hidden; border: 0; border-radius: 12px; background: #fff; box-shadow: 0 22px 35px #0005; cursor: pointer; transition: transform .5s ease, width .5s ease, opacity .5s ease; }
@@ -42,16 +44,17 @@
 .alex-static-stage .is-left { z-index: 1; left: 0; width: min(36cqw, calc(100cqh * var(--shot-ratio))); transform-origin: left center; transform: translateY(-50%) scale(.96) rotateY(18deg); opacity: .9; }
 .alex-static-stage .is-right { z-index: 1; left: auto; right: 0; width: min(36cqw, calc(100cqh * var(--shot-ratio))); transform-origin: right center; transform: translateY(-50%) scale(.96) rotateY(-18deg); opacity: .9; }
 .alex-static-nav { position: relative; display: flex; align-items: center; justify-content: center; gap: 25px; }
-.alex-static-nav > button { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid #2c4b70; border-radius: 50%; background: #13273e; color: #fff; font-size: 28px; line-height: 1; cursor: pointer; }
+.alex-static-nav > button { width: 44px; height: 44px; padding: 0; display: grid; place-items: center; border: 1px solid var(--glass-line); border-radius: 50%; background: var(--glass-soft); color: var(--glass-text); font-size: 28px; line-height: 1; cursor: pointer; }
 .alex-static-nav > div { display: flex; gap: 2px; }
+.alex-static-nav > button:hover { border-color: var(--accent); color: var(--accent); }
 .alex-static-nav > div button { position: relative; width: 22px; height: 32px; padding: 0; border: 0; background: transparent; cursor: pointer; }
-.alex-static-nav > div button::after { content: ''; position: absolute; inset: 11px 6px; border-radius: 50%; background: #35547c; }
-.alex-static-nav > div button.is-active::after { background: #287bff; }
+.alex-static-nav > div button::after { content: ''; position: absolute; inset: 11px 6px; border-radius: 50%; background: color-mix(in srgb, var(--glass-text) 28%, transparent); }
+.alex-static-nav > div button.is-active::after { background: var(--accent); }
 .alex-static-thumbs { width: 86%; justify-self: center; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .alex-static-thumbs button { min-width: 0; height: clamp(66px, 8cqw, 106px); padding: 3px; overflow: hidden; border: 2px solid transparent; border-radius: 10px; background: #fff; cursor: pointer; }
-.alex-static-thumbs button.is-active { border-color: #398aff; box-shadow: 0 0 0 2px #153763; }
+.alex-static-thumbs button.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
 .alex-static-thumbs img { width: 100%; height: 100%; display: block; object-fit: contain; border-radius: 5px; }
-.project--alex-static :is(button, a):focus-visible { outline: 3px solid #79b3ff; outline-offset: 3px; }
+.project--alex-static :is(button, a):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 @container (max-width: 850px) {
   .project--alex-static { grid-template-columns: minmax(230px, 34%) minmax(0, 1fr); gap: 18px; padding: 22px; }
   .alex-static-actions { grid-template-columns: 1fr; }
