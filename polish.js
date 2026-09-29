@@ -135,40 +135,6 @@
 
   const scrollContainer = document.querySelector('.scroll');
 
-  // Use the exact same smooth wheel animation when the pointer is inside
-  // the content panel. script.js already handles wheel gestures outside it.
-  window.addEventListener('wheel', (event) => {
-    const targetIsInsideScroller = event.target instanceof Element && event.target.closest('.scroll');
-    if (!scrollContainer || !targetIsInsideScroller || event.defaultPrevented) return;
-    if (typeof animateOutsideScroll !== 'function') return;
-
-    const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
-      ? 16
-      : (event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? scrollContainer.clientHeight : 1);
-    const delta = (Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX) * unit;
-    if (!delta) return;
-
-    const maxScroll = scrollContainer.scrollHeight - scrollContainer.clientHeight;
-    const start = outsideScrollTarget ?? scrollContainer.scrollTop;
-    const nextScroll = Math.min(maxScroll, Math.max(0, start + delta));
-    if (nextScroll === start) return;
-
-    event.preventDefault();
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      scrollContainer.classList.add('is-outside-scrolling');
-      scrollContainer.scrollTop = nextScroll;
-      scrollContainer.classList.remove('is-outside-scrolling');
-      return;
-    }
-
-    outsideScrollTarget = nextScroll;
-    if (outsideScrollFrame === null) {
-      scrollContainer.classList.add('is-outside-scrolling');
-      outsideScrollTime = performance.now();
-      outsideScrollFrame = requestAnimationFrame(animateOutsideScroll);
-    }
-  }, { passive: false, capture: true });
-
   const scrollHint = document.querySelector('[data-scroll-hint]');
   const hideHint = () => {
     if (scrollContainer && scrollContainer.scrollTop > 36) scrollHint?.classList.add('is-hidden');

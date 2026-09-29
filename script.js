@@ -323,43 +323,48 @@ const scrollContainer = document.querySelector('.scroll');
 const sections = [...document.querySelectorAll('.scroll section[id]')];
 const navLinks = [...document.querySelectorAll('[data-nav-link]')];
 
-// The page itself is fixed, so wheel gestures made over the surrounding
-// background or toolbar need to be forwarded to the content scroller.
+// Use one wheel animation for the panel, toolbar and surrounding background.
 let outsideScrollTarget = null;
 let outsideScrollFrame = null;
 let outsideScrollTime = 0;
 
+function stopWheelScroll() {
+  if (outsideScrollFrame !== null) cancelAnimationFrame(outsideScrollFrame);
+  outsideScrollFrame = null;
+  outsideScrollTarget = null;
+  scrollContainer?.classList.remove('is-outside-scrolling');
+}
+
 function animateOutsideScroll(time) {
   if (!scrollContainer || outsideScrollTarget === null) return;
 
+  const maxScroll = Math.max(0, scrollContainer.scrollHeight - scrollContainer.clientHeight);
+  outsideScrollTarget = Math.min(maxScroll, Math.max(0, outsideScrollTarget));
   const elapsed = Math.min(34, Math.max(1, time - outsideScrollTime));
   const distance = outsideScrollTarget - scrollContainer.scrollTop;
 
   if (Math.abs(distance) < 0.5) {
     scrollContainer.scrollTop = outsideScrollTarget;
-    scrollContainer.classList.remove('is-outside-scrolling');
-    outsideScrollTarget = null;
-    outsideScrollFrame = null;
+    stopWheelScroll();
     return;
   }
 
   const progress = 1 - Math.pow(0.01, elapsed / 260);
+  const previousTop = scrollContainer.scrollTop;
   scrollContainer.scrollTop += distance * progress;
+  // Browsers can round scrollTop to device pixels. A subpixel step must not
+  // keep requesting frames forever and fight a later navigation scroll.
+  if (scrollContainer.scrollTop === previousTop) {
+    scrollContainer.scrollTop = outsideScrollTarget;
+    stopWheelScroll();
+    return;
+  }
   outsideScrollTime = time;
   outsideScrollFrame = requestAnimationFrame(animateOutsideScroll);
 }
 
 window.addEventListener('wheel', (event) => {
-  const targetIsInsideScroller = event.target instanceof Element && event.target.closest('.scroll');
-  if (!scrollContainer || event.defaultPrevented) return;
-
-  if (targetIsInsideScroller) {
-    if (outsideScrollFrame !== null) cancelAnimationFrame(outsideScrollFrame);
-    scrollContainer.classList.remove('is-outside-scrolling');
-    outsideScrollTarget = null;
-    outsideScrollFrame = null;
-    return;
-  }
+  if (!scrollContainer || event.defaultPrevented || event.ctrlKey) return;
 
   const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
     ? 16
@@ -388,12 +393,20 @@ window.addEventListener('wheel', (event) => {
   }
 }, { passive: false });
 
+// Direct input takes over from any pending wheel movement.
+window.addEventListener('pointerdown', stopWheelScroll, { passive: true, capture: true });
+window.addEventListener('touchstart', stopWheelScroll, { passive: true, capture: true });
+window.addEventListener('keydown', (event) => {
+  if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) stopWheelScroll();
+});
+
 function scrollToSection(target, behavior = 'smooth') {
   if (!target || !scrollContainer) return;
+  stopWheelScroll();
   const containerTop = scrollContainer.getBoundingClientRect().top;
   const targetTop = target.getBoundingClientRect().top;
   const top = scrollContainer.scrollTop + targetTop - containerTop;
-  scrollContainer.scrollTo({ top, behavior });
+  scrollContainer.scrollTo({ top, behavior: behavior === 'auto' ? 'instant' : behavior });
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
