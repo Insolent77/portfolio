@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="INS — дизайн и разработка понятных сайтов и цифровых продуктов под ключ.">
-  <meta name="theme-color" content="#241a14">
+  <meta name="theme-color" content="#faf5ec">
   <meta name="color-scheme" content="dark light">
   <meta property="og:type" content="website">
   <meta property="og:title" content="INS — понятные сайты для людей и бизнеса">
@@ -20,9 +20,11 @@
   <link rel="stylesheet" href="polish.css">
   <link rel="stylesheet" href="alex-carousel.css">
   <link rel="stylesheet" href="approach.css">
+  <link rel="stylesheet" href="appearance-legacy.css">
+  <link rel="stylesheet" href="studio.css">
   <script>document.documentElement.classList.remove('no-js');try{if(localStorage.getItem('portfolio-sound')===null)localStorage.setItem('portfolio-sound','off')}catch{}</script>
 </head>
-<body data-background="coffee" data-glass="cocoa">
+<body data-background="mist" data-glass="porcelain">
   <a class="skip-link" href="#main-scroll" data-i18n="skipLink">Перейти к содержимому</a>
 
   <div class="ambient" aria-hidden="true">
@@ -39,15 +41,19 @@
         <div class="appearance" aria-label="Настройки оформления" data-appearance-panel>
           <div class="switcher" role="group" aria-labelledby="background-label">
             <span class="switcher__label" id="background-label" data-i18n="backgroundLabel">Фон</span>
+            <button class="choice choice--mist" type="button" data-background-choice="mist" aria-label="Кремовый фон с голубым свечением" title="Кремовый фон с голубым свечением"><i></i></button>
             <button class="choice choice--coffee" type="button" data-background-choice="coffee" aria-label="Тёмный кофейный фон" title="Тёмный кофейный фон"><i></i></button>
             <button class="choice choice--home" type="button" data-background-choice="home" aria-label="Домашний интерьер" title="Домашний интерьер"><i></i></button>
             <button class="choice choice--glow" type="button" data-background-choice="glow" aria-label="Абстрактный свет" title="Абстрактный свет"><i></i></button>
+            <button class="choice choice--cobalt" type="button" data-background-choice="cobalt" aria-label="Кобальтовый фон" title="Кобальтовый фон"><i></i></button>
           </div>
           <div class="switcher" role="group" aria-labelledby="glass-label">
             <span class="switcher__label" id="glass-label" data-i18n="glassLabel">Стекло</span>
+            <button class="choice choice--porcelain" type="button" data-glass-choice="porcelain" aria-label="Светлое оформление с синими акцентами" title="Светлое оформление с синими акцентами"><i></i></button>
             <button class="choice choice--dark" type="button" data-glass-choice="dark" aria-label="Тёмное стекло" title="Тёмное стекло"><i></i></button>
             <button class="choice choice--milk" type="button" data-glass-choice="milk" aria-label="Молочное стекло" title="Молочное стекло"><i></i></button>
             <button class="choice choice--cocoa" type="button" data-glass-choice="cocoa" aria-label="Коричневое стекло" title="Коричневое стекло"><i></i></button>
+            <button class="choice choice--sand" type="button" data-glass-choice="sand" aria-label="Песочное стекло" title="Песочное стекло"><i></i></button>
           </div>
           <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false" aria-label="Включить звуки" title="Включить звуки">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path class="sound-toggle__body" d="M5 9h3.2L12 6v12l-3.8-3H5Z"/><path class="sound-toggle__waves" d="M15 9.2c.8.7 1.2 1.6 1.2 2.8s-.4 2.1-1.2 2.8M17.4 7c1.4 1.3 2.1 3 2.1 5s-.7 3.7-2.1 5"/><path class="sound-toggle__mute" d="m15.4 9.4 4.2 5.2m0-5.2-4.2 5.2"/></svg>
@@ -67,6 +73,19 @@
           <p class="hero__lead reveal" data-i18n="heroLead">Создаю спокойные и понятные цифровые продукты — от структуры и дизайна до кода, запуска и поддержки.</p>
           <div class="hero__actions reveal"><a class="button button--primary" href="https://t.me/INS8988" target="_blank" rel="noreferrer"><span data-i18n="heroCta">Обсудить проект</span><i>↗</i></a><a class="button button--quiet" href="#projects"><span data-i18n="heroWork">Посмотреть работы</span><i>↓</i></a></div>
           <div class="hero__facts reveal"><p><span data-i18n="factPlaceLabel">Работаю</span><b data-i18n="factPlace">Удалённо</b></p><p><span data-i18n="factFocusLabel">Фокус</span><b data-i18n="factFocus">Польза + простота</b></p></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-art__halo"></div>
+          <div class="hero-art__note" data-i18n="heroArtNote">Ваша идея —<br>готовый сайт</div>
+          <svg class="hero-art__arrow" viewBox="0 0 100 75"><path d="M8 5c48-3 73 19 72 57m-11-11 11 12 9-14"/></svg>
+          <div class="hero-art__window">
+            <div class="hero-art__bar"><i></i><i></i><i></i><span></span></div>
+            <div class="hero-art__page"><div class="hero-art__lines"><i></i><b></b><b></b><span></span><span></span><em></em></div><div class="hero-art__shape"></div></div>
+            <div class="hero-art__cards"><i></i><i></i><i></i></div>
+          </div>
+          <div class="hero-art__tile hero-art__tile--code"><svg viewBox="0 0 40 40"><path d="m13 11-9 9 9 9m14-18 9 9-9 9m-4-23-6 34"/></svg></div>
+          <div class="hero-art__tile hero-art__tile--check"><svg viewBox="0 0 40 40"><path d="m9 21 8 8 15-18"/></svg></div>
+          <svg class="hero-art__cursor" viewBox="0 0 48 56"><path d="m6 4 35 28-18 2-10 16Z"/></svg>
         </div>
         <a class="scroll-hint reveal" href="#projects" data-scroll-hint><span data-i18n="scrollHint">Листайте страницу</span><i>↓</i></a>
       </section>

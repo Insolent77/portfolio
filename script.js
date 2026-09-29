@@ -9,6 +9,7 @@ const translations = {
     navProjects: 'Проекты', navApproach: 'Подход', navContacts: 'Контакты',
     availability: 'Открыт к проектам',
     heroKicker: 'Полный цикл разработки',
+    heroArtNote: 'Ваша идея — готовый сайт',
     heroTitle: 'Сайты, в которых<br><em>легко разобраться.</em>',
     heroLead: 'Создаю спокойные и понятные цифровые продукты — от структуры и дизайна до кода, запуска и поддержки.',
     heroCta: 'Обсудить проект', heroWork: 'Посмотреть работы',
@@ -42,6 +43,7 @@ const translations = {
     navProjects: 'Projects', navApproach: 'Approach', navContacts: 'Contact',
     availability: 'Available for projects',
     heroKicker: 'Full-cycle development',
+    heroArtNote: 'Your idea, brought to life',
     heroTitle: 'Websites that are<br><em>easy to understand.</em>',
     heroLead: 'I create calm and clear digital products — from structure and design to code, launch and ongoing support.',
     heroCta: 'Discuss a project', heroWork: 'View my work',
@@ -71,12 +73,12 @@ const translations = {
 
 const appearanceNames = {
   ru: {
-    background: { coffee: 'Тёмный кофейный фон', home: 'Домашний интерьер', glow: 'Абстрактный свет' },
-    glass: { dark: 'Тёмное стекло', milk: 'Молочное стекло', cocoa: 'Коричневое стекло' }
+    background: { mist: 'Кремовый фон с голубым свечением', coffee: 'Тёмный кофейный фон', home: 'Домашний интерьер', glow: 'Абстрактный свет', cobalt: 'Кобальтовый фон' },
+    glass: { porcelain: 'Светлое оформление с синими акцентами', dark: 'Тёмное стекло', milk: 'Молочное стекло', cocoa: 'Коричневое стекло', sand: 'Песочное стекло' }
   },
   en: {
-    background: { coffee: 'Dark coffee background', home: 'Cozy home interior', glow: 'Abstract warm light' },
-    glass: { dark: 'Dark glass', milk: 'Milky glass', cocoa: 'Cocoa glass' }
+    background: { mist: 'Cream background with a soft blue glow', coffee: 'Dark coffee background', home: 'Cozy home interior', glow: 'Abstract warm light', cobalt: 'Cobalt background' },
+    glass: { porcelain: 'Light appearance with blue accents', dark: 'Dark glass', milk: 'Milky glass', cocoa: 'Cocoa glass', sand: 'Sand glass' }
   }
 };
 
@@ -96,8 +98,17 @@ const storage = {
 
 const params = new URLSearchParams(location.search);
 const supportedLanguages = ['ru', 'en'];
-const supportedBackgrounds = ['coffee', 'home', 'glow'];
-const supportedGlass = ['dark', 'milk', 'cocoa'];
+const supportedBackgrounds = ['mist', 'coffee', 'home', 'glow', 'cobalt'];
+const supportedGlass = ['porcelain', 'dark', 'milk', 'cocoa', 'sand'];
+
+// Upgrade the former default pair once, preserving custom appearance choices.
+if (!storage.get('portfolio-default-theme-studio-v1')) {
+  if (storage.get('portfolio-background') === 'cobalt' && storage.get('portfolio-glass') === 'sand') {
+    storage.set('portfolio-background', 'mist');
+    storage.set('portfolio-glass', 'porcelain');
+  }
+  storage.set('portfolio-default-theme-studio-v1', '1');
+}
 
 let currentLanguage = supportedLanguages.includes(params.get('lang'))
   ? params.get('lang')
@@ -105,11 +116,11 @@ let currentLanguage = supportedLanguages.includes(params.get('lang'))
 
 let currentBackground = supportedBackgrounds.includes(params.get('background'))
   ? params.get('background')
-  : (supportedBackgrounds.includes(storage.get('portfolio-background')) ? storage.get('portfolio-background') : 'coffee');
+  : (supportedBackgrounds.includes(storage.get('portfolio-background')) ? storage.get('portfolio-background') : 'mist');
 
 let currentGlass = supportedGlass.includes(params.get('glass'))
   ? params.get('glass')
-  : (supportedGlass.includes(storage.get('portfolio-glass')) ? storage.get('portfolio-glass') : 'cocoa');
+  : (supportedGlass.includes(storage.get('portfolio-glass')) ? storage.get('portfolio-glass') : 'porcelain');
 
 let soundEnabled = storage.get('portfolio-sound') !== 'off';
 let audioContext = null;
@@ -166,7 +177,7 @@ function applyLanguage(language, persist = true) {
 }
 
 function applyBackground(background, persist = true) {
-  currentBackground = supportedBackgrounds.includes(background) ? background : 'coffee';
+  currentBackground = supportedBackgrounds.includes(background) ? background : 'mist';
   document.body.dataset.background = currentBackground;
   document.querySelectorAll('[data-background-choice]').forEach((button) => {
     const active = button.dataset.backgroundChoice === currentBackground;
@@ -177,8 +188,9 @@ function applyBackground(background, persist = true) {
 }
 
 function applyGlass(glass, persist = true) {
-  currentGlass = supportedGlass.includes(glass) ? glass : 'cocoa';
+  currentGlass = supportedGlass.includes(glass) ? glass : 'porcelain';
   document.body.dataset.glass = currentGlass;
+  setMeta('meta[name="theme-color"]', { porcelain: '#faf5ec', sand: '#f5e6ca', milk: '#f6eddd', dark: '#10100f', cocoa: '#241a14' }[currentGlass]);
   document.querySelectorAll('[data-glass-choice]').forEach((button) => {
     const active = button.dataset.glassChoice === currentGlass;
     button.classList.toggle('is-active', active);
