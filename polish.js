@@ -4,43 +4,47 @@
       appearanceToggle: 'Оформление',
       alexResultOne: 'Сайт + админ-панель + личный кабинет',
       alexResultTwo: 'Полный цикл разработки',
-      textMateResultOne: 'Работает прямо в браузере',
-      textMateResultTwo: 'Локальные и облачные AI-модели',
-      gitResultOne: 'Интерактивная визуализация истории Git',
-      gitResultTwo: 'Ветки и коммиты в одном сценарии',
+      textMateResultOne: 'Исправляет ошибки, переводит и сокращает текст',
+      textMateResultTwo: 'Не нужно копировать текст в другой сервис',
+      gitResultOne: 'Показывает изменения в порядке их появления',
+      gitResultTwo: 'Помогает проследить разные направления работы',
       lomonosovType: 'Мобильное приложение',
-      lomonosovDescription: 'Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.',
-      lomonosovResultOne: 'ДЗ, чаты и расписание в одном месте',
-      lomonosovResultTwo: 'Роли ученика, родителя и преподавателя',
-      autoType: 'Одностраничный сайт',
-      autoDescription: 'Промо-сайт автосервиса: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.',
-      autoResultOne: 'Адаптивный лендинг под телефон и ПК',
-      autoResultTwo: 'Кликабельные контакты и карта',
-      futureResultOne: 'Сайт / сервис / автоматизация',
-      futureResultTwo: 'Решение под конкретную задачу',
-      trustTitle: 'Есть задача, но нет ТЗ? Нормально.',
-      trustText: 'Опишите своими словами, что хотите получить — помогу сформулировать решение.'
+      lomonosovTitle: 'Мой Ломоносов — всё для учёбы',
+      autoTitle: 'Сайт автосервиса',
+      lomonosovDescription: 'Приложение «Мой Ломоносов» для учеников, родителей и преподавателей. Здесь можно посмотреть расписание, найти домашнее задание, написать в чат и узнать, как идут дела с учёбой. Всё собрано в одном месте, чтобы нужное было под рукой.',
+      lomonosovResultOne: 'Расписание и домашние задания под рукой',
+      lomonosovResultTwo: 'Можно общаться и следить за успехами в учёбе',
+      autoType: 'Сайт для бизнеса',
+      autoDescription: 'Сайт автосервиса в Саратове. Собрал на одной странице услуги, контакты и карту, чтобы человек мог быстро узнать, с чем здесь помогут, позвонить и найти дорогу. Удобно открыть с телефона, когда помощь нужна прямо сейчас.',
+      autoResultOne: 'Услуги и контакты на одной странице',
+      autoResultTwo: 'Можно сразу позвонить или открыть карту',
+      futureResultOne: 'Помогу разобраться, какой сайт вам нужен',
+      futureResultTwo: 'Объясню, как всё устроено и как этим пользоваться',
+      trustTitle: 'Есть задача, но нет тз — это нормально',
+      trustText: 'Не нужно заранее разбираться в технических деталях. Расскажите, что хотите получить, а я помогу с остальным.'
     },
     en: {
       appearanceToggle: 'Appearance',
       alexResultOne: 'Website + admin panel + student portal',
       alexResultTwo: 'Full-cycle development',
-      textMateResultOne: 'Works directly in the browser',
-      textMateResultTwo: 'Local and cloud AI models',
-      gitResultOne: 'Interactive Git history visualization',
-      gitResultTwo: 'Branches and commits in one flow',
+      textMateResultOne: 'Corrects, translates and shortens text',
+      textMateResultTwo: 'No need to copy text into another service',
+      gitResultOne: 'See changes in the order they happened',
+      gitResultTwo: 'Follow different lines of work',
       lomonosovType: 'Mobile application',
-      lomonosovDescription: 'My Lomonosov is a personal learning app for students, parents and teachers with homework, chats, lesson schedules, reports and learning statistics in one place.',
-      lomonosovResultOne: 'Homework, chats and schedule in one place',
-      lomonosovResultTwo: 'Student, parent and teacher roles',
-      autoType: 'One-page website',
-      autoDescription: 'A promotional website for an auto service in Saratov with services, benefits, contacts and quick access to calls, social media and Yandex Maps.',
-      autoResultOne: 'Responsive landing page for mobile and desktop',
-      autoResultTwo: 'Clickable contacts and map',
-      futureResultOne: 'Website / service / automation',
-      futureResultTwo: 'A solution built around the task',
-      trustTitle: 'Have a task but no specification? That’s fine.',
-      trustText: 'Describe what you want in your own words — I’ll help turn it into a clear solution.'
+      lomonosovTitle: 'My Lomonosov — school in one app',
+      autoTitle: 'A website for a car repair shop',
+      lomonosovDescription: 'My Lomonosov is an app for students, parents and teachers. Check the timetable, find homework, send a message or see how learning is going. Everything is in one place and easy to reach.',
+      lomonosovResultOne: 'Timetable and homework within easy reach',
+      lomonosovResultTwo: 'Keep in touch and follow learning progress',
+      autoType: 'Business website',
+      autoDescription: 'A website for a car repair shop in Saratov. Services, contact details and a map are on one page, so visitors can see what the shop repairs, call and find their way there. Easy to open on a phone when help is needed.',
+      autoResultOne: 'Services and contact details on one page',
+      autoResultTwo: 'Call the shop or open the map directly',
+      futureResultOne: 'I’ll help you work out what kind of website you need',
+      futureResultTwo: 'I’ll explain how it works and how to use it',
+      trustTitle: 'It’s okay to have a task without a written brief',
+      trustText: 'You don’t need to figure out the technical details first. Tell me what you want to achieve, and I’ll help with the rest.'
     }
   };
 
@@ -70,7 +74,7 @@
           </div>
         </div><span class="project__arrow">↗</span>
       </a>
-      <div class="project__copy"><p class="project__meta"><span>04 / EDTECH APP</span><span data-extra-i18n="lomonosovType">Мобильное приложение</span></p><h3>Мой Ломоносов</h3><p data-extra-i18n="lomonosovDescription">Личный кабинет «Мой Ломоносов» для учеников, родителей и преподавателей: домашние задания, чаты, расписание уроков, отчёты и учебная статистика в одном приложении.</p><div class="project__results"><span data-extra-i18n="lomonosovResultOne">ДЗ, чаты и расписание в одном месте</span><span data-extra-i18n="lomonosovResultTwo">Роли ученика, родителя и преподавателя</span></div><ul aria-label="Технологии"><li>Expo</li><li>React Native</li><li>API</li><li>UX/UI</li></ul></div>`;
+      <div class="project__copy"><p class="project__meta"><span>04 / EDTECH APP</span><span data-extra-i18n="lomonosovType">Мобильное приложение</span></p><h3 data-extra-i18n="lomonosovTitle">Мой Ломоносов — всё для учёбы</h3><p data-extra-i18n="lomonosovDescription">Приложение «Мой Ломоносов» для учеников, родителей и преподавателей. Здесь можно посмотреть расписание, найти домашнее задание, написать в чат и узнать, как идут дела с учёбой. Всё собрано в одном месте, чтобы нужное было под рукой.</p><div class="project__results"><span data-extra-i18n="lomonosovResultOne">Расписание и домашние задания под рукой</span><span data-extra-i18n="lomonosovResultTwo">Можно общаться и следить за успехами в учёбе</span></div><ul aria-label="Технологии"><li>Expo</li><li>React Native</li><li>API</li><li>UX/UI</li></ul></div>`;
     if (futureCard) projectList.insertBefore(lomonosovCard, futureCard); else projectList.appendChild(lomonosovCard);
   }
 
@@ -90,7 +94,7 @@
           </div>
         </div><span class="project__arrow">↗</span>
       </a>
-      <div class="project__copy"><p class="project__meta"><span>05 / BUSINESS LANDING</span><span data-extra-i18n="autoType">Одностраничный сайт</span></p><h3>Автосервис</h3><p data-extra-i18n="autoDescription">Промо-сайт автосервиса: услуги, преимущества, контакты и быстрые переходы к звонку, соцсетям и Яндекс.Картам.</p><div class="project__results"><span data-extra-i18n="autoResultOne">Адаптивный лендинг под телефон и ПК</span><span data-extra-i18n="autoResultTwo">Кликабельные контакты и карта</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
+      <div class="project__copy"><p class="project__meta"><span>05 / BUSINESS LANDING</span><span data-extra-i18n="autoType">Сайт для бизнеса</span></p><h3 data-extra-i18n="autoTitle">Сайт автосервиса</h3><p data-extra-i18n="autoDescription">Сайт автосервиса в Саратове. Собрал на одной странице услуги, контакты и карту, чтобы человек мог быстро узнать, с чем здесь помогут, позвонить и найти дорогу. Удобно открыть с телефона, когда помощь нужна прямо сейчас.</p><div class="project__results"><span data-extra-i18n="autoResultOne">Услуги и контакты на одной странице</span><span data-extra-i18n="autoResultTwo">Можно сразу позвонить или открыть карту</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
     if (futureCard) projectList.insertBefore(autoCard, futureCard); else projectList.appendChild(autoCard);
   }
 
