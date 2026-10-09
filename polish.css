@@ -27,6 +27,9 @@
 }
 .project:hover .project-preview__frame { transform: rotate(0) translateY(-2px); box-shadow: 0 29px 56px rgba(20,16,13,.34); }
 .project-preview--alex { background: linear-gradient(145deg,#cbd5e7,#e9e2d8); }
+.project-preview--enot { background: #e7edf1; }
+.project-preview--enot .project-preview__frame { background: #f8f7f3; }
+.project-preview--enot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .project-preview--alex .project-preview__frame { background:#f5f7fb; }
 .project-preview--alex img { width: 118%; height: 118%; max-width: none; object-fit: cover; object-position: 12% 20%; transform: translate(-4%,-5%); }
 

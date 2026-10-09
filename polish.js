@@ -18,6 +18,11 @@
       autoDescription: 'Сайт автосервиса в Саратове. Собрал на одной странице услуги, контакты и карту, чтобы человек мог быстро узнать, с чем здесь помогут, позвонить и найти дорогу. Удобно открыть с телефона, когда помощь нужна прямо сейчас.',
       autoResultOne: 'Услуги и контакты на одной странице',
       autoResultTwo: 'Можно сразу позвонить или открыть карту',
+      enotType: 'Сайт для блога',
+      enotTitle: 'Енот делает ремонт',
+      enotDescription: 'Сайт проекта о ремонте и домашних переделках своими руками. Собрал примеры работ, сравнение «до и после», этапы переделок и ответы на частые вопросы, чтобы посетитель мог познакомиться с блогом и обсудить свою идею.',
+      enotResultOne: 'Переделки с наглядным сравнением до и после',
+      enotResultTwo: 'Адаптивный сайт с переходом в блог и контакты',
       futureResultOne: 'Помогу разобраться, какой сайт вам нужен',
       futureResultTwo: 'Объясню, как всё устроено и как этим пользоваться',
       trustTitle: 'Есть задача, но нет тз — это нормально',
@@ -41,6 +46,11 @@
       autoDescription: 'A website for a car repair shop in Saratov. Services, contact details and a map are on one page, so visitors can see what the shop repairs, call and find their way there. Easy to open on a phone when help is needed.',
       autoResultOne: 'Services and contact details on one page',
       autoResultTwo: 'Call the shop or open the map directly',
+      enotType: 'Blog website',
+      enotTitle: 'Enot Delaet Remont — DIY home renovation',
+      enotDescription: 'A website for a DIY home renovation project. It brings together completed makeovers, before-and-after comparisons, the renovation process and frequently asked questions, so visitors can explore the blog and discuss their own ideas.',
+      enotResultOne: 'Makeovers with clear before-and-after comparisons',
+      enotResultTwo: 'Responsive website linking to the blog and contacts',
       futureResultOne: 'I’ll help you work out what kind of website you need',
       futureResultTwo: 'I’ll explain how it works and how to use it',
       trustTitle: 'It’s okay to have a task without a written brief',
@@ -51,6 +61,7 @@
   const projectList = document.querySelector('.project-list');
   let lomonosovCard = projectList?.querySelector('[data-project-lomonosov]');
   let autoCard = projectList?.querySelector('[data-project-auto]');
+  let enotCard = projectList?.querySelector('[data-project-enot]');
 
   if (projectList && !lomonosovCard) {
     const futureCard = [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
@@ -98,9 +109,22 @@
     if (futureCard) projectList.insertBefore(autoCard, futureCard); else projectList.appendChild(autoCard);
   }
 
+  if (projectList && !enotCard) {
+    const futureCard = [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
+    enotCard = document.createElement('article');
+    enotCard.className = 'project reveal';
+    enotCard.dataset.projectEnot = '';
+    enotCard.innerHTML = `
+      <a class="project__cover" href="https://insolent77.github.io/enot_delaet_remont/" target="_blank" rel="noreferrer" aria-label="Енот делает ремонт">
+        <div class="preview project-preview project-preview--enot" aria-hidden="true"><div class="project-preview__frame"><img src="assets/enot-preview.png" alt="" loading="lazy" width="1200" height="760"></div></div><span class="project__arrow">↗</span>
+      </a>
+      <div class="project__copy"><p class="project__meta"><span>06 / DIY BLOG</span><span data-extra-i18n="enotType">Сайт для блога</span></p><h3 data-extra-i18n="enotTitle">Енот делает ремонт</h3><p data-extra-i18n="enotDescription">Сайт проекта о ремонте и домашних переделках своими руками. Собрал примеры работ, сравнение «до и после», этапы переделок и ответы на частые вопросы, чтобы посетитель мог познакомиться с блогом и обсудить свою идею.</p><div class="project__results"><span data-extra-i18n="enotResultOne">Переделки с наглядным сравнением до и после</span><span data-extra-i18n="enotResultTwo">Адаптивный сайт с переходом в блог и контакты</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
+    if (futureCard) projectList.insertBefore(enotCard, futureCard); else projectList.appendChild(enotCard);
+  }
+
   const futureCard = projectList && [...projectList.querySelectorAll('.project')].find((card) => card.textContent.includes('YOUR PROJECT'));
   const futureMeta = futureCard?.querySelector('.project__meta span:first-child');
-  if (futureMeta) futureMeta.textContent = '06 / YOUR PROJECT';
+  if (futureMeta) futureMeta.textContent = '07 / YOUR PROJECT';
 
   const updateExtraCopy = () => {
     const lang = document.documentElement.lang === 'en' ? 'en' : 'ru';
@@ -142,7 +166,7 @@
   scrollContainer?.addEventListener('scroll', hideHint, { passive: true });
   hideHint();
 
-  const addedProjects = [lomonosovCard, autoCard].filter(Boolean);
+  const addedProjects = [lomonosovCard, autoCard, enotCard].filter(Boolean);
   addedProjects.forEach((addedProject) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       addedProject.classList.add('is-visible');
