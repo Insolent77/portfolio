@@ -27,9 +27,22 @@
 }
 .project:hover .project-preview__frame { transform: rotate(0) translateY(-2px); box-shadow: 0 29px 56px rgba(20,16,13,.34); }
 .project-preview--alex { background: linear-gradient(145deg,#cbd5e7,#e9e2d8); }
-.project-preview--enot { background: #e7edf1; }
-.project-preview--enot .project-preview__frame { background: #f8f7f3; }
-.project-preview--enot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.project-preview--enot { background: linear-gradient(145deg, #eaf2ff, #cbdfff); }
+.project-preview--enot .project-preview__frame { background: #f8fbff; border-color: #fff; }
+.enot-ui__bar { height: 32px; padding: 0 13px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 1px solid #dce7f8; color: #17396c; }
+.enot-ui__bar b { font-size: 9px; }
+.enot-ui__bar > span { font-size: 6px; color: #5274a9; white-space: nowrap; }
+.enot-ui__body { height: calc(100% - 32px); display: grid; grid-template-columns: 1.15fr 1fr; gap: 12px; padding: 12px; }
+.enot-ui__copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 9px; }
+.enot-ui__copy small { color: #075bff; font-size: 6px; font-weight: 700; }
+.enot-ui__copy strong { color: #071344; font: 800 18px/1.12 var(--font-body); }
+.enot-ui__lines { display: grid; gap: 4px; width: 90%; }
+.enot-ui__lines i { height: 3px; background: #c2d3ed; border-radius: 2px; }
+.enot-ui__lines i:last-child { width: 72%; }
+.enot-ui__cta { padding: 7px 9px; background: #075bff; border-radius: 6px; color: #fff; font-size: 7px; font-weight: 700; }
+.enot-ui__photo { position: relative; overflow: hidden; min-width: 0; border-radius: 8px; }
+.enot-ui__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 48% 45%; }
+.enot-ui__photo > span { position: absolute; bottom: 7px; left: 5px; right: 5px; padding: 5px 2px; text-align: center; border-radius: 5px; background: #fffffff0; color: #17396c; font-size: 6px; font-weight: 700; }
 .project-preview--alex .project-preview__frame { background:#f5f7fb; }
 .project-preview--alex img { width: 118%; height: 118%; max-width: none; object-fit: cover; object-position: 12% 20%; transform: translate(-4%,-5%); }
 

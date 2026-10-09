@@ -19,6 +19,9 @@
       autoResultOne: 'Услуги и контакты на одной странице',
       autoResultTwo: 'Можно сразу позвонить или открыть карту',
       enotType: 'Сайт для блога',
+      enotPreviewTitle: 'Обновляю дом своими руками',
+      enotPreviewCta: 'Смотреть переделки',
+      enotPreviewBadge: 'После переделки',
       enotTitle: 'Енот делает ремонт',
       enotDescription: 'Сайт проекта о ремонте и домашних переделках своими руками. Собрал примеры работ, сравнение «до и после», этапы переделок и ответы на частые вопросы, чтобы посетитель мог познакомиться с блогом и обсудить свою идею.',
       enotResultOne: 'Переделки с наглядным сравнением до и после',
@@ -47,6 +50,9 @@
       autoResultOne: 'Services and contact details on one page',
       autoResultTwo: 'Call the shop or open the map directly',
       enotType: 'Blog website',
+      enotPreviewTitle: 'DIY home makeovers',
+      enotPreviewCta: 'Explore makeovers',
+      enotPreviewBadge: 'After renovation',
       enotTitle: 'Enot Delaet Remont — DIY home renovation',
       enotDescription: 'A website for a DIY home renovation project. It brings together completed makeovers, before-and-after comparisons, the renovation process and frequently asked questions, so visitors can explore the blog and discuss their own ideas.',
       enotResultOne: 'Makeovers with clear before-and-after comparisons',
@@ -116,7 +122,15 @@
     enotCard.dataset.projectEnot = '';
     enotCard.innerHTML = `
       <a class="project__cover" href="https://insolent77.github.io/enot_delaet_remont/" target="_blank" rel="noreferrer" aria-label="Енот делает ремонт">
-        <div class="preview project-preview project-preview--enot" aria-hidden="true"><div class="project-preview__frame"><img src="assets/enot-preview.png" alt="" loading="lazy" width="1200" height="760"></div></div><span class="project__arrow">↗</span>
+        <div class="preview project-preview project-preview--enot" aria-hidden="true">
+          <div class="project-preview__frame enot-ui">
+            <div class="enot-ui__bar"><b>Енот делает ремонт</b><span>DIY / HOME</span></div>
+            <div class="enot-ui__body">
+              <div class="enot-ui__copy"><small>HOME MAKEOVER</small><strong data-extra-i18n="enotPreviewTitle">Обновляю дом своими руками</strong><div class="enot-ui__lines"><i></i><i></i></div><span class="enot-ui__cta" data-extra-i18n="enotPreviewCta">Смотреть переделки</span></div>
+              <div class="enot-ui__photo"><img src="assets/enot-bath.webp" alt="" loading="lazy"><span data-extra-i18n="enotPreviewBadge">После переделки</span></div>
+            </div>
+          </div>
+        </div><span class="project__arrow">↗</span>
       </a>
       <div class="project__copy"><p class="project__meta"><span>06 / DIY BLOG</span><span data-extra-i18n="enotType">Сайт для блога</span></p><h3 data-extra-i18n="enotTitle">Енот делает ремонт</h3><p data-extra-i18n="enotDescription">Сайт проекта о ремонте и домашних переделках своими руками. Собрал примеры работ, сравнение «до и после», этапы переделок и ответы на частые вопросы, чтобы посетитель мог познакомиться с блогом и обсудить свою идею.</p><div class="project__results"><span data-extra-i18n="enotResultOne">Переделки с наглядным сравнением до и после</span><span data-extra-i18n="enotResultTwo">Адаптивный сайт с переходом в блог и контакты</span></div><ul aria-label="Технологии"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive</li></ul></div>`;
     if (futureCard) projectList.insertBefore(enotCard, futureCard); else projectList.appendChild(enotCard);
