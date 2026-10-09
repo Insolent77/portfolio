@@ -33,6 +33,9 @@ body[data-glass='porcelain'] .appearance-wrap .appearance { gap: 12px; flex-wrap
 body[data-glass='porcelain'] .availability { font-size: 10px; }
 body[data-glass='porcelain'] .availability > i { box-shadow: 0 0 0 4px #075bff12; }
 body[data-glass='porcelain'] .section { scroll-margin-top: 16px; }
+body[data-glass='porcelain'] .scroll > .section + .section {
+  border-top: 1px solid #8ab8ff;
+}
 body[data-glass='porcelain'] .hero {
   width: 100%; min-height: min(720px, calc(var(--panel-height) - var(--toolbar-height)));
   padding: 50px 7% 76px;
