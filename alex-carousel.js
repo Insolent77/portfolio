@@ -97,7 +97,7 @@
       <p class="alex-static-description" data-alex-copy="description"></p>
       <div class="alex-static-features">${featureIcons.map((icon,i)=>`<div><i>${icon}</i><p><b data-alex-copy="feature${i+1}Title"></b><span data-alex-copy="feature${i+1}Text"></span></p></div>`).join('')}</div>
       <div class="alex-static-tech"><small data-alex-copy="tech"></small><div><span>PHP</span><span>MySQL</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Responsive</span></div></div>
-      <div class="alex-static-actions"><a href="https://alex-educator.com" target="_blank" rel="noreferrer"><span>↗</span><b data-alex-copy="project"></b></a><a class="secondary" href="https://github.com/Insolent77/alex-educator" target="_blank" rel="noreferrer"><span>●</span><b data-alex-copy="github"></b></a></div>
+      
     </div>
     <div class="alex-static-gallery">
       <div class="alex-static-stage">${shots.map((shot,i)=>`<button type="button" data-slide="${i}" style="--shot-ratio:${shot.ratio}" aria-label="${shot.label}"><img src="${shot.src}" alt="${shot.label}"></button>`).join('')}</div>
