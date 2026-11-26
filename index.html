@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="approach.css">
   <link rel="stylesheet" href="appearance-legacy.css">
   <link rel="stylesheet" href="studio.css">
+  <link rel="stylesheet" href="contact-dialog.css">
   <script>document.documentElement.classList.remove('no-js');try{if(localStorage.getItem('portfolio-sound')===null)localStorage.setItem('portfolio-sound','off')}catch{}</script>
 </head>
 <body data-background="mist" data-glass="porcelain">
@@ -141,10 +142,24 @@
       </section>
     </div>
   </main>
+  <dialog id="contact-dialog" aria-labelledby="brief-title" aria-describedby="brief-note">
+    <button type="button" class="brief-close" aria-label="Закрыть">×</button>
+    <h2 id="brief-title">Обсудить проект</h2>
+    <p id="brief-note">Оба поля необязательны. Сообщение можно проверить и отправить в Telegram.</p>
+    <label for="brief-idea">Что вы хотите сделать?</label>
+    <textarea id="brief-idea" rows="3" maxlength="1200"></textarea>
+    <label for="brief-reference">Ссылка на пример</label>
+    <input id="brief-reference" type="text" inputmode="url" maxlength="800" placeholder="https://">
+    <div class="brief-actions">
+      <a class="button button--primary" id="brief-draft" href="https://t.me/INS8988" target="_blank" rel="noreferrer" data-stat="contact-tg">С заявкой в Telegram</a>
+      <a class="button button--quiet" id="brief-direct" href="https://t.me/INS8988" target="_blank" rel="noreferrer" data-stat="contact-tg">Сразу в Telegram</a>
+    </div>
+  </dialog>
   <script src="analytics-config.js"></script>
   <script src="analytics.js?v=2"></script>
   <script src="script.js"></script>
   <script src="polish.js"></script>
   <script src="approach-redesign.js"></script>
+  <script src="contact-dialog.js"></script>
 </body>
 </html>

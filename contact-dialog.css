@@ -1,0 +1,18 @@
+#contact-dialog {
+  box-sizing:border-box; width:min(28rem, calc(100vw - 2rem)); max-height:calc(100dvh - 2rem);
+  margin:auto; padding:clamp(1.25rem, 4vw, 2rem); overflow:auto; overscroll-behavior:contain;
+  border:1px solid var(--glass-line); border-radius:24px; color:var(--glass-text);
+  background:linear-gradient(145deg,var(--glass-strong),var(--glass-bg));
+  backdrop-filter:blur(22px); box-shadow:var(--glass-shadow); font-family:inherit;
+}
+#contact-dialog::backdrop { background:rgba(12,18,35,.36); backdrop-filter:blur(5px) }
+#contact-dialog h2 { font:600 1.6rem/1.2 var(--font-display,inherit); margin:0 2rem .5rem 0 }
+#brief-note { color:var(--glass-muted); font-size:.9rem; line-height:1.5; margin:0 0 1.2rem }
+#contact-dialog label { display:block; margin:1rem 0 .4rem; font-weight:600; font-size:.9rem }
+#contact-dialog :is(input,textarea) { box-sizing:border-box; width:100%; font:inherit; font-size:1rem; padding:.7rem .85rem;
+  background:var(--glass-soft); color:var(--glass-text); border:1px solid var(--glass-line); border-radius:12px }
+#contact-dialog textarea { resize:vertical }
+#contact-dialog :focus-visible { outline:2px solid var(--accent); outline-offset:2px }
+.brief-close { position:absolute; right:1rem; top:.8rem; width:2.5rem; height:2.5rem; border:0; background:transparent; color:inherit; cursor:pointer; font-size:1.6rem }
+.brief-actions { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem }
+.brief-actions .button { flex:1 1 auto; min-height:42px; padding:.55rem .8rem; justify-content:center }
