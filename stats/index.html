@@ -11,6 +11,7 @@ label,input { display:block } input,button { font:inherit; padding:.65rem 1rem; 
 input { width:min(100%,25rem); margin:.25rem 0 1rem } button { background:#292622; color:white; cursor:pointer }
 table { width:100%; border-collapse:collapse } th,td { padding:.45rem; text-align:left; border-bottom:1px solid #d2c9bd }
 td:last-child,th:last-child { text-align:right } caption { text-align:left; font-weight:bold; margin:1rem 0 }
+th[scope="rowgroup"] { text-align:left; padding-top:1.2rem; color:#50483f }
 </style>
 <link rel="stylesheet" href="chart.css?v=5">
 <main>
@@ -38,11 +39,12 @@ td:last-child,th:last-child { text-align:right } caption { text-align:left; font
 <aside id="chart-popup" tabindex="0" aria-label="Нажатия по кнопкам за день" hidden></aside>
 </section>
 <h2>Уникальные браузеры · <span id="visitors"></span></h2>
-<table><caption>За всё время</caption><thead><tr><th>Кнопка или ссылка</th><th>Нажатия</th></tr></thead><tbody></tbody></table>
+<table><caption>За всё время</caption><thead><tr><th>Кнопка или ссылка</th><th>Нажатия</th></tr></thead>
+<tbody id="primary-controls"></tbody><tbody id="other-controls"></tbody></table>
 </section>
 </main>
 <script src="../analytics-config.js"></script>
 <script src="supabase-2.119.2.js"></script>
 <script src="chart.js?v=6"></script>
-<script src="stats.js?v=5"></script>
+<script src="stats.js?v=6"></script>
 </html>

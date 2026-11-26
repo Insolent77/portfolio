@@ -9,6 +9,30 @@ const client = supabase.createClient(url, key, {
 });
 let activeUser;
 let version = 0;
+const primaryLabels = [
+  'Первый экран · Обсудить проект',
+  'Будущий сайт · Обсудить проект',
+  'Первый экран · Посмотреть работы',
+  'Контакты · Telegram',
+  'Контакты · GitHub',
+  'Контакты · Avito',
+  'Будущий сайт · Обложка'
+];
+function renderControlGroup(selector, title, controls) {
+  const body = document.querySelector(selector);
+  body.replaceChildren();
+  if (!controls.length) return;
+  const header = document.createElement('th');
+  header.scope = 'rowgroup';
+  header.colSpan = 2;
+  header.textContent = title;
+  body.insertRow().append(header);
+  for (const item of controls) {
+    const row = body.insertRow();
+    row.insertCell().textContent = item.label;
+    row.insertCell().textContent = item.clicks;
+  }
+}
 async function showSession(session) {
   const user = session?.user.id || null;
   if (activeUser === user) return;
@@ -26,13 +50,11 @@ async function showSession(session) {
     return;
   }
   document.querySelector('#visitors').textContent = data.visitors;
-  const body = document.querySelector('tbody');
-  body.replaceChildren();
-  for (const item of data.controls) {
-    const row = body.insertRow();
-    row.insertCell().textContent = item.label;
-    row.insertCell().textContent = item.clicks;
-  }
+  const byLabel = new Map(data.controls.map(item => [item.label, item]));
+  renderControlGroup('#primary-controls', 'Основные кнопки',
+    primaryLabels.map(label => byLabel.get(label)).filter(Boolean));
+  renderControlGroup('#other-controls', 'Остальные кнопки и ссылки',
+    data.controls.filter(item => !primaryLabels.includes(item.label)));
   const filter = document.querySelector('#range-filter');
   const { from, to } = filter.elements;
   function applyRange() {
