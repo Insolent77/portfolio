@@ -2,8 +2,11 @@
 #daily h2 { margin:0; font:1.8rem Georgia,serif }
 #period { margin:.25rem 0 1rem; color:#625a51 }
 .legend { display:flex; gap:1rem; font-size:.9rem }
-.legend span::before { content:''; display:inline-block; width:1.2em; height:3px; margin-right:.4em; vertical-align:middle; background:#167467 }
-.legend span + span::before { background:#a94c2d }
+.legend span::before { content:''; display:inline-block; width:.72em; height:.72em; border-radius:50%; margin-right:.4em; background:#319bd8 }
+.legend span + span::before { background:#209660 }
+main { max-width:68rem }
+#daily { background:#fff }
+.legend { justify-content:flex-end; flex-wrap:wrap }
 #chart { display:block; width:100%; touch-action:pan-y; margin:.7rem 0; overflow:visible }
 #chart text { fill:#625a51; font:13px system-ui,sans-serif }
 #day-detail { border-top:1px solid #ded6c9; padding-top:.8rem }
