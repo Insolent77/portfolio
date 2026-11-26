@@ -9,6 +9,9 @@
   } catch { /* Storage is optional. */ }
 
   function record(control) {
+    try {
+      if (localStorage.getItem('ins-portfolio-exclude') === '1') return;
+    } catch { /* The browser may block local storage. */ }
     fetch(url + '/rest/v1/rpc/portfolio_record', {
       method: 'POST', keepalive: true,
       headers: { apikey: key, 'Content-Type': 'application/json' },

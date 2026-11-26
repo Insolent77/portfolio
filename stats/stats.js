@@ -9,6 +9,71 @@ const client = supabase.createClient(url, key, {
 });
 let activeUser;
 let version = 0;
+let metricRequest = 0;
+const exclude = document.querySelector('#exclude-browser');
+function readExclusion() {
+  try { exclude.checked = localStorage.getItem('ins-portfolio-exclude') === '1'; }
+  catch { exclude.disabled = true; }
+}
+readExclusion();
+window.addEventListener('storage', readExclusion);
+exclude.onchange = () => {
+  try { localStorage.setItem('ins-portfolio-exclude', exclude.checked ? '1' : '0'); }
+  catch {
+    exclude.checked = !exclude.checked;
+    statusLine.textContent = 'Браузер не разрешил сохранить настройку.';
+  }
+};
+async function showMetrics(from, to) {
+  const id = ++metricRequest;
+  const sessionVersion = version;
+  const panel = document.querySelector('#metrics');
+  panel.textContent = 'Загружаем показатели…';
+  const {data, error} = await client.rpc('portfolio_period', {date_from:from,date_to:to});
+  if (id !== metricRequest || sessionVersion !== version) return;
+  if (error) {
+    panel.textContent = error.code === 'PGRST202' ? 'Для расчёта конверсии обновите portfolio.sql в Supabase.' : 'Не удалось загрузить показатели.';
+    return;
+  }
+  const {current,previous} = data;
+  panel.replaceChildren();
+  const date = value => new Date(value).toLocaleDateString('ru-RU',{timeZone:'UTC'});
+  const number = new Intl.NumberFormat('ru-RU',{maximumFractionDigits:1});
+  const delta = value => (value > 0 ? '+' : '') + number.format(value);
+  function card(label,value,comparison,coverage) {
+    const item = document.createElement('article');
+    const headline = document.createElement('strong');
+    const note = document.createElement('small');
+    headline.textContent = value;
+    note.textContent = comparison;
+    item.append(label,headline,note);
+    if (coverage) {
+      const since = document.createElement('small');
+      since.textContent = 'По данным с '+date(coverage);
+      item.append(since);
+    }
+    panel.append(item);
+  }
+  const dates = date(previous.start)+' – '+date(previous.end);
+  const unavailable = 'Недостаточно данных для сравнения';
+  const hasVisits = current.visit_start <= current.end;
+  const hasContacts = current.contact_start <= current.end;
+  const comparableVisits = hasVisits && previous.visit_start === previous.start;
+  const comparableContacts = hasContacts && previous.contact_start === previous.start;
+  card('Уникальные посетители',hasVisits ? current.visitors : 'Нет данных',
+    comparableVisits ? delta(current.visitors-previous.visitors)+' к периоду '+dates : unavailable,
+    hasVisits && current.visit_start > from && current.visit_start);
+  const rate = current.eligible ? 100*current.contacts/current.eligible : null;
+  const oldRate = previous.eligible ? 100*previous.contacts/previous.eligible : null;
+  let comparison = unavailable;
+  if (comparableContacts) {
+    comparison = 'Изменение числа посетителей, перешедших к контакту: '+delta(current.contacts-previous.contacts)+' ('+dates+')';
+    if (rate !== null && oldRate !== null) comparison += ' · '+delta(rate-oldRate)+' п. п.';
+  }
+  card('Переход к контакту',hasContacts ? current.contacts+' из '+current.eligible+
+    (rate === null ? '' : ' · '+number.format(rate)+' %') : 'Нет данных',
+    comparison, hasContacts && current.contact_start > from && current.contact_start);
+}
 const primaryLabels = [
   'Первый экран · Обсудить проект',
   'Будущий сайт · Обсудить проект',
@@ -59,7 +124,10 @@ async function showSession(session) {
   const { from, to } = filter.elements;
   function applyRange() {
     to.setCustomValidity(from.value > to.value ? 'Дата окончания должна быть не раньше даты начала.' : '');
-    if (filter.reportValidity()) renderDailyChart(data.daily || [], data.controls, from.value, to.value);
+    if (filter.reportValidity()) {
+      renderDailyChart(data.daily || [], data.controls, from.value, to.value);
+      showMetrics(from.value,to.value);
+    }
   }
   function currentWeek() {
     const today = new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Moscow'}).format(new Date());

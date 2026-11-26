@@ -15,6 +15,7 @@ create table if not exists portfolio_private.daily_visitors (
   day date not null, visitor_id uuid not null, primary key (day, visitor_id)
 );
 alter table portfolio_private.daily_visitors add column if not exists last_activity_at timestamptz;
+alter table portfolio_private.daily_visitors add column if not exists contacted boolean not null default false;
 create table if not exists portfolio_private.daily_clicks (
   day date not null, control_id text references portfolio_private.controls(id),
   clicks bigint not null, primary key (day, control_id)
@@ -27,6 +28,8 @@ on conflict do nothing;
 alter table portfolio_private.daily_visitors enable row level security;
 alter table portfolio_private.daily_clicks enable row level security;
 alter table portfolio_private.tracking_start enable row level security;
+alter table portfolio_private.tracking_start add column if not exists contact_since date
+  not null default timezone('Europe/Moscow', now())::date;
 
 insert into portfolio_private.controls (id,label) values
   ('skip', 'К содержимому'),
@@ -81,10 +84,12 @@ declare
   today date := timezone('Europe/Moscow', now())::date;
 begin
   if visitor is null then return; end if;
-  insert into portfolio_private.daily_visitors as v (day, visitor_id, last_activity_at)
-  values (today, visitor, now())
+  insert into portfolio_private.daily_visitors as v (day, visitor_id, last_activity_at, contacted)
+  values (today, visitor, now(), coalesce(control in
+    ('hero-contact','future-contact','future-cover','contact-tg','contact-avito'), false))
   on conflict (day, visitor_id) do update
-    set last_activity_at = greatest(v.last_activity_at, excluded.last_activity_at);
+    set last_activity_at = greatest(v.last_activity_at, excluded.last_activity_at),
+        contacted = v.contacted or excluded.contacted;
   if control is null then
     insert into portfolio_private.visitors values (visitor) on conflict do nothing;
   else
@@ -131,4 +136,39 @@ end;
 $$;
 revoke all on function public.portfolio_report() from public, anon, authenticated;
 grant execute on function public.portfolio_report() to authenticated;
+
+create or replace function public.portfolio_period(date_from date, date_to date)
+returns jsonb language plpgsql stable security definer set search_path = '' as $$
+declare
+  today date := timezone('Europe/Moscow', now())::date;
+  period_length integer := date_to - date_from + 1;
+begin
+  if not exists (select 1 from portfolio_private.owners where id = auth.uid()) then
+    raise insufficient_privilege;
+  end if;
+  if date_from is null or date_to is null or date_from > date_to then
+    raise exception 'Invalid date range';
+  end if;
+  return (
+    with periods(name, first_day, last_day) as (
+      values ('current', date_from, least(date_to,today)),
+             ('previous', date_from - period_length, least(date_to,today) - period_length)
+    )
+    select jsonb_object_agg(p.name, jsonb_build_object(
+      'start', p.first_day, 'end', p.last_day,
+      'visit_start', greatest(p.first_day,t.day), 'contact_start', greatest(p.first_day,t.contact_since),
+      'visitors', counts.visitors, 'eligible', counts.eligible, 'contacts', counts.contacts
+    ))
+    from periods p cross join portfolio_private.tracking_start t
+    cross join lateral (
+      select count(distinct visitor_id) as visitors,
+        count(distinct visitor_id) filter (where day >= t.contact_since) as eligible,
+        count(distinct visitor_id) filter (where contacted) as contacts
+      from portfolio_private.daily_visitors where day between p.first_day and p.last_day
+    ) counts
+  );
+end;
+$$;
+revoke all on function public.portfolio_period(date,date) from public, anon, authenticated;
+grant execute on function public.portfolio_period(date,date) to authenticated;
 commit;
