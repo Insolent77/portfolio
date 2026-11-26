@@ -16,13 +16,19 @@ function readExclusion() {
   catch { exclude.disabled = true; }
 }
 readExclusion();
-window.addEventListener('storage', readExclusion);
+window.addEventListener('storage', event => {
+  if (event.key !== 'ins-portfolio-exclude') return;
+  readExclusion();
+  if (activeUser) showSession({user:{id:activeUser}},true);
+});
 exclude.onchange = () => {
   try { localStorage.setItem('ins-portfolio-exclude', exclude.checked ? '1' : '0'); }
   catch {
     exclude.checked = !exclude.checked;
     statusLine.textContent = 'Браузер не разрешил сохранить настройку.';
+    return;
   }
+  if (activeUser) showSession({user:{id:activeUser}},true);
 };
 async function showMetrics(from, to) {
   const id = ++metricRequest;
@@ -98,9 +104,9 @@ function renderControlGroup(selector, title, controls) {
     row.insertCell().textContent = item.clicks;
   }
 }
-async function showSession(session) {
+async function showSession(session, refresh = false) {
   const user = session?.user.id || null;
-  if (activeUser === user) return;
+  if (activeUser === user && !refresh) return;
   activeUser = user;
   const request = ++version;
   form.hidden = Boolean(user);
@@ -108,6 +114,20 @@ async function showSession(session) {
   logout.hidden = !user;
   statusLine.textContent = user ? 'Загружаем статистику…' : '';
   if (!user) return;
+  const exclusionStatus = document.querySelector('#exclude-status');
+  exclusionStatus.textContent = '';
+  if (!exclude.disabled && localStorage.getItem('ins-portfolio-exclude') !== null) {
+    const visitorKey = 'ins-portfolio-visitor';
+    const browserId = localStorage.getItem(visitorKey) || crypto.randomUUID();
+    localStorage.setItem(visitorKey,browserId);
+    const {error: syncError} = await client.rpc('portfolio_exclusion', {
+      browser_id:browserId, excluded:exclude.checked
+    });
+    if (request !== version) return;
+    exclusionStatus.textContent = syncError
+      ? (syncError.code === 'PGRST202' ? 'Для пересчёта истории обновите portfolio.sql в Supabase.' : 'Не удалось обновить исключение в базе. Обновите страницу для повтора.')
+      : (exclude.checked ? 'Прошлые посещения этого браузера исключены.' : 'Браузер учитывается.');
+  }
   const { data, error } = await client.rpc('portfolio_report');
   if (request !== version) return;
   if (error) {
@@ -140,7 +160,8 @@ async function showSession(session) {
   filter.oninput = () => to.setCustomValidity('');
   filter.onsubmit = event => { event.preventDefault(); applyRange(); };
   document.querySelector('#this-week').onclick = currentWeek;
-  currentWeek();
+  if (refresh && from.value && to.value) applyRange();
+  else currentWeek();
   report.hidden = false;
   statusLine.textContent = '';
 }

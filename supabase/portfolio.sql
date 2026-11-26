@@ -11,6 +11,24 @@ create table if not exists portfolio_private.owners (
 alter table portfolio_private.visitors enable row level security;
 alter table portfolio_private.controls enable row level security;
 alter table portfolio_private.owners enable row level security;
+create table if not exists portfolio_private.excluded_browsers (id uuid primary key);
+alter table portfolio_private.excluded_browsers enable row level security;
+
+create or replace function public.portfolio_exclusion(browser_id uuid, excluded boolean)
+returns void language plpgsql security definer set search_path = '' as $$
+begin
+  if not exists (select 1 from portfolio_private.owners where id = auth.uid()) then
+    raise insufficient_privilege;
+  end if;
+  if excluded then
+    insert into portfolio_private.excluded_browsers values (browser_id) on conflict do nothing;
+  else
+    delete from portfolio_private.excluded_browsers where id = browser_id;
+  end if;
+end;
+$$;
+revoke all on function public.portfolio_exclusion(uuid,boolean) from public, anon, authenticated;
+grant execute on function public.portfolio_exclusion(uuid,boolean) to authenticated;
 create table if not exists portfolio_private.daily_visitors (
   day date not null, visitor_id uuid not null, primary key (day, visitor_id)
 );
@@ -83,7 +101,7 @@ returns void language plpgsql security definer set search_path = '' as $$
 declare
   today date := timezone('Europe/Moscow', now())::date;
 begin
-  if visitor is null then return; end if;
+  if visitor is null or exists (select 1 from portfolio_private.excluded_browsers where id = visitor) then return; end if;
   insert into portfolio_private.daily_visitors as v (day, visitor_id, last_activity_at, contacted)
   values (today, visitor, now(), coalesce(control in
     ('hero-contact','future-contact','future-cover','contact-tg','contact-avito'), false))
@@ -111,7 +129,8 @@ begin
     raise insufficient_privilege;
   end if;
   return jsonb_build_object(
-    'visitors', (select count(*) from portfolio_private.visitors),
+    'visitors', (select count(*) from portfolio_private.visitors v
+      where not exists (select 1 from portfolio_private.excluded_browsers e where e.id = v.id)),
     'daily', (
       with bounds as (
         select timezone('Europe/Moscow', now())::date as today, day as started
@@ -122,12 +141,16 @@ begin
       )
       select jsonb_agg(jsonb_build_object(
         'day', days.day,
-        'last_activity_at', (select max(v.last_activity_at) from portfolio_private.daily_visitors v where v.day = days.day),
-        'visitors', (select count(*) from portfolio_private.daily_visitors v where v.day = days.day),
+        'last_activity_at', totals.last_activity_at,
+        'visitors', totals.visitors,
         'buttons', coalesce((select jsonb_agg(jsonb_build_object('label', c.label, 'clicks', d.clicks)
           order by d.clicks desc, c.label) from portfolio_private.daily_clicks d
           join portfolio_private.controls c on c.id = d.control_id where d.day = days.day), '[]'::jsonb)
-      ) order by days.day) from days
+      ) order by days.day) from days cross join lateral (
+        select count(*) as visitors, max(v.last_activity_at) as last_activity_at
+        from portfolio_private.daily_visitors v where v.day = days.day
+        and not exists (select 1 from portfolio_private.excluded_browsers e where e.id = v.visitor_id)
+      ) totals
     ),
     'controls', (select jsonb_agg(jsonb_build_object('label',label,'clicks',clicks)
       order by clicks desc, label) from portfolio_private.controls)
@@ -164,7 +187,8 @@ begin
       select count(distinct visitor_id) as visitors,
         count(distinct visitor_id) filter (where day >= t.contact_since) as eligible,
         count(distinct visitor_id) filter (where contacted) as contacts
-      from portfolio_private.daily_visitors where day between p.first_day and p.last_day
+      from portfolio_private.daily_visitors v where day between p.first_day and p.last_day
+      and not exists (select 1 from portfolio_private.excluded_browsers e where e.id = v.visitor_id)
     ) counts
   );
 end;
