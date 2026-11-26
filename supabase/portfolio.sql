@@ -14,6 +14,7 @@ alter table portfolio_private.owners enable row level security;
 create table if not exists portfolio_private.daily_visitors (
   day date not null, visitor_id uuid not null, primary key (day, visitor_id)
 );
+alter table portfolio_private.daily_visitors add column if not exists last_activity_at timestamptz;
 create table if not exists portfolio_private.daily_clicks (
   day date not null, control_id text references portfolio_private.controls(id),
   clicks bigint not null, primary key (day, control_id)
@@ -80,7 +81,10 @@ declare
   today date := timezone('Europe/Moscow', now())::date;
 begin
   if visitor is null then return; end if;
-  insert into portfolio_private.daily_visitors values (today, visitor) on conflict do nothing;
+  insert into portfolio_private.daily_visitors as v (day, visitor_id, last_activity_at)
+  values (today, visitor, now())
+  on conflict (day, visitor_id) do update
+    set last_activity_at = greatest(v.last_activity_at, excluded.last_activity_at);
   if control is null then
     insert into portfolio_private.visitors values (visitor) on conflict do nothing;
   else
@@ -113,6 +117,7 @@ begin
       )
       select jsonb_agg(jsonb_build_object(
         'day', days.day,
+        'last_activity_at', (select max(v.last_activity_at) from portfolio_private.daily_visitors v where v.day = days.day),
         'visitors', (select count(*) from portfolio_private.daily_visitors v where v.day = days.day),
         'buttons', coalesce((select jsonb_agg(jsonb_build_object('label', c.label, 'clicks', d.clicks)
           order by d.clicks desc, c.label) from portfolio_private.daily_clicks d

@@ -110,7 +110,16 @@ function renderDailyChart(history, controls, from, to) {
       li.textContent = b.label+' — '+b.clicks;
       list.append(li);
     }
-    popup.replaceChildren(title.cloneNode(true),list);
+    const activity = document.createElement('div');
+    if (day.last_activity_at) {
+      const time = new Intl.DateTimeFormat('ru-RU', {
+        timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit',second:'2-digit'
+      }).format(new Date(day.last_activity_at));
+      activity.textContent = 'Последняя активность · '+time+' МСК';
+    } else {
+      activity.textContent = day.visitors || clicks[selected] ? 'Время активности не записано' : 'Активности не было';
+    }
+    popup.replaceChildren(title.cloneNode(true),activity,list);
     popup.scrollTop = 0;
   }
   function show(i, clientX, clientY) {
