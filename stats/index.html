@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Статистика · INS</title>
+<style>
+* { box-sizing:border-box } body { margin:0; background:#faf5ec; color:#211e1c; font:1rem/1.55 system-ui,sans-serif }
+main { max-width:44rem; margin:8vh auto; padding:1.5rem } h1 { font:2.6rem Georgia,serif }
+label,input { display:block } input,button { font:inherit; padding:.65rem 1rem; border:1px solid #81766b; border-radius:.5rem }
+input { width:min(100%,25rem); margin:.25rem 0 1rem } button { background:#292622; color:white; cursor:pointer }
+table { width:100%; border-collapse:collapse } th,td { padding:.45rem; text-align:left; border-bottom:1px solid #d2c9bd }
+td:last-child,th:last-child { text-align:right } caption { text-align:left; font-weight:bold; margin:1rem 0 }
+</style>
+<main>
+<h1>Статистика портфолио</h1>
+<form id="login">
+<label>Электронная почта<input name="email" type="email" autocomplete="username" required></label>
+<label>Пароль<input name="password" type="password" autocomplete="current-password" required></label>
+<button>Войти</button>
+</form>
+<p role="status" id="status"></p>
+<section id="report" hidden>
+<button type="button" id="logout">Выйти</button>
+<h2>Уникальные браузеры · <span id="visitors"></span></h2>
+<table><caption>За всё время</caption><thead><tr><th>Кнопка или ссылка</th><th>Нажатия</th></tr></thead><tbody></tbody></table>
+</section>
+</main>
+<script src="../analytics-config.js"></script>
+<script src="stats.js"></script>
+</html>

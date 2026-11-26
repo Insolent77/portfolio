@@ -75,7 +75,7 @@
     lomonosovCard.className = 'project reveal';
     lomonosovCard.dataset.projectLomonosov = '';
     lomonosovCard.innerHTML = `
-      <a class="project__cover" href="https://lk.mylomonosov.ru/" target="_blank" rel="noreferrer" aria-label="Открыть Мой Ломоносов">
+      <a data-stat="lomonosov" class="project__cover" href="https://lk.mylomonosov.ru/" target="_blank" rel="noreferrer" aria-label="Открыть Мой Ломоносов">
         <div class="preview project-preview project-preview--lomonosov" aria-hidden="true">
           <div class="project-preview__frame lomonosov-ui">
             <div class="lomonosov-ui__top"><span>МОЙ</span><b>Ломоносов</b></div>
@@ -101,7 +101,7 @@
     autoCard.className = 'project reveal';
     autoCard.dataset.projectAuto = '';
     autoCard.innerHTML = `
-      <a class="project__cover" href="https://insolent77.github.io/artemiy-site/" target="_blank" rel="noreferrer" aria-label="Открыть проект Автосервис">
+      <a data-stat="auto" class="project__cover" href="https://insolent77.github.io/artemiy-site/" target="_blank" rel="noreferrer" aria-label="Открыть проект Автосервис">
         <div class="preview project-preview project-preview--auto" aria-hidden="true">
           <div class="project-preview__frame auto-ui">
             <div class="auto-ui__top"><span class="auto-ui__logo">АВТОСЕРВИС</span><i></i><i></i><i></i></div>
@@ -121,7 +121,7 @@
     enotCard.className = 'project reveal';
     enotCard.dataset.projectEnot = '';
     enotCard.innerHTML = `
-      <a class="project__cover" href="https://insolent77.github.io/enot_delaet_remont/" target="_blank" rel="noreferrer" aria-label="Енот делает ремонт">
+      <a data-stat="enot" class="project__cover" href="https://insolent77.github.io/enot_delaet_remont/" target="_blank" rel="noreferrer" aria-label="Енот делает ремонт">
         <div class="preview project-preview project-preview--enot" aria-hidden="true">
           <div class="project-preview__frame enot-ui">
             <div class="enot-ui__bar"><b>Енот делает ремонт</b><span>DIY / HOME</span></div>

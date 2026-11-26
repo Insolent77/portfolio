@@ -100,9 +100,9 @@
       
     </div>
     <div class="alex-static-gallery">
-      <div class="alex-static-stage">${shots.map((shot,i)=>`<button type="button" data-slide="${i}" style="--shot-ratio:${shot.ratio}" aria-label="${shot.label}"><img src="${shot.src}" alt="${shot.label}"></button>`).join('')}</div>
-      <div class="alex-static-nav"><button type="button" data-prev aria-label="Предыдущий скриншот">‹</button><div>${shots.map((_,i)=>`<button type="button" data-dot="${i}" aria-label="Скриншот ${i+1}"></button>`).join('')}</div><button type="button" data-next aria-label="Следующий скриншот">›</button></div>
-      <div class="alex-static-thumbs">${shots.map((shot,i)=>`<button type="button" data-thumb="${i}" aria-label="${shot.label}"><img src="${shot.src}" alt=""></button>`).join('')}</div>
+      <div class="alex-static-stage">${shots.map((shot,i)=>`<button data-stat="slide-${i}" type="button" data-slide="${i}" style="--shot-ratio:${shot.ratio}" aria-label="${shot.label}"><img src="${shot.src}" alt="${shot.label}"></button>`).join('')}</div>
+      <div class="alex-static-nav"><button data-stat="prev" type="button" data-prev aria-label="Предыдущий скриншот">‹</button><div>${shots.map((_,i)=>`<button data-stat="dot-${i}" type="button" data-dot="${i}" aria-label="Скриншот ${i+1}"></button>`).join('')}</div><button data-stat="next" type="button" data-next aria-label="Следующий скриншот">›</button></div>
+      <div class="alex-static-thumbs">${shots.map((shot,i)=>`<button data-stat="thumb-${i}" type="button" data-thumb="${i}" aria-label="${shot.label}"><img src="${shot.src}" alt=""></button>`).join('')}</div>
     </div>`;
 
   const slides=[...card.querySelectorAll('[data-slide]')],dots=[...card.querySelectorAll('[data-dot]')],thumbs=[...card.querySelectorAll('[data-thumb]')];let current=0,timer;
