@@ -13,6 +13,10 @@ main { max-width:68rem }
 #day-detail ul { margin:.5rem 0 0; padding-left:1.2rem }
 #daily [hidden] { display:none }
 .day-target { cursor:pointer }
+#range-filter { display:flex; flex-wrap:wrap; align-items:end; gap:.65rem; margin:1rem 0 }
+#range-filter label { font-size:.85rem }
+#range-filter input { width:auto; max-width:100%; min-width:0; margin:.2rem 0 0 }
+#this-week { background:#fff; color:#292622 }
 #chart-popup { position:fixed; z-index:3; width:min(20rem,calc(100vw - 16px)); max-height:min(21rem,55vh); overflow:auto; overscroll-behavior:contain; padding:0 1rem .6rem; background:white; border:1px solid #d4dedb; border-radius:.75rem; box-shadow:0 6px 26px #162e3226; font-size:.9rem }
 #chart-popup strong { position:sticky; top:0; display:block; background:white; padding:.65rem 0; border-bottom:1px solid #e5ebe9 }
 #chart-popup ul { list-style:none; margin:0; padding:0 }

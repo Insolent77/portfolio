@@ -1,4 +1,6 @@
-function renderDailyChart(days, controls) {
+const dayMs = 86400000;
+function renderDailyChart(history, controls, from, to) {
+  const days = history.filter(row => row.day >= from && row.day <= to);
   const svg = document.querySelector('#chart');
   const detail = document.querySelector('#day-detail');
   const popup = document.querySelector('#chart-popup');
@@ -6,22 +8,17 @@ function renderDailyChart(days, controls) {
   document.querySelector('#period').textContent = 'По дням · московское время';
   svg.replaceChildren();
   detail.replaceChildren();
-  const dates = days.map(day => day.day);
-  if (!dates.length) {
-    const today = new Intl.DateTimeFormat('sv-SE', { timeZone:'Europe/Moscow' }).format(new Date());
-    for (let offset = 6; offset >= 0; offset--) {
-      const date = new Date(today + 'T12:00:00Z');
-      date.setUTCDate(date.getUTCDate() - offset);
-      dates.push(date.toISOString().slice(0,10));
-    }
-  }
+  svg.onkeydown = svg.onpointerdown = svg.onpointermove = null;
+  const start = Date.parse(from);
+  const span = (Date.parse(to) - start) / dayMs;
   const clicks = days.map(day => day.buttons.reduce((sum, b) => sum + b.clicks, 0));
   const peak = Math.max(4, ...clicks, ...days.map(day => day.visitors));
   const magnitude = 10 ** Math.floor(Math.log10(peak / 4));
   const step = [1,2,5,10].find(n => n * magnitude >= peak / 4) * magnitude;
   const max = step * 4;
   const left = 48, right = 650, bottom = 208;
-  const x = i => dates.length === 1 ? (left + right) / 2 : left + i * (right-left) / (dates.length-1);
+  const axisX = offset => span ? left + offset * (right-left) / span : (left+right)/2;
+  const x = i => axisX((Date.parse(days[i].day) - start) / dayMs);
   const y = n => bottom - n / max * 185;
   function add(tag, attrs, label) {
     const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -35,15 +32,20 @@ function renderDailyChart(days, controls) {
     add('text',{x:left-7,y:y(n)+4,'text-anchor':'end'}, n);
   }
   function dateLabel(i, style) {
-    return new Date(dates[i] + 'T12:00:00Z').toLocaleDateString('ru-RU', {day:'numeric',month:style,timeZone:'Europe/Moscow'});
+    return new Date(days[i].day).toLocaleDateString('ru-RU', {day:'numeric',month:style,timeZone:'Europe/Moscow'});
   }
-  const last = dates.length - 1;
-  for (const i of new Set([0, Math.round(last/4), Math.round(last/2), Math.round(3*last/4), last])) {
-    add('text',{x:x(i),y:236,'text-anchor':'middle'}, dateLabel(i,'numeric'));
+  const last = days.length - 1;
+  const intervals = span <= 6 ? span : 4;
+  for (let i = 0; i <= intervals; i++) {
+    const offset = Math.round(i * span / (intervals || 1));
+    const date = new Date(start + offset * dayMs);
+    const options = {day:'2-digit',month:'2-digit',timeZone:'UTC'};
+    if (span <= 6) options.weekday = 'short';
+    add('text',{x:axisX(offset),y:236,'text-anchor':'middle'},date.toLocaleDateString('ru-RU',options));
   }
   if (!days.length) {
     add('text',{x:(left+right)/2,y:112,'text-anchor':'middle'}, 'Пока нет данных по дням');
-    detail.textContent = 'Для начала дневного учёта выполните обновлённый portfolio.sql в Supabase.';
+    detail.textContent = history.length ? 'За выбранные даты дневных данных нет.' : 'Дневные данные пока недоступны.';
     return;
   }
   const guide = add('line',{y1:16,y2:bottom,stroke:'#827665','stroke-dasharray':'3 5'});

@@ -109,7 +109,7 @@ begin
         from portfolio_private.tracking_start
       ), days as (
         select today - offset_days as day from bounds
-        cross join generate_series(0, least(29, today - started)) as offset_days
+        cross join generate_series(0, today - started) as offset_days
       )
       select jsonb_agg(jsonb_build_object(
         'day', days.day,
