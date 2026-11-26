@@ -1,44 +1,61 @@
 const form = document.querySelector('#login');
 const report = document.querySelector('#report');
+const logout = document.querySelector('#logout');
 const statusLine = document.querySelector('#status');
 const { url, key } = window.portfolioSupabase;
-let token;
+const client = supabase.createClient(url, key, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false,
+    storageKey: 'ins-portfolio-stats-session' }
+});
+let activeUser;
+let version = 0;
+async function showSession(session) {
+  const user = session?.user.id || null;
+  if (activeUser === user) return;
+  activeUser = user;
+  const request = ++version;
+  form.hidden = Boolean(user);
+  report.hidden = true;
+  logout.hidden = !user;
+  statusLine.textContent = user ? 'Загружаем статистику…' : '';
+  if (!user) return;
+  const { data, error } = await client.rpc('portfolio_report');
+  if (request !== version) return;
+  if (error) {
+    statusLine.textContent = 'Не удалось открыть отчёт. Проверьте соединение и доступ к статистике.';
+    return;
+  }
+  document.querySelector('#visitors').textContent = data.visitors;
+  const body = document.querySelector('tbody');
+  body.replaceChildren();
+  for (const item of data.controls) {
+    const row = body.insertRow();
+    row.insertCell().textContent = item.label;
+    row.insertCell().textContent = item.clicks;
+  }
+  renderDailyChart(data.daily || []);
+  report.hidden = false;
+  statusLine.textContent = '';
+}
+client.auth.onAuthStateChange((_event, session) => {
+  setTimeout(() => showSession(session), 0);
+});
 form.addEventListener('submit', async event => {
   event.preventDefault();
   const button = form.querySelector('button');
   button.disabled = true;
   try {
-    if (!url || !key) throw new Error('Подключение Supabase ещё не настроено.');
-    statusLine.textContent = 'Проверяем доступ…';
-    const headers = { apikey: key, 'Content-Type': 'application/json' };
-    const login = await fetch(url + '/auth/v1/token?grant_type=password', {
-      method: 'POST', headers, body: JSON.stringify(Object.fromEntries(new FormData(form)))
-    });
+    const { error } = await client.auth.signInWithPassword(Object.fromEntries(new FormData(form)));
+    if (error) statusLine.textContent = 'Вход не удался. Проверьте почту, пароль и соединение.';
+  } finally {
     form.elements.password.value = '';
-    if (!login.ok) throw new Error('Вход не удался. Проверьте почту и пароль.');
-    token = (await login.json()).access_token;
-    const response = await fetch(url + '/rest/v1/rpc/portfolio_report', {
-      method: 'POST', headers: { ...headers, Authorization: 'Bearer ' + token }, body: '{}', cache: 'no-store'
-    });
-    if (!response.ok) throw new Error('Нет доступа к отчёту или база недоступна.');
-    const data = await response.json();
-    document.querySelector('#visitors').textContent = data.visitors;
-    const body = document.querySelector('tbody');
-    body.replaceChildren();
-    for (const item of data.controls) {
-      const row = body.insertRow();
-      row.insertCell().textContent = item.label;
-      row.insertCell().textContent = item.clicks;
-    }
-    form.hidden = true;
-    report.hidden = false;
-    statusLine.textContent = '';
-  } catch (error) {
-    statusLine.textContent = error.message;
-  } finally { button.disabled = false; }
+    button.disabled = false;
+  }
 });
-document.querySelector('#logout').addEventListener('click', () => {
-  fetch(url + '/auth/v1/logout', { method: 'POST', keepalive: true,
-    headers: { apikey: key, Authorization: 'Bearer ' + token } }).catch(() => {});
-  location.reload();
+logout.addEventListener('click', async () => {
+  logout.disabled = true;
+  try {
+    const { error } = await client.auth.signOut({ scope: 'local' });
+    if (error) statusLine.textContent = 'Не удалось завершить сеанс. Повторите выход.';
+  } finally { logout.disabled = false; }
 });

@@ -12,20 +12,30 @@ input { width:min(100%,25rem); margin:.25rem 0 1rem } button { background:#29262
 table { width:100%; border-collapse:collapse } th,td { padding:.45rem; text-align:left; border-bottom:1px solid #d2c9bd }
 td:last-child,th:last-child { text-align:right } caption { text-align:left; font-weight:bold; margin:1rem 0 }
 </style>
+<link rel="stylesheet" href="chart.css">
 <main>
 <h1>Статистика портфолио</h1>
-<form id="login">
+<form id="login" hidden>
 <label>Электронная почта<input name="email" type="email" autocomplete="username" required></label>
 <label>Пароль<input name="password" type="password" autocomplete="current-password" required></label>
 <button>Войти</button>
 </form>
 <p role="status" id="status"></p>
+<button type="button" id="logout" hidden>Выйти</button>
 <section id="report" hidden>
-<button type="button" id="logout">Выйти</button>
+<section id="daily" aria-labelledby="chart-title">
+<h2 id="chart-title">Посещаемость по дням</h2>
+<p id="period"></p>
+<div class="legend"><span>Посетители</span><span>Нажатия</span></div>
+<svg id="chart" viewBox="0 0 680 245" tabindex="0" role="group" aria-label="Дневная статистика. Для выбора дня используйте стрелки влево и вправо."></svg>
+<div id="day-detail" aria-live="polite"></div>
+</section>
 <h2>Уникальные браузеры · <span id="visitors"></span></h2>
 <table><caption>За всё время</caption><thead><tr><th>Кнопка или ссылка</th><th>Нажатия</th></tr></thead><tbody></tbody></table>
 </section>
 </main>
 <script src="../analytics-config.js"></script>
-<script src="stats.js"></script>
+<script src="supabase-2.119.2.js"></script>
+<script src="chart.js"></script>
+<script src="stats.js?v=2"></script>
 </html>

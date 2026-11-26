@@ -11,6 +11,21 @@ create table if not exists portfolio_private.owners (
 alter table portfolio_private.visitors enable row level security;
 alter table portfolio_private.controls enable row level security;
 alter table portfolio_private.owners enable row level security;
+create table if not exists portfolio_private.daily_visitors (
+  day date not null, visitor_id uuid not null, primary key (day, visitor_id)
+);
+create table if not exists portfolio_private.daily_clicks (
+  day date not null, control_id text references portfolio_private.controls(id),
+  clicks bigint not null, primary key (day, control_id)
+);
+create table if not exists portfolio_private.tracking_start (
+  id boolean primary key check (id), day date not null
+);
+insert into portfolio_private.tracking_start values (true, timezone('Europe/Moscow', now())::date)
+on conflict do nothing;
+alter table portfolio_private.daily_visitors enable row level security;
+alter table portfolio_private.daily_clicks enable row level security;
+alter table portfolio_private.tracking_start enable row level security;
 
 insert into portfolio_private.controls (id,label) values
   ('skip', 'К содержимому'),
@@ -61,12 +76,19 @@ on conflict (id) do update set label = excluded.label;
 
 create or replace function public.portfolio_record(visitor uuid, control text)
 returns void language plpgsql security definer set search_path = '' as $$
+declare
+  today date := timezone('Europe/Moscow', now())::date;
 begin
   if visitor is null then return; end if;
+  insert into portfolio_private.daily_visitors values (today, visitor) on conflict do nothing;
   if control is null then
     insert into portfolio_private.visitors values (visitor) on conflict do nothing;
   else
     update portfolio_private.controls set clicks = clicks + 1 where id = control;
+    if found then
+      insert into portfolio_private.daily_clicks as d values (today, control, 1)
+      on conflict (day, control_id) do update set clicks = d.clicks + 1;
+    end if;
   end if;
 end;
 $$;
@@ -81,6 +103,22 @@ begin
   end if;
   return jsonb_build_object(
     'visitors', (select count(*) from portfolio_private.visitors),
+    'daily', (
+      with bounds as (
+        select timezone('Europe/Moscow', now())::date as today, day as started
+        from portfolio_private.tracking_start
+      ), days as (
+        select today - offset_days as day from bounds
+        cross join generate_series(0, least(29, today - started)) as offset_days
+      )
+      select jsonb_agg(jsonb_build_object(
+        'day', days.day,
+        'visitors', (select count(*) from portfolio_private.daily_visitors v where v.day = days.day),
+        'buttons', coalesce((select jsonb_agg(jsonb_build_object('label', c.label, 'clicks', d.clicks)
+          order by d.clicks desc, c.label) from portfolio_private.daily_clicks d
+          join portfolio_private.controls c on c.id = d.control_id where d.day = days.day), '[]'::jsonb)
+      ) order by days.day) from days
+    ),
     'controls', (select jsonb_agg(jsonb_build_object('label',label,'clicks',clicks)
       order by clicks desc, label) from portfolio_private.controls)
   );
