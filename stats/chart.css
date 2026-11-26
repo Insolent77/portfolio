@@ -12,4 +12,9 @@ main { max-width:68rem }
 #day-detail { border-top:1px solid #ded6c9; padding-top:.8rem }
 #day-detail ul { margin:.5rem 0 0; padding-left:1.2rem }
 #daily [hidden] { display:none }
+.day-target { cursor:pointer }
+#chart-popup { position:fixed; z-index:3; width:min(20rem,calc(100vw - 16px)); max-height:min(21rem,55vh); overflow:auto; overscroll-behavior:contain; padding:0 1rem .6rem; background:white; border:1px solid #d4dedb; border-radius:.75rem; box-shadow:0 6px 26px #162e3226; font-size:.9rem }
+#chart-popup strong { position:sticky; top:0; display:block; background:white; padding:.65rem 0; border-bottom:1px solid #e5ebe9 }
+#chart-popup ul { list-style:none; margin:0; padding:0 }
+#chart-popup li { padding:.28rem 0; font-variant-numeric:tabular-nums }
 @media(max-width:500px) { #chart text { font-size:19px } }

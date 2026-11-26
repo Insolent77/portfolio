@@ -33,7 +33,7 @@ async function showSession(session) {
     row.insertCell().textContent = item.label;
     row.insertCell().textContent = item.clicks;
   }
-  renderDailyChart(data.daily || []);
+  renderDailyChart(data.daily || [], data.controls);
   report.hidden = false;
   statusLine.textContent = '';
 }

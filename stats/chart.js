@@ -1,6 +1,8 @@
-function renderDailyChart(days) {
+function renderDailyChart(days, controls) {
   const svg = document.querySelector('#chart');
   const detail = document.querySelector('#day-detail');
+  const popup = document.querySelector('#chart-popup');
+  popup.hidden = true;
   document.querySelector('#period').textContent = 'По дням · московское время';
   svg.replaceChildren();
   detail.replaceChildren();
@@ -62,7 +64,27 @@ function renderDailyChart(days) {
     series.forEach((v,i) => add('circle',{cx:x(i),cy:y(v),r:id==='visits'?4:2.8,fill:color}));
     markers.push([add('circle',{r:id==='visits'?6:3.5,fill:color,stroke:'#fff'}),series]);
   }
+  for (const [marker, series] of markers) {
+    series.forEach((value,i) => add('circle', {
+      cx:x(i), cy:y(value), r:9, fill:'transparent', 'data-day':i, class:'day-target'
+    }));
+  }
   let selected;
+  let hideTimer;
+  function hide() {
+    clearTimeout(hideTimer);
+    popup.hidden = true;
+  }
+  function scheduleHide() {
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hide, 250);
+  }
+  popup.onpointerenter = () => clearTimeout(hideTimer);
+  popup.onpointerleave = scheduleHide;
+  svg.onpointerleave = scheduleHide;
+  document.querySelector('#daily').onfocusout = event => {
+    if (!event.currentTarget.contains(event.relatedTarget)) hide();
+  };
   function select(i) {
     selected = Math.max(0, Math.min(i, days.length-1));
     const day = days[selected];
@@ -77,23 +99,43 @@ function renderDailyChart(days) {
     const summary = document.createElement('div');
     summary.textContent = 'Посетители · '+day.visitors+'　 Нажатия · '+clicks[selected];
     detail.replaceChildren(title,summary);
+    const counts = new Map(day.buttons.map(button => [button.label,button.clicks]));
+    const sorted = controls.map(({label}) => ({label, clicks:counts.get(label) || 0}))
+      .sort((a,b) => b.clicks - a.clicks || a.label.localeCompare(b.label,'ru'));
     const list = document.createElement('ul');
-    for (const b of day.buttons) {
+    for (const b of sorted) {
       const li = document.createElement('li');
-      li.textContent = b.label+' · '+b.clicks;
+      li.textContent = b.label+' — '+b.clicks;
       list.append(li);
     }
-    if (list.children.length) detail.append(list);
+    popup.replaceChildren(title.cloneNode(true),list);
+    popup.scrollTop = 0;
+  }
+  function show(i, clientX, clientY) {
+    clearTimeout(hideTimer);
+    if (selected !== i) select(i);
+    popup.hidden = false;
+    const w = popup.offsetWidth, h = popup.offsetHeight;
+    const left = clientX + 10 + w <= innerWidth - 8 ? clientX + 10 : clientX - w - 10;
+    popup.style.left = Math.max(8, left)+'px';
+    popup.style.top = Math.max(8, Math.min(clientY-14, innerHeight-h-8))+'px';
   }
   svg.onpointerdown = svg.onpointermove = event => {
-    const bounds = svg.getBoundingClientRect();
-    const pos = (event.clientX-bounds.left) / bounds.width * 680;
-    select(Math.round((pos-left)/(right-left)*(days.length-1)));
+    const target = event.target.closest('[data-day]');
+    if (target) show(Number(target.dataset.day),event.clientX,event.clientY);
+    else scheduleHide();
   };
+  document.onpointerdown = event => {
+    if (!popup.contains(event.target) && !event.target.closest('.day-target')) hide();
+  };
+  document.onkeydown = event => { if (event.key === 'Escape') hide(); };
   svg.onkeydown = event => {
-    if (!['ArrowLeft','ArrowRight'].includes(event.key)) return;
+    if (!['ArrowLeft','ArrowRight','Enter'].includes(event.key)) return;
     event.preventDefault();
-    select(selected + (event.key === 'ArrowLeft' ? -1 : 1));
+    const offset = {ArrowLeft:-1, ArrowRight:1, Enter:0}[event.key];
+    const i = Math.max(0,Math.min(last,selected + offset));
+    const point = new DOMPoint(x(i),y(clicks[i])).matrixTransform(svg.getScreenCTM());
+    show(i,point.x,point.y);
   };
   select(days.length-1);
 }
